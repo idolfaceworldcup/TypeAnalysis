@@ -14,6 +14,7 @@
     "test": "npm run unit"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "bootstrap-vue": "^2.0.0-rc.11",
     "flatpickr": "^4.5.1",
     "nouislider": "^11.1.0",
@@ -22,7 +23,9 @@
     "vue-flatpickr-component": "^8.1.1",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.2",
-    "vue2-transitions": "^0.2.3"
+    "vue2-transitions": "^0.2.3",
+    "vueperslides": "^1.17.4",
+    "vuetify": "^1.5.14"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
@@ -92,7 +95,7 @@
     "vue-loader": "^14.2.2",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.6.6",
-    "webpack": "^3.6.0",
+    "webpack": "^4.1.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
