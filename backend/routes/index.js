@@ -1,9 +1,12 @@
-const express = require('express');
-const router = express.Router();
-const test = require('../lib/test')
+var express = require('express');
+var router = express.Router();
+var path = require('path')
 
-router.get('/', (req, res, next) => {
-    test.myTest(req, res, next);
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  console.log(path.join(__dirname,'../public/dist', 'index.html'))
+  //res.send('hi')
+  res.sendFile(path.join(__dirname,'../public/dist', 'index.html'))
 })
 
 module.exports = router;
