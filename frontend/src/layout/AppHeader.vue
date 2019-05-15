@@ -1,7 +1,7 @@
 <template>
     <header class="header-global">
         <div style="position: relative">
-            <base-nav class="navbar-main" type="success" effect="dark" expand>
+            <base-nav class="navbar-main"  type="success" effect="" expand>
                 <a class="navbar-brand" href="#"></a>
                 <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                 <base-dropdown tag="li" class="nav-item">
@@ -9,6 +9,7 @@
                         <i class="ni ni-collection d-lg-none"></i>
                         <span class="nav-link-inner--text">MENU</span>
                     </a>
+                    <router-link to="/" class="dropdown-item">Main</router-link>
                     <router-link to="/login" class="dropdown-item">Login</router-link>
                     <router-link to="/register" class="dropdown-item">Register</router-link>
                 </base-dropdown>
