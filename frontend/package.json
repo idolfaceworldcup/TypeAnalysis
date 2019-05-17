@@ -4,6 +4,7 @@
   "description": "A Vue.js project",
   "author": "having-Tech <david.jihoon92@gmail.com>",
   "private": true,
+  "main" : "main.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -13,13 +14,20 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlbanCrepel/vue-displacement-slideshow.git"
+  },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "bootstrap-vue": "^2.0.0-rc.11",
     "flatpickr": "^4.5.1",
+    "gsap": "^2.0.2",
     "nouislider": "^11.1.0",
     "register-service-worker": "^1.5.2",
+    "three": "^0.98.0",
     "vue": "^2.6.6",
+    "vue-displacement-slideshow": "^1.1.0",
     "vue-flatpickr-component": "^8.1.1",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.2",
@@ -28,6 +36,8 @@
     "vuetify": "^1.5.14"
   },
   "devDependencies": {
+    "raw-loader": "^1.0.0",
+    "webpack-cli": "^3.1.2",
     "@babel/core": "^7.4.4",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-transform-runtime": "^7.4.4",
@@ -103,5 +113,12 @@
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
-  }
+  },
+  "keywords": [
+    "vue",
+    "three",
+    "webgl",
+    "gsap",
+    "slideshow"
+  ]
 }

@@ -1,7 +1,10 @@
 <template>
     <header class="header-global">
         <div style="position: relative">
-            <base-nav class="navbar-main"  type="success" effect="" expand>
+            <base-nav class="navbar-main" type="success" effect="light" expand>
+                <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
+                    <img src="img/brand/logo.png" alt="logo">
+                </router-link>
                 <a class="navbar-brand" href="#"></a>
                 <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
                 <base-dropdown tag="li" class="nav-item">

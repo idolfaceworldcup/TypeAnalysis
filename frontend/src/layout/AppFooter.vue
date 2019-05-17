@@ -12,7 +12,7 @@
                 <div class="col-md-6">
                     <div class="copyright">
                         &copy; {{year}}
-                        <a href="#" target="_blank" rel="noopener">IDOL</a> 
+                        <a href="#" target="_blank" rel="noopener">TPYEANALYSIS</a> 
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -21,8 +21,7 @@
                             <a href="#" class="nav-link" target="_blank">test Tim</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link" target="_blank">About
-                                Us</a>
+                            <a href="#" class="nav-link" target="_blank">About Us</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link" target="_blank">test</a>

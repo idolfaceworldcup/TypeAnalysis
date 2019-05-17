@@ -1,6 +1,6 @@
 .nav-link {
     color: $nav-link-color;
-
+    font-weight: $font-weight-bold;
     &:hover {
         color: theme-color("primary");
     }
