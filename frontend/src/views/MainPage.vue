@@ -29,11 +29,7 @@ import VueDisplacementSlideshow from "../vue-displacement-slideshow";
       VueDisplacementSlideshow,
     },
     computed: {
-      images() {
-        return [
-          require("../../public/img/images/나탈리도메르.jpg")
-        ];
-      }
+
     },
     methods: {
       init() {
