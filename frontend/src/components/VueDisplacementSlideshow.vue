@@ -285,6 +285,6 @@
 <style>
     .vue-displacement-slideshow {
         width: 100%;
-        height: 100%;
+        height: 1000%;
     }
 </style>

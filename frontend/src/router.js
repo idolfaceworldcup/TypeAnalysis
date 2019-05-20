@@ -5,13 +5,14 @@ import AppFooter from "./layout/AppFooter";
 import MainPage from "./views/MainPage.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
+import Modify from "./views/Modify";
+import TypeAnalsis from "./views/TypeAnalsis";
 
 
 Vue.use(Router);
 
 export default new Router({
   linkExactActiveClass: "active",
-  mode: 'history',
   routes: [
     {
       path: "/",
@@ -37,6 +38,24 @@ export default new Router({
       components: {
         header: AppHeader,
         default: Register,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/modify",
+      name: "modify",
+      components: {
+        header: AppHeader,
+        default: Modify,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/typeanalsis",
+      name: "typeanalsis",
+      components: {
+        header: AppHeader,
+        default: TypeAnalsis,
         footer: AppFooter
       }
     }

@@ -1,4 +1,5 @@
 import BaseInput from "../components/BaseInput";
+import BaseAlert from "../components/BaseAlert";
 import BaseCheckbox from "../components/BaseCheckbox";
 import BaseButton from "../components/BaseButton";
 import Card from "../components/Card";
@@ -11,5 +12,6 @@ export default {
     Vue.component(BaseCheckbox.name, BaseCheckbox);
     Vue.component(Card.name, Card);
     Vue.component(Icon.name, Icon);
+    Vue.component(BaseAlert.name, BaseAlert );
   }
 };

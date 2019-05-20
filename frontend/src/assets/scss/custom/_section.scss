@@ -287,6 +287,10 @@
         }
 
         // shape color variations
+        &.shpae-success {
+            background-color : dakren("success"); 
+        }
+
         &.shape-primary {
             background: linear-gradient(150deg, shapes-primary-color("step-1-gradient-bg") 15%, shapes-primary-color("step-2-gradient-bg") 70%, shapes-primary-color("step-3-gradient-bg") 94%);
         }

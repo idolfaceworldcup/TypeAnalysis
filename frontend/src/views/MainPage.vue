@@ -11,13 +11,20 @@
             ease="Expo.easeInOut"
             ref="slideshow">
       </vue-displacement-slideshow>
+      
+      <base-button block type="secondary" >
+        <router-link to="/TypeAnalsis" >테스트 시작하기</router-link>
+      </base-button>
+      
+      
     </div>
+    
   </section>
 </template>
 
 <script>
-import VueDisplacementSlideshow from "../vue-displacement-slideshow";
-
+import VueDisplacementSlideshow from "vue-displacement-slideshow";
+import VueTinySlider from 'vue-tiny-slider';
   export default {
     name: 'mainpage',
     data() {
@@ -26,10 +33,18 @@ import VueDisplacementSlideshow from "../vue-displacement-slideshow";
       }
     },
     components: {
-      VueDisplacementSlideshow,
+      'vue-displacement-slideshow' : VueDisplacementSlideshow,
+      'tiny-slider' : VueTinySlider
     },
     computed: {
-
+      images() {
+        return [
+          require("../../public/img/images/나탈리도메르.jpg"),
+          require("../../public/img/images/니콜키드먼.jpg"),
+          require("../../public/img/images/드류베이모어.jpg"),
+          require("../../public/img/images/메간폭스.jpg")
+        ];
+      }
     },
     methods: {
       init() {
