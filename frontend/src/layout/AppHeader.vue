@@ -15,6 +15,8 @@
                     <router-link to="/" class="dropdown-item">Main</router-link>
                     <router-link to="/login" class="dropdown-item">Login</router-link>
                     <router-link to="/register" class="dropdown-item">Register</router-link>
+                    <router-link to="/Modify" class="dropdown-item">Modify</router-link>
+                    <router-link to="/TypeAnalysis" class="dropdown-item">TypeAnalysis</router-link>
                 </base-dropdown>
                 </ul>
 

@@ -49,6 +49,14 @@
 </template>
 <script>
 export default {
+    created () {
+    this.$http.get('https://localhost:3000/api/manager/test')
+    .then((response) => {
+      this.users= response.data;
+      console.log(response.data);
+    })
+        
+    },
     data : function() {
         return {
             user :{
@@ -59,16 +67,17 @@ export default {
         }
     },
     methods : {
-        signUp: function(event){
-            this.$http.post('',{
+        signup: function(event){
+            this.$http.get('/api/manager/test',{
             user: this.user
             })
             .then((response) => {
+                alert(response.data)
                 if(response.data.result === 0 ){
                     alert('Error, Please, try again')
                 }
                 if(response.data.result === 1){
-                    alert('Success')
+                    alert(response.data)
                 }
             })
             .catch(function (error) {

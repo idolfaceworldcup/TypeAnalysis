@@ -1,30 +1,29 @@
 <template>
   <section class="section section-shaped section-lg my-0">
+    
     <div class="container pt-lg-md"> 
       <h1>{{ msg }}</h1>
-      <vue-displacement-slideshow
-            :images="images"
-            displacement=""
-            :intensity="0.2"
-            :speedIn="1.4"
-            :speedOut="1.4"
-            ease="Expo.easeInOut"
-            ref="slideshow">
-      </vue-displacement-slideshow>
-      
+      <div class="section section-shaped section-lg"> 
+        <vue-displacement-slideshow
+              :images="images"
+              displacement=""
+              :intensity="0.2"
+              :speedIn="1.4"
+              :speedOut="1.4"
+              ease="Expo.easeInOut"
+              ref="slideshow">
+        </vue-displacement-slideshow>
+      </div>
       <base-button block type="secondary" >
         <router-link to="/TypeAnalsis" >테스트 시작하기</router-link>
       </base-button>
-      
-      
     </div>
-    
   </section>
 </template>
 
 <script>
 import VueDisplacementSlideshow from "vue-displacement-slideshow";
-import VueTinySlider from 'vue-tiny-slider';
+
   export default {
     name: 'mainpage',
     data() {
@@ -33,8 +32,7 @@ import VueTinySlider from 'vue-tiny-slider';
       }
     },
     components: {
-      'vue-displacement-slideshow' : VueDisplacementSlideshow,
-      'tiny-slider' : VueTinySlider
+      'vue-displacement-slideshow' : VueDisplacementSlideshow
     },
     computed: {
       images() {

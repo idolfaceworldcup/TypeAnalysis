@@ -6,13 +6,15 @@ import MainPage from "./views/MainPage.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Modify from "./views/Modify";
-import TypeAnalsis from "./views/TypeAnalsis";
+import TypeAnalysis from "./views/TypeAnalysis";
 
 
 Vue.use(Router);
 
 export default new Router({
   linkExactActiveClass: "active",
+  mode: 'history',
+
   routes: [
     {
       path: "/",
@@ -51,11 +53,11 @@ export default new Router({
       }
     },
     {
-      path: "/typeanalsis",
-      name: "typeanalsis",
+      path: "/typeanalysis",
+      name: "typeanalysis",
       components: {
         header: AppHeader,
-        default: TypeAnalsis,
+        default: TypeAnalysis,
         footer: AppFooter
       }
     }
