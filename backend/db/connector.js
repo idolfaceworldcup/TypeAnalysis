@@ -1,8 +1,8 @@
 var connector = {
     host:'localhost',
-    user:'test',
-    password:'test123',
-    database:'mytypeanalysis'
+    user:'test2',
+    password:'testlocal123',
+    database:'test'
 }
 
 module.exports = connector;
