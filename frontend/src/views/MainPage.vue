@@ -38,7 +38,6 @@ import VueDisplacementSlideshow from "vue-displacement-slideshow";
       images() {
         return [
           require("../../public/img/images/나탈리도메르.jpg"),
-          require("../../public/img/images/니콜키드먼.jpg"),
           require("../../public/img/images/드류베이모어.jpg"),
           require("../../public/img/images/메간폭스.jpg")
         ];

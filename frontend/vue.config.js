@@ -7,8 +7,8 @@ module.exports = {
         }
     },
     performance: {
-      maxAssetSize: 1000000,
-      maxEntrypointSize: 4000000
+      maxAssetSize: 100000000,
+      maxEntrypointSize: 400000000
     }
   },
   publicPath: '/',
