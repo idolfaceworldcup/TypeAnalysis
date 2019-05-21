@@ -5,8 +5,9 @@ exports.myTest = async (req, res, next) => {
         const conn = await pool.getConnection()
         let managers = await conn.query('select * from manager')
         await conn.release()
-    
-        res.send(managers)
+        let manager = require('../model/manager')(managers[0])
+        console.log(manager)
+        res.send(manager)
     } catch(err) {
         return 'error'
     }

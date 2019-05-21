@@ -48,15 +48,8 @@
     </section>
 </template>
 <script>
+import axios from 'axios'
 export default {
-    created () {
-    this.$http.get('https://localhost:3000/api/manager/test')
-    .then((response) => {
-      this.users= response.data;
-      console.log(response.data);
-    })
-        
-    },
     data : function() {
         return {
             user :{
@@ -66,9 +59,25 @@ export default {
             }
         }
     },
+
+    created () {
+        this.$http.get('http://localhost:3000/api/manager/test')
+            .then((response) => {
+                alert(response.data.loginId)
+                alert('hi')
+            })
+    },
+
+    mounted () {
+         axios.get('http://localhost:3000/api/manager/test')
+        .then((result) => {
+            alert(result.data.loginId)
+            alert('bye')
+        })
+    },
     methods : {
         signup: function(event){
-            this.$http.get('/api/manager/test',{
+            this.$http.get('http://localhost:3000/api/manager/test',{
             user: this.user
             })
             .then((response) => {
