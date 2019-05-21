@@ -15,7 +15,7 @@ exports.findByAttributeIdAndImageId = async (imageId, attributeId) => {
 exports.findByImageId = async (imageId) => {
     try {
         const conn = await pool.getConnection()
-        let result = await conn.query('select * from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where v.imageId = ?', [imageId])
+        let result = await conn.query('select *, a.name attributeName from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where v.imageId = ?', [imageId])
         await conn.release()
         
         return result
@@ -27,7 +27,7 @@ exports.findByImageId = async (imageId) => {
 exports.findByAttributeIdAndValue = async (attributeId, value) => {
     try {
         const conn = await pool.getConnection()
-        let result = await conn.query('select * from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where v.attributeId = ? and v.value = ?', [attributeId, value])
+        let result = await conn.query('select *, a.name attributeName from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where v.attributeId = ? and v.value = ?', [attributeId, value])
         await conn.release()
         
         return result
@@ -39,7 +39,7 @@ exports.findByAttributeIdAndValue = async (attributeId, value) => {
 exports.findByCondition = async (query, condition) => {
     try {
         const conn = await pool.getConnection()
-        let result = await conn.query('select *, count(*) count from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where ' + query + ' group by v.imageId order by count', condition)
+        let result = await conn.query('select *, a.name attributeName, count(*) count from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where ' + query + ' group by v.imageId order by count', condition)
         await conn.release()
         
         return result
@@ -51,7 +51,7 @@ exports.findByCondition = async (query, condition) => {
 exports.findByConditionWithResult = async (query, condition) => {
     try {
         const conn = await pool.getConnection()
-        let result = await conn.query('select *, count(*) count from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id left join result r on i.id = r.imageId where ' + query + ' group by v.imageId order by count', condition)
+        let result = await conn.query('select r.*, i.path, a.name, v.value, v.imageId valueImageId, v.attributeId, count(*), count from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id left join result r on i.id = r.imageId where ' + query + ' group by v.imageId order by count', condition)
         await conn.release()
         
         return result

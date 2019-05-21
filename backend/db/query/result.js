@@ -1,5 +1,17 @@
 const pool = require('../pool')
 
+exports.findByAccountId = async (accountId) => {
+    try {
+        const conn = await pool.getConnection()
+        let result = await conn.query('select * from result r left join image i on r.imageId = i.id where accountId = ?', [accountId])
+        await conn.release()
+        
+        return result
+    } catch(err) {
+        return '500'
+    }
+}
+
 exports.insert = async (content, imageId, analysisId, accountId) => {
     try {
         const conn = await pool.getConnection()

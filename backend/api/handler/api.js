@@ -5,6 +5,6 @@ const managerAPI = require('../manager')
 const errorAPI = require('../error')
 
 router.use('/manager', managerAPI)
-router.use('/error', managerAPI)
+router.use('/error', errorAPI)
 
 module.exports = router;
