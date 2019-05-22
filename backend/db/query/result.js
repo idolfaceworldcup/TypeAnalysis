@@ -1,10 +1,18 @@
 const pool = require('../pool')
 
-exports.findByAccountId = async (accountId) => {
+exports.findByAccountId = async (conn, accountId) => {
     try {
-        const conn = await pool.getConnection()
         let result = await conn.query('select * from result r left join image i on r.imageId = i.id where accountId = ?', [accountId])
-        await conn.release()
+
+        return result
+    } catch(err) {
+        return '500'
+    }
+}
+
+exports.insert = async (conn, content, imageId, analysisId, accountId) => {
+    try {
+        let result = await conn.query('insert into result(content, date, analysisId, imageId, accountId) values(?, now(), ?, ?, ?)', [content, analysisId, imageId, accountId])
         
         return result
     } catch(err) {
@@ -12,21 +20,11 @@ exports.findByAccountId = async (accountId) => {
     }
 }
 
-exports.insert = async (content, imageId, analysisId, accountId) => {
+exports.delete = async (conn, imageId) => {
     try {
-        const conn = await pool.getConnection()
-        await conn.query('insert into result(content, date, analysisId, imageId, accountId) values(?, now(), ?, ?, ?)', [content, analysisId, imageId, accountId])
-        await conn.release()
-    } catch(err) {
-        return '500'
-    }
-}
+        let result = await conn.query('delete from result where imageId = ?', [imageId])
 
-exports.delete = async (imageId) => {
-    try {
-        const conn = await pool.getConnection()
-        await conn.query('delete from result where imageId = ?', [imageId])
-        await conn.release()
+        return result
     } catch(err) {
         return '500'
     }

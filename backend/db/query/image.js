@@ -1,10 +1,8 @@
 const pool = require('../pool')
 
-exports.findByAnalysisId = async (analysisId) => {
+exports.findByAnalysisId = async (conn, analysisId) => {
     try {
-        const conn = await pool.getConnection()
         let result = await conn.query('select * from image where analysisId = ?', [analysisId])
-        await conn.release()
         
         return result
     } catch(err) {
@@ -12,21 +10,21 @@ exports.findByAnalysisId = async (analysisId) => {
     }
 }
 
-exports.insert = async (path, analysisId) => {
+exports.insert = async (conn, path, analysisId) => {
     try {
-        const conn = await pool.getConnection()
-        await conn.query('insert into image(path, analysisId) values(?, ?)', [path, analysisId])
-        await conn.release()
+        let result = await conn.query('insert into image(path, analysisId) values(?, ?)', [path, analysisId])
+
+        return result
     } catch(err) {
         return '500'
     }
 }
 
-exports.delete = async (id) => {
+exports.delete = async (conn, id) => {
     try {
-        const conn = await pool.getConnection()
-        await conn.query('delete from image where id = ?', [id])
-        await conn.release()
+        let result = await conn.query('delete from image where id = ?', [id])
+
+        return result
     } catch(err) {
         return '500'
     }

@@ -1,42 +1,50 @@
 const pool = require('../pool')
 
-exports.findByLoginIdAndPassword = async (loginId, password) => {
+exports.findAll = async (conn) => {
     try {
-        const conn = await pool.getConnection()
-        let result = await conn.query('select * from manager where loginId = ? and password = ?', [loginId, password])
-        await conn.release()
-        
+        let result = await conn.query('select * from manager')
+
         return result
     } catch(err) {
         return '500'
     }
 }
 
-exports.insert = async (loginId, password) => {
+exports.findByLoginIdAndPassword = async (conn, loginId, password) => {
     try {
-        const conn = await pool.getConnection()
-        await conn.query('insert into manager(loginId, password) values(?, ?)', [loginId, password])
-        await conn.release()
+        let result = await conn.query('select * from manager where loginId = ? and password = ?', [loginId, password])
+
+        return result
     } catch(err) {
         return '500'
     }
 }
 
-exports.update = async (password, id) => {
+exports.insert = async (conn, loginId, password) => {
     try {
-        const conn = await pool.getConnection()
-        await conn.query('update manager set password = ? where id = ?', [password, id])
-        await conn.release()
+        let result = await conn.query('insert into manager(loginId, password) values(?, ?)', [loginId, password])
+
+        return result
     } catch(err) {
         return '500'
     }
 }
 
-exports.delete = async (id) => {
+exports.update = async (conn, password, id) => {
     try {
-        const conn = await pool.getConnection()
-        await conn.query('delete from manager where id = ?', [id])
-        await conn.release()
+        let result = await conn.query('update manager set password = ? where id = ?', [password, id])
+
+        return result
+    } catch(err) {
+        return '500'
+    }
+}
+
+exports.delete = async (conn, id) => {
+    try {
+        let result = await conn.query('delete from manager where id = ?', [id])
+        
+        return result
     } catch(err) {
         return '500'
     }

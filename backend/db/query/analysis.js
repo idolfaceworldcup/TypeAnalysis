@@ -1,10 +1,18 @@
 const pool = require('../pool')
 
-exports.findAll = async () => {
+exports.findAll = async (conn) => {
     try {
-        const conn = await pool.getConnection()
         let result = await conn.query('select * from analysis')
-        await conn.release()
+        
+        return result
+    } catch(err) {
+        return '500'
+    }
+}
+
+exports.findById = async (conn, id) => {
+    try {
+        let result = await conn.query('select * from analysis where id = ?', [id])
         
         return result
     } catch(err) {

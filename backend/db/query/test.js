@@ -1,10 +1,8 @@
 const pool = require('../pool')
 
-exports.findAll = async () => {
+exports.findAll = async (conn) => {
     try {
-        const conn = await pool.getConnection()
         let result = await conn.query('select * from test')
-        await conn.release()
  
         return result
     } catch(err) {
@@ -12,11 +10,9 @@ exports.findAll = async () => {
     }
 }
 
-exports.insert = async (path) => {
+exports.insert = async (conn, path) => {
     try {
-        const conn = await pool.getConnection()
-        await conn.query('insert into test(test) values(?)', [path])
-        await conn.release()
+        let result = await conn.query('insert into test(test) values(?)', [path])
 
         return result
     } catch(err) {

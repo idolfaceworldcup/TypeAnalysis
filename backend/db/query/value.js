@@ -1,10 +1,8 @@
 const pool = require('../pool')
 
-exports.findByAttributeIdAndImageId = async (imageId, attributeId) => {
+exports.findByAttributeIdAndImageId = async (conn, imageId, attributeId) => {
     try {
-        const conn = await pool.getConnection()
         let result = await conn.query('select * from value where imageId = ? and attributeId = ?', [imageId, attributeId])
-        await conn.release()
         
         return result
     } catch(err) {
@@ -12,35 +10,29 @@ exports.findByAttributeIdAndImageId = async (imageId, attributeId) => {
     }
 }
 
-exports.findByImageId = async (imageId) => {
+exports.findByImageId = async (conn, imageId) => {
     try {
-        const conn = await pool.getConnection()
         let result = await conn.query('select *, a.name attributeName from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where v.imageId = ?', [imageId])
-        await conn.release()
-        
+
         return result
     } catch(err) {
         return '500'
     }
 }
 
-exports.findByAttributeIdAndValue = async (attributeId, value) => {
+exports.findByAttributeIdAndValue = async (conn, attributeId, value) => {
     try {
-        const conn = await pool.getConnection()
         let result = await conn.query('select *, a.name attributeName from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where v.attributeId = ? and v.value = ?', [attributeId, value])
-        await conn.release()
-        
+
         return result
     } catch(err) {
         return '500'
     }
 }
 
-exports.findByCondition = async (query, condition) => {
+exports.findByCondition = async (conn, query, condition) => {
     try {
-        const conn = await pool.getConnection()
         let result = await conn.query('select *, a.name attributeName, count(*) count from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where ' + query + ' group by v.imageId order by count', condition)
-        await conn.release()
         
         return result
     } catch(err) {
@@ -48,43 +40,41 @@ exports.findByCondition = async (query, condition) => {
     }
 }
 
-exports.findByConditionWithResult = async (query, condition) => {
+exports.findByConditionWithResult = async (conn, query, condition) => {
     try {
-        const conn = await pool.getConnection()
         let result = await conn.query('select r.*, i.path, a.name, v.value, v.imageId valueImageId, v.attributeId, count(*), count from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id left join result r on i.id = r.imageId where ' + query + ' group by v.imageId order by count', condition)
-        await conn.release()
-        
+
         return result
     } catch(err) {
         return '500'
     }
 }
 
-exports.insert = async (value, imageId, attributeId) => {
+exports.insert = async (conn, value, imageId, attributeId) => {
     try {
-        const conn = await pool.getConnection()
-        await conn.query('insert into value(value, imageId, attributeId) values(?, ?, ?)', [value, imageId, attributeId])
-        await conn.release()
+        let result = await conn.query('insert into value(value, imageId, attributeId) values(?, ?, ?)', [value, imageId, attributeId])
+    
+        return result
     } catch(err) {
         return '500'
     }
 }
 
-exports.update = async (value, id) => {
+exports.update = async (conn, value, id) => {
     try {
-        const conn = await pool.getConnection()
-        await conn.query('update value set value = ? where id = ?', [value, id])
-        await conn.release()
+        let result = await conn.query('update value set value = ? where id = ?', [value, id])
+
+        return result
     } catch(err) {
         return '500'
     }
 }
 
-exports.delete = async (imageId) => {
+exports.delete = async (conn, imageId) => {
     try {
-        const conn = await pool.getConnection()
-        await conn.query('delete from value where imageId = ?', [imageId])
-        await conn.release()
+        let result = await conn.query('delete from value where imageId = ?', [imageId])
+
+        return result
     } catch(err) {
         return '500'
     }
