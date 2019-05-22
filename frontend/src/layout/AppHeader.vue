@@ -1,23 +1,24 @@
 <template>
     <header class="header-global">
-        <div style="position: relative">
-            <base-nav class="navbar-main" type="success" effect="light" expand>
+        
+            <base-nav class="navbar-main" transparent type="" effect="light" expand>
                 <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
                     <img src="img/brand/logo.png" alt="logo">
                 </router-link>
                 <a class="navbar-brand" href="#"></a>
+
                 <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-                <base-dropdown tag="li" class="nav-item">
-                    <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
-                        <i class="ni ni-collection d-lg-none"></i>
-                        <span class="nav-link-inner--text">MENU</span>
-                    </a>
-                    <router-link to="/" class="dropdown-item">Main</router-link>
-                    <router-link to="/login" class="dropdown-item">Login</router-link>
-                    <router-link to="/register" class="dropdown-item">Register</router-link>
-                    <router-link to="/Modify" class="dropdown-item">Modify</router-link>
-                    <router-link to="/TypeAnalysis" class="dropdown-item">TypeAnalysis</router-link>
-                </base-dropdown>
+                    <base-dropdown tag="li" class="nav-item">
+                        <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
+                            <i class="ni ni-collection d-lg-none"></i>
+                            <span class="nav-link-inner--text">MENU</span>
+                        </a>
+                        <router-link to="/" class="dropdown-item">Main</router-link>
+                        <router-link to="/login" class="dropdown-item">Login</router-link>
+                        <router-link to="/register" class="dropdown-item">Register</router-link>
+                        <router-link to="/modify" class="dropdown-item">Modify</router-link>
+                        <router-link to="/typeanalysis" class="dropdown-item">TypeAnalysis</router-link>
+                    </base-dropdown>
                 </ul>
 
                 <div class="row" slot="content-header" slot-scope="{closeMenu}">
@@ -51,7 +52,7 @@
                     </base-dropdown>
                 </ul>
             </base-nav>
-        </div>
+        
     </header>
 </template>
 <script>

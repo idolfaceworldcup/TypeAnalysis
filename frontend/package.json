@@ -28,13 +28,11 @@
     "register-service-worker": "^1.5.2",
     "three": "^0.98.0",
     "vue": "^2.6.6",
-    "vue-displacement-slideshow": "^1.1.0",
+    "vue-agile": "^1.0.8",
     "vue-flatpickr-component": "^8.1.1",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.2",
-    "vue-tiny-slider": "^0.1.35",
     "vue2-transitions": "^0.2.3",
-    "vueperslides": "^1.17.4",
     "vuetify": "^1.5.14"
   },
   "devDependencies": {

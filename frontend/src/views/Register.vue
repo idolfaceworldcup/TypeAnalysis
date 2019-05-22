@@ -60,24 +60,10 @@ export default {
         }
     },
 
-    created () {
-        this.$http.get('http://localhost:3000/api/manager/test')
-            .then((response) => {
-                alert(response.data.loginId)
-                alert('hi')
-            })
-    },
-
-    mounted () {
-         axios.get('http://localhost:3000/api/manager/test')
-        .then((result) => {
-            alert(result.data.loginId)
-            alert('bye')
-        })
-    },
     methods : {
         signup: function(event){
-            this.$http.get('http://localhost:3000/api/manager/test',{
+            alert('bye')
+            axios.get('http://localhost:3000/api/manager/test',{
             user: this.user
             })
             .then((response) => {

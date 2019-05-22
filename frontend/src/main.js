@@ -7,6 +7,7 @@ import './registerServiceWorker'
 
 Vue.config.productionTip = false;
 Vue.use(Argon);
+
 Vue.prototype.$http = axios;
 
 new Vue({

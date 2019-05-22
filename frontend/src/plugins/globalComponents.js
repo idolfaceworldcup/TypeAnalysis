@@ -4,7 +4,7 @@ import BaseCheckbox from "../components/BaseCheckbox";
 import BaseButton from "../components/BaseButton";
 import Card from "../components/Card";
 import Icon from "../components/Icon";
-import Modal from "../components/Modal";
+
 export default {
   install(Vue) {
     Vue.component(BaseButton.name, BaseButton);
@@ -13,6 +13,5 @@ export default {
     Vue.component(Card.name, Card);
     Vue.component(Icon.name, Icon);
     Vue.component(BaseAlert.name, BaseAlert );
-    Vue.component(Modal.name, Modal);
   }
 };

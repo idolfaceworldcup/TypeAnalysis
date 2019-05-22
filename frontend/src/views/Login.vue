@@ -18,13 +18,14 @@
                           body-classes="px-lg-5 py-lg-5"
                           class="border-0">
                         <template>
+                            <div id ="login">
                             <form role="form">
-                                <base-input alternative
+                                <base-input v-model="user.id"
                                             class="mb-3"
                                             placeholder="Email"
                                             addon-left-icon="ni ni-email-83">
                                 </base-input>
-                                <base-input alternative
+                                <base-input v-model="user.password"
                                             type="password"
                                             placeholder="Password"
                                             addon-left-icon="ni ni-lock-circle-open">
@@ -33,9 +34,11 @@
                                     Remember me
                                 </base-checkbox>
                                 <div class="text-center">
-                                    <base-button type="primary" class="my-4">Sign In</base-button>
+                                    <base-button type="primary" v-on:click="login" class="my-4">LOGIN</base-button>
                                 </div>
                             </form>
+                            </div>
+
                         </template>
                     </card>
                     <div class="row mt-3">
@@ -57,7 +60,32 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-    name : "login"
+    data: function() {
+        return {
+            user : {
+                id:'',
+                password:''
+            }
+        }
+    },
+    
+    methods: {
+        login: function(event) {
+            axios.get('http://localhost:3000/api/account', {
+                id : this.id,
+                password: this.password 
+            }).then((response) => {
+                alert('success login')
+            },
+            (error) => {
+                alert(error.resopnse.data.error)
+            }).catch(error => {
+                alert(error)
+            })
+        }
+    }
 };
 </script>
