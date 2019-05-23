@@ -59,6 +59,16 @@ export default {
             }
         }
     },
+    mounted () {
+         axios.get('http://localhost:3000/api/manager/test')
+            .then((response) => {
+                alert(response.data)
+                alert(response.data.id)
+            })
+            .catch(function (error) {
+                alert('error')
+            })
+    },
 
     methods : {
         signup: function(event){

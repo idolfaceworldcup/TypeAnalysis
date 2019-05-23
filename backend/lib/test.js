@@ -1,14 +1,16 @@
 const pool = require('../db/pool')
-const query = require('../db/qeury/manager')
+const query = require('../db/query/manager')
 
-exports.myTest = async (req, res, next) => {
+exports.myTest = async () => {
     try {
         const conn = await pool.getConnection()
         let managers = await query.findAll(conn)
         await conn.release()
         let manager = require('../model/manager')(managers[0])
+        
         console.log(manager)
-        res.send(manager)
+
+        return manager
     } catch(err) {
         return 'error'
     }

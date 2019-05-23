@@ -3,7 +3,7 @@ const router = express.Router();
 const analysis = require('../lib/analysis')
 
 router.get('/analysises', (req, res, next) => {
-    analysis.getAnalysis(req, res, next)
+    res.send(analysis.getAnalysis())
 })
 
 module.exports = router;
