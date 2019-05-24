@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 //define API and use API
 const managerAPI = require('../manager')
-const accountAPI = require('../error')
-const analysisAPI = require('../error')
-const imageAPI = require('../error')
+const accountAPI = require('../account')
+const analysisAPI = require('../analysis')
+const imageAPI = require('../image')
 const errorAPI = require('../error')
 
 router.use('/manager', managerAPI)
