@@ -1,12 +1,10 @@
-const pool = require('../pool')
-
 exports.findByAnalysisId = async (conn, analysisId) => {
     try {
         let result = await conn.query('select * from image where analysisId = ?', [analysisId])
         
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -16,7 +14,7 @@ exports.findByAnalysisIdAndIds = async (conn, analysisId, id1, id2) => {
         
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -26,7 +24,7 @@ exports.insert = async (conn, path, analysisId) => {
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -36,6 +34,6 @@ exports.delete = async (conn, id) => {
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }

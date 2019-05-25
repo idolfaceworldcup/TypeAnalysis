@@ -5,11 +5,15 @@ const attribute = require('./attribute')
 const pool = require('../db/pool')
 
 exports.getAnalysis = async () => {
-    let conn = await pool.getConnection()
-    let result = await analysis.findAll()
-    await conn.release()
+    try {
+        let conn = await pool.getConnection()
+        let result = await analysis.findAll()
+        await conn.release()
 
-    return result
+        return result
+    } catch (err) {
+        return 500
+    }
 }
 
 // exports.getTwoImage = async (analysisId, id1, id2) => {

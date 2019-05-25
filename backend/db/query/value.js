@@ -1,12 +1,10 @@
-const pool = require('../pool')
-
 exports.findByAttributeIdAndImageId = async (conn, imageId, attributeId) => {
     try {
         let result = await conn.query('select * from value where imageId = ? and attributeId = ?', [imageId, attributeId])
         
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -16,7 +14,7 @@ exports.findByImageId = async (conn, imageId) => {
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -26,7 +24,7 @@ exports.findByAttributeIdAndValue = async (conn, attributeId, value) => {
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -36,7 +34,7 @@ exports.findByCondition = async (conn, query, condition) => {
         
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -46,7 +44,7 @@ exports.findByConditionWithResult = async (conn, query, condition) => {
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -56,7 +54,7 @@ exports.insert = async (conn, value, imageId, attributeId) => {
     
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -66,16 +64,26 @@ exports.update = async (conn, value, id) => {
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
-exports.delete = async (conn, imageId) => {
+exports.deleteByImageId = async (conn, imageId) => {
     try {
         let result = await conn.query('delete from value where imageId = ?', [imageId])
 
         return result
     } catch(err) {
-        return '500'
+        return 500
+    }
+}
+
+exports.deleteByAttributeId = async (conn, attributeId) => {
+    try {
+        let result = await conn.query('delete from value where attributeId = ?', [attributeId])
+
+        return result
+    } catch(err) {
+        return 500
     }
 }

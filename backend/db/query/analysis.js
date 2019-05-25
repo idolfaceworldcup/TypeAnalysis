@@ -1,12 +1,10 @@
-const pool = require('../pool')
-
 exports.findAll = async (conn) => {
     try {
         let result = await conn.query('select * from analysis')
         
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -16,6 +14,6 @@ exports.findById = async (conn, id) => {
         
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }

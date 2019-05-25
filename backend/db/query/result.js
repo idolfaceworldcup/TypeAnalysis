@@ -1,12 +1,10 @@
-const pool = require('../pool')
-
 exports.findByAccountId = async (conn, accountId) => {
     try {
         let result = await conn.query('select * from result r left join image i on r.imageId = i.id where accountId = ?', [accountId])
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -16,7 +14,7 @@ exports.insert = async (conn, content, imageId, analysisId, accountId) => {
         
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -26,6 +24,6 @@ exports.delete = async (conn, imageId) => {
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }

@@ -1,12 +1,10 @@
-const pool = require('../pool')
-
 exports.findAll = async (conn) => {
     try {
         let result = await conn.query('select * from manager')
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -16,7 +14,7 @@ exports.findByLoginIdAndPassword = async (conn, loginId, password) => {
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -26,7 +24,7 @@ exports.insert = async (conn, loginId, password) => {
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -36,7 +34,7 @@ exports.update = async (conn, password, id) => {
 
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
 
@@ -46,6 +44,6 @@ exports.delete = async (conn, id) => {
         
         return result
     } catch(err) {
-        return '500'
+        return 500
     }
 }
