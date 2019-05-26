@@ -13,6 +13,31 @@ exports.login = async (loginId, password) => {
     }
 }
 
+exports.getAccount = async (id) => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await account.findById(conn, id)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
+exports.createAccount = async (loginId, password) => {
+    try {
+        let conn = await pool.getConnection()
+        await account.insert(conn, loginId, password)
+        await conn.release()
+
+        return 300
+    }
+    catch (err) {
+        return 500
+    }
+}
+
 exports.update = async (password, id) => {
     try {
         let conn = await pool.getConnection()

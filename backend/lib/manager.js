@@ -13,6 +13,18 @@ exports.login = async (loginId, password) => {
     }
 }
 
+exports.getManager = async (id) => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await manager.findById(conn, id)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
 exports.update = async (password, id) => {
     try {
         let conn = await pool.getConnection()

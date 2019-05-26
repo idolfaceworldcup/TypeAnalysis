@@ -8,6 +8,16 @@ exports.findAll = async (conn) => {
     }
 }
 
+exports.findById = async (conn, id) => {
+    try {
+        let result = await conn.query('select * from manager where id = ?', [id])
+
+        return result
+    } catch(err) {
+        return 500
+    }
+}
+
 exports.findByLoginIdAndPassword = async (conn, loginId, password) => {
     try {
         let result = await conn.query('select * from manager where loginId = ? and password = ?', [loginId, password])
