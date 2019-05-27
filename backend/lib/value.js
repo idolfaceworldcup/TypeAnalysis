@@ -13,6 +13,18 @@ exports.getValue = async (imageId) => {
     }
 }
 
+exports.getKindOfValue = async (analysisId) => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await value.findByKindOfValue(conn, analysisId)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
 exports.getIdealImage = async (query, condition) => {
     try {
         let conn = await pool.getConnection()
@@ -34,6 +46,7 @@ exports.getSimilarResult = async (query, condition) => {
 
         return result
     } catch (err) {
-        return '500'
+        return 500
     }
 }
+

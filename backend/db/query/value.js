@@ -18,9 +18,19 @@ exports.findByImageId = async (conn, imageId) => {
     }
 }
 
-exports.findByAttributeIdAndValue = async (conn, attributeId, value) => {
+exports.findByImageId = async (conn, attributeId, value) => {
     try {
-        let result = await conn.query('select *, a.name attributeName from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where v.attributeId = ? and v.value = ?', [attributeId, value])
+        let result = await conn.query('select *, a.name attributeName from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where a.id = ? and v.value = ?', [attributeId, value])
+
+        return result
+    } catch(err) {
+        return 500
+    }
+}
+
+exports.findByKindOfValue = async (conn, analysisId) => {
+    try {
+        let result = await conn.query('select * from value v left join attribute a on v.attributeId = a.id where a.analysisId = ? group by value;', [analysisId])
 
         return result
     } catch(err) {

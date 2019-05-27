@@ -15,6 +15,30 @@ exports.getImage = async (analysisId) => {
     }
 }
 
+exports.getImageByAttribute = async (attributeId, value) => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await value.findByCondition(conn, attributeId, value)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
+exports.getImageByQuery = async (query, condition) => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await value.findByCondition(conn, query, condition)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
 exports.addAttribute = async (name, analysisId) => {
     try {
         let conn = await pool.getConnection()
@@ -92,12 +116,3 @@ exports.deleteImage = async (imageId) => {
 
     return 300
 }
-
-
-// exports.getTwoImage = async (analysisId, id1, id2) => {
-//     let conn = await pool.getConnection()
-//     let result = await image.findByAnalysisIdAndIds(conn, analysisId, id1, id2)
-//     await conn.release()
-
-//     return result
-// }
