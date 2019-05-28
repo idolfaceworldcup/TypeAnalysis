@@ -32,5 +32,5 @@ exports.deleteAttribute = async (attributeId) => {
         return 500
     }
 
-    return 300
+    return 200
 }

@@ -1,23 +1,23 @@
 (async function () {
-    const pool = require('./db/pool')
-    const conn = await pool.getConnection()
-    let result = await conn.query('select * from attribute where analysisId = 1')
-    await conn.release()
+    const attribute = require('./lib/attribute')
+    const value = require('./lib/value')
+    let attributes = await attribute.getAttribute(2)
+    let values = await value.getKindOfValue(2)
 
-    let map1 = new Map()
-
-    for(let i = 0; i < result.length; ++i) 
-    {
-        let map2 = new Map()
-        map2.set('값1')
-        map2.set('값2')
-        map1.set(result[i].name, map2)
+    let arr = {}
+    for(let a of attributes) {
+        let valArr = {}
+        for(let v of values) {
+            if(v.attributeId === a.id) {
+                valArr[v.value] = 0
+                arr[a.id] =  valArr
+            }
+        }
     }
-    console.log(map1);
 
-    map1.get('스타일').set('값1', 3)
-    console.log(map1)
-    map1.get('스타일').set('값1', 5)
-    console.log(map1)
-    
+    let t = attributes[0].id
+
+    console.log(arr)
+    console.log(++arr[t]['장발'])
+    console.log(arr[t]['장발'])
 }) ()

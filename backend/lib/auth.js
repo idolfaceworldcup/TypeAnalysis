@@ -3,20 +3,18 @@ const account = require('./account')
 exports.logout = async (req, res, next) => {
     req.logout()
     req.session.save(function(){
-        return 300
+        return 200
     })
 }
 
 exports.regist = async (req, res, next) => {
-    if(req.user) {
-        return false
-    }
-
+    
     try {
-        let result = await account.createAccount(loginId, password)
-        
-        return result
+        let result = await account.createAccount(req.body.account.loginId, req.body.account.password)
+        console.log(result)
+        return 200
     } catch(err) {
+        console.log('err')
         return 500
     }
 }

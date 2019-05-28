@@ -31,7 +31,7 @@ exports.update = async (password, id) => {
         await manager.update(conn, password, id)
         await conn.release()
 
-        return 300
+        return 200
     }
     catch (err) {
         return 500
@@ -44,7 +44,7 @@ exports.delete = async (id) => {
         await manager.delete(conn, id)
         await conn.release()
 
-        return 300
+        return 200
     }
     catch (err) {
         return 500

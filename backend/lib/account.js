@@ -31,7 +31,7 @@ exports.createAccount = async (loginId, password) => {
         await account.insert(conn, loginId, password)
         await conn.release()
 
-        return 300
+        return 200
     }
     catch (err) {
         return 500
@@ -44,7 +44,7 @@ exports.update = async (password, id) => {
         await account.update(conn, password, id)
         await conn.release()
 
-        return 300
+        return 200
     }
     catch (err) {
         return 500
@@ -57,7 +57,7 @@ exports.delete = async (id) => {
         await account.delete(conn, id)
         await conn.release()
 
-        return 300
+        return 200
     }
     catch (err) {
         return 500

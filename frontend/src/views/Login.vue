@@ -30,11 +30,8 @@
                                             placeholder="Password"
                                             addon-left-icon="ni ni-lock-circle-open">
                                 </base-input>
-                                <base-checkbox>
-                                    Remember me
-                                </base-checkbox>
                                 <div class="text-center">
-                                    <base-button type="primary" v-on:click="login" class="my-4">LOGIN</base-button>
+                                    <base-button type="primary" class="my-4" v-on:click="login">LOGIN</base-button>
                                 </div>
                             </form>
                             </div>
@@ -67,24 +64,18 @@ export default {
         return {
             account : {
                 loginId:'',
-                password:''
+                password:'',
             }
         }
     },
     
     methods: {
         login: function(event) {
-            
-            axios.get('http://localhost:3000/api/manager/test', {
-                account : this.account
-            }).then((response) => {
+            axios.post('http://localhost:3000/api/login/account', this.account).then((response) => {
                 alert('success login')
                 this.$router.push({
                     name : "mainpage"
                 })
-            },
-            (error) => {
-                alert(error.resopnse.data.error)
             }).catch(error => {
                 alert(error)
                 alert(response.data)

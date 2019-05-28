@@ -7,7 +7,7 @@ exports.createResult = async (content, imageId, analysisId, accountId) => {
         await result.insert(conn, content, imageId, analysisId, accountId)
         await conn.release()
 
-        return 300
+        return 200
     } catch (err) {
         return 500
     }

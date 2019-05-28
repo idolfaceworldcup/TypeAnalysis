@@ -1,26 +1,61 @@
-module.exports = (passport) => {
+module.exports = (app) => {
+    const passport = require('passport')
     const LocalStrategy = require('passport-local').Strategy
     const account = require('./account')
 
+    app.use(passport.initialize())
+    app.use(passport.session())
+
     passport.serializeUser((user, done) => {
-        done(null, user.id)
+        done(null, user)
     })
-    passport.deserializeUser(async (id, done) => {
+    passport.deserializeUser(async (user, done) => {
         try {
-            let result = await account.getAccount(id)
-            done(null, result)
+            let result
+            if(user.authority === undefined) {
+                result = await account.getAccount(user.id)
+                done(null, result)
+            }
+            else {
+                
+                result = await account.getAccount(user.id)
+                done(null, result)
+            }
         } catch(err) {
             return done(null, false, { message : 'DB ERROR'})
         }
     })
 
-    passport.use(new LocalStrategy(
+    passport.use('user', new LocalStrategy(
         {
-            usernameField : 'loginId'
+            usernameField : 'loginId',
+            passwordField : 'password'
         },
-        async (username, password, done) => {
+        async (loginId, password, done) => {
             try {
-                let result = await account.login(username, password)
+                let result = await account.login(loginId, password)
+                
+                if(result[0] === undefined) return done(null, false, { message : 'Incorrect login'})
+
+
+                return done(null, result[0], {
+                    message : 'Welcome'
+                })
+            } catch(err) {
+                return done(null, false, { message: 'DB ERROR'})
+            }
+        })
+    )
+
+    
+    passport.use('manager', new LocalStrategy(
+        {
+            usernameField : 'loginId',
+            passwordField : 'password'
+        },
+        async (req, username, password, done) => {
+            try {
+                let result = await manager.login(username, password)
                 
                 if(result[0] === undefined) return done(null, false, { message : 'Incorrect login'})
 
@@ -32,5 +67,9 @@ module.exports = (passport) => {
             }
         })
     )
+
+
+    console.log('gg')
+
     return passport
 }

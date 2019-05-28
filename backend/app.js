@@ -2,16 +2,19 @@ const createError = require('http-errors')
 const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')  
 const logger = require('morgan')
-const passport = require('passport')
-
-const indexRouter = require('./routes/index')
-const apiRouter = require('./api/handler/api')(passport)
 
 const app = express()
-app.use(passport.initialize())
-app.use(passport.session())
+
+app.use(bodyParser.json())
+const sessionRouter = require('./routes/session')
+app.use(sessionRouter);
+
 app.use(require('connect-history-api-fallback')())
+
+const indexRouter = require('./routes/index')
+const apiRouter = require('./api/handler/api')(app)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))

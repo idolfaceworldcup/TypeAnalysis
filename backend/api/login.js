@@ -3,15 +3,16 @@ const router = express.Router();
 const auth = require('../lib/auth')
 const { check, validationResult } = require('express-validator/check');
 
-module.exports = (accountPassport, managerPassport) => {
-    router.post('/account', accountPassport.authenticate('local', {
+module.exports = (passport) => {
+    router.post('/account', passport.authenticate('user', {
         successRedirect : '/',
         failureRedirect : '/login',
         failureFlash : false,
         successFlash : false
     }))
 
-    router.post('/manager', managerPassport.authenticate('local', {
+
+    router.post('/manager', passport.authenticate('manager', {
         successRedirect : '/manager',
         failureRedirect : '/manager/login',
         failureFlash : false,
@@ -23,16 +24,18 @@ module.exports = (accountPassport, managerPassport) => {
     })
 
     router.post('/regist', [
-        check('loginId').isEmail().isLength( { max : 15, min : 4 } ),
-        check('password').isLength( { max : 20, min : 4 } ),
-        check('passwordValid').exists().custom((value, { req }) => value === req.body.password),
-    ], (req, res, next) => {
+        check('account.loginId').isLength( { max : 20, min : 4 } ),
+        check('account.password').isLength( { max : 20, min : 4 } ),
+        check('account.passwordValid').exists().custom((value, { req }) => value === req.body.account.password)
+    ], async (req, res, next) => {
         const error = validationResult(req);
+        console.log(req.body.account)
         if(!error.isEmpty()) {
-            return false;
+            return 500;
         }
-        res.send(auth.regist(req, res, next));
+        console.log('bye')
+        res.sendStatus(await auth.regist(req, res, next));
     })
-
+    
     return router;
 }

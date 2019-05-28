@@ -1,8 +1,13 @@
-module.exports = (passport) => {
+module.exports = (app) => {
+    const passport = require('passport')
     const LocalStrategy = require('passport-local').Strategy
     const manager = require('./manager')
 
+    app.use(passport.initialize())
+    app.use(passport.session())
+
     passport.serializeUser((user, done) => {
+        console.log('first')
         done(null, user.id)
     })
     passport.deserializeUser(async (id, done) => {
@@ -14,7 +19,7 @@ module.exports = (passport) => {
         }
     })
 
-    passport.use(new LocalStrategy(
+    passport.use('manager', new LocalStrategy(
         {
             usernameField : 'loginId'
         },

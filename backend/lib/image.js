@@ -45,7 +45,7 @@ exports.addAttribute = async (name, analysisId) => {
         await attribute.insert(conn, name, analysisId)
         await conn.release()
 
-        return 300
+        return 200
     } catch (err) {
         return 500
     }
@@ -71,7 +71,7 @@ exports.addImage = async (path, analysisId, values, attributeId) => {
         return 500
     }
 
-    return 300
+    return 200
 }
 
 exports.updateImage = async (values, valueId) => {
@@ -93,7 +93,7 @@ exports.updateImage = async (values, valueId) => {
         return 500
     }
 
-    return 300
+    return 200
 }
 
 exports.deleteImage = async (imageId) => {
@@ -114,5 +114,5 @@ exports.deleteImage = async (imageId) => {
         return 500
     }
 
-    return 300
+    return 200
 }
