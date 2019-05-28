@@ -1,5 +1,5 @@
 <template>
-    <section class="section section-shaped section-sm my-0">
+    <section class="section section-shaped section-xl my-0">
         <div class="shape shape-style-1 bg-gradient-success">
             <span></span>
             <span></span>
@@ -74,7 +74,7 @@ export default {
     
     methods: {
         login: function(event) {
-            axios.get('http://localhost:3000/api/account', {
+            axios.get('http://localhost:3000/api/manager/test', {
                 id : this.id,
                 password: this.password 
             }).then((response) => {
@@ -86,6 +86,10 @@ export default {
                 alert(error)
             })
         }
+    },
+
+    mounted() {
+        this.login()
     }
 };
 </script>

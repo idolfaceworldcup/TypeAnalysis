@@ -7,7 +7,9 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Modify from "./views/Modify";
 import TypeAnalysis from "./views/TypeAnalysis";
-
+import TypeMan from "./views/TypeMan";
+import TypeWoman from "./views/TypeWoman";
+import User from "./views/User";
 
 Vue.use(Router);
 
@@ -44,6 +46,15 @@ export default new Router({
       }
     },
     {
+      path: "/user",
+      name: "user",
+      components: {
+        header: AppHeader,
+        default: User,
+        footer: AppFooter
+      }
+    },
+    {
       path: "/modify",
       name: "modify",
       components: {
@@ -59,8 +70,41 @@ export default new Router({
         header: AppHeader,
         default: TypeAnalysis,
         footer: AppFooter
+      },
+      children : [
+        {
+          path : "typeman",
+          name : "typeman",
+          components: {
+            header: AppHeader,
+            default : TypeMan,
+            footer: AppFooter
+          }
+        },
+        {
+          path : "typewoman",
+          name : "typewoman",
+          components: {
+            header: AppHeader,
+            default : TypeWoman,
+            footer: AppFooter
+          }
+        }
+      ]
+    },
+    {
+      path: "/",
+      redirect: {
+          name : "typeman"
+      }
+    },
+    {
+      path: "/",
+      redirect: {
+          name : "typewoman"
       }
     }
+
   ],
 
   scrollBehavior: to => {

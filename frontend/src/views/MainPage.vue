@@ -1,5 +1,5 @@
 <template>
-  <section class="section section-shaped  section-lg my-0">
+  <section class="section section-shaped section-lg my-0">
     <div class="shape shape-style-1 bg-gradient-success">
       <span></span>
       <span></span>
@@ -26,10 +26,10 @@
               <img class="slide" src='../../public/img/images/미란다커.jpg'>
               <img class="slide" src='../../public/img/images/라이언_레이놀즈.jpg'>
               <template slot="prevButton">
-                <i class="fas fa-chevron-left"></i>
+                <i class="ni ni-bold-left"></i>
               </template>
               <template slot="nextButton">
-                <i class="fas fa-chevron-right"></i>
+                <i class="ni ni-bold-right"></i>
               </template>
             </agile>
           </div>
@@ -37,7 +37,7 @@
       </div>
       </section>
       <base-button block type="secondary" >
-        <router-link to="/TypeAnalsis" >테스트 시작하기</router-link>
+        <router-link to="/typeanalysis" >테스트 시작하기</router-link>
       </base-button>
     </div>
   </section>
@@ -58,7 +58,10 @@ import { VueAgile } from 'vue-agile'
   };
 
 </script>
+
+
 <style lang="sass">
+
 	.section--demo-2
 		.agile
 			&__nav-button

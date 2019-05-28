@@ -1,5 +1,5 @@
 <template>
-    <section class="section section-shaped section-sm my-0">
+    <section class="section section-shaped section-xl my-0">
         <div class="shape shape-style-1 bg-gradient-success">
             <span></span>
             <span></span>
@@ -18,7 +18,7 @@
                           body-classes="px-lg-5 py-lg-5"
                           class="border-0">
                         <template>
-                            <div id="signup">
+                            <div id="SingUp">
                                 <form role="form">
                                     <base-input v-model="user.name"
                                                 class="mb-3"
@@ -36,7 +36,7 @@
                                                 addon-left-icon="ni ni-lock-circle-open">
                                     </base-input>
                                     <div class="text-center">
-                                        <base-button type="primary" class="my-4" v-on:click="singup">Create account</base-button>
+                                        <base-button type="primary" class="my-4" v-on:click="signup">Create account</base-button>
                                     </div>
                                 </form>
                             </div>
@@ -59,22 +59,12 @@ export default {
             }
         }
     },
-    mounted () {
-         axios.get('http://localhost:3000/api/manager/test')
-            .then((response) => {
-                alert(response.data)
-                alert(response.data.id)
-            })
-            .catch(function (error) {
-                alert('error')
-            })
-    },
 
     methods : {
         signup: function(event){
             alert('bye')
             axios.get('http://localhost:3000/api/manager/test',{
-            user: this.user
+            //user: this.user
             })
             .then((response) => {
                 alert(response.data)
@@ -89,7 +79,11 @@ export default {
                 alert('error')
             })
         }
+    },
+    mounted() {
+        this.signup()
     }
+
 };
 </script>
 <style>
