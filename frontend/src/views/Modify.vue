@@ -1,5 +1,5 @@
 <template>
-        <section class="section section-shaped section-sm my-0">
+        <section class="section section-shaped section-xl my-0">
             <div class="shape shape-style-1 bg-gradient-success">
                 <span></span>
                 <span></span>
@@ -20,10 +20,10 @@
                         <template>
                             <div id = "modify">
                                 <form role="form">
-                                    <base-input v-model="email"
+                                    <base-input v-model="loginId"
                                                 class="mb-3"
-                                                placeholder="Email"
-                                                addon-left-icon="ni ni-email-83">
+                                                placeholder="loginId"
+                                                addon-left-icon="ni ni-hat-3">
                                     </base-input>
                                     <base-input v-model="password"
                                                 type="password"
@@ -53,7 +53,7 @@ export default {
     data : function() {
         return {
             user : {
-                email : '',
+                loginId : '',
                 password: '',
                 newpassword: ''
             }
@@ -61,7 +61,7 @@ export default {
     },
     methods:{
         modify: function(event){
-            this.$http.post('', {
+            axios.post('', {
                 user: this.user
             })
             .then(

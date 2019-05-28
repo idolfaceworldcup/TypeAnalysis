@@ -10,12 +10,7 @@
                     <span></span>
                     <span></span>
         </div>
-        <div class="contianer">
-            <vue-select-image :dataImages="dataImages"
-                @onselectimage="onSelectImage">
-            </vue-select-image>
- 
-        </div>
+        
     </section>
 </template>
 

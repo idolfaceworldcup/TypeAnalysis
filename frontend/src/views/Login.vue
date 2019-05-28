@@ -20,12 +20,12 @@
                         <template>
                             <div id ="login">
                             <form role="form">
-                                <base-input v-model="user.id"
+                                <base-input v-model="account.loginId"
                                             class="mb-3"
-                                            placeholder="Email"
-                                            addon-left-icon="ni ni-email-83">
+                                            placeholder="LoginID"
+                                            addon-left-icon="ni ni-hat-3">
                                 </base-input>
-                                <base-input v-model="user.password"
+                                <base-input v-model="account.password"
                                             type="password"
                                             placeholder="Password"
                                             addon-left-icon="ni ni-lock-circle-open">
@@ -65,8 +65,8 @@ import axios from 'axios'
 export default {
     data: function() {
         return {
-            user : {
-                id:'',
+            account : {
+                loginId:'',
                 password:''
             }
         }
@@ -74,22 +74,25 @@ export default {
     
     methods: {
         login: function(event) {
+            
             axios.get('http://localhost:3000/api/manager/test', {
-                id : this.id,
-                password: this.password 
+                account : this.account
             }).then((response) => {
                 alert('success login')
+                this.$router.push({
+                    name : "mainpage"
+                })
             },
             (error) => {
                 alert(error.resopnse.data.error)
             }).catch(error => {
                 alert(error)
+                alert(response.data)
+                this.$router.push({
+                    name : "mainpage"
+                })
             })
         }
-    },
-
-    mounted() {
-        this.login()
     }
 };
 </script>

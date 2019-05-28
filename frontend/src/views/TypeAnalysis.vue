@@ -34,14 +34,19 @@
                 
                 <div class="row">
                     <div class="col-md-6">
-                        <base-button block type="secondary">
-                                <router-link to="typeman" >남자 연예인</router-link>
-                        </base-button>
+                        <router-link to="typeman" >
+                            <base-button block type="secondary">
+                                    남자 연예인
+                            </base-button>
+                        </router-link>
                     </div>
+
                     <div class="col-md-6">
-                        <base-button block type="secondary">
-                                <router-link to="typewoman" >여자 연예인</router-link>
-                        </base-button>
+                        <router-link to="typewoman" >
+                            <base-button block type="secondary">
+                                    여자 연예인
+                            </base-button>
+                        </router-link>
                     </div>
                 </div>
                 

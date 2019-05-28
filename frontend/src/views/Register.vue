@@ -20,19 +20,19 @@
                         <template>
                             <div id="SingUp">
                                 <form role="form">
-                                    <base-input v-model="user.name"
+                                    <base-input v-model="account.loginId"
                                                 class="mb-3"
-                                                placeholder="Name"
+                                                placeholder="loginId"
                                                 addon-left-icon="ni ni-hat-3">
                                     </base-input>
-                                    <base-input v-model="user.email"
-                                                class="mb-3"
-                                                placeholder="Email"
-                                                addon-left-icon="ni ni-email-83">
-                                    </base-input>
-                                    <base-input v-model="user.password"
+                                    <base-input v-model="account.password"
                                                 type="password"
                                                 placeholder="Password"
+                                                addon-left-icon="ni ni-lock-circle-open">
+                                    </base-input>
+                                    <base-input v-model="account.passwordValid"
+                                                type="password"
+                                                placeholder="Password confirm"
                                                 addon-left-icon="ni ni-lock-circle-open">
                                     </base-input>
                                     <div class="text-center">
@@ -52,10 +52,10 @@ import axios from 'axios'
 export default {
     data : function() {
         return {
-            user :{
-                email : '',
+            account :{
+                loginId : '',
                 password: '',
-                name : ''
+                passwordValid: ''
             }
         }
     },
@@ -63,8 +63,8 @@ export default {
     methods : {
         signup: function(event){
             alert('bye')
-            axios.get('http://localhost:3000/api/manager/test',{
-            //user: this.user
+            axios.post('http://localhost:3000/api/login/regist',{
+            account: this.account
             })
             .then((response) => {
                 alert(response.data)
@@ -72,16 +72,18 @@ export default {
                     alert('Error, Please, try again')
                 }
                 if(response.data.result === 1){
-                    alert(response.data)
+                    this.$router.push({
+                    name : "mainpage"
+                })
                 }
             })
             .catch(function (error) {
-                alert('error')
+                alert(error)
+                this.$router.push({
+                    name : "mainpage"
+                })
             })
         }
-    },
-    mounted() {
-        this.signup()
     }
 
 };
