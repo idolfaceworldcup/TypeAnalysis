@@ -36,6 +36,10 @@ module.exports = (passport) => {
         console.log('bye')
         res.sendStatus(await auth.regist(req, res, next));
     })
+
+    router.post('/authentication', (req, res, next) => {
+        res.send(req.user)
+    })
     
     return router;
 }

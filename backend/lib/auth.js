@@ -18,3 +18,13 @@ exports.regist = async (req, res, next) => {
         return 500
     }
 }
+
+exports.isLogin = (req, res, next) => {
+    if(req.user) {
+        return true
+    }
+
+    else {
+        return false
+    }
+}

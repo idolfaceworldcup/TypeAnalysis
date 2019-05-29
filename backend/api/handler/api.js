@@ -4,7 +4,7 @@ const router = express.Router();
 //define API and use API
 
 module.exports = (app) => {
-    const passport = require('../../lib/accountPassport')(app)
+    const passport = require('../../lib/passport')(app)
 
     const managerAPI = require('../manager')
     const loginAPI = require('../login')(passport)

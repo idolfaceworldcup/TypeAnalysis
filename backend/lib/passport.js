@@ -2,6 +2,7 @@ module.exports = (app) => {
     const passport = require('passport')
     const LocalStrategy = require('passport-local').Strategy
     const account = require('./account')
+    const manager = require('./manager')
 
     app.use(passport.initialize())
     app.use(passport.session())
@@ -17,8 +18,7 @@ module.exports = (app) => {
                 done(null, result)
             }
             else {
-                
-                result = await account.getAccount(user.id)
+                result = await manager.getManager(user.id)
                 done(null, result)
             }
         } catch(err) {
