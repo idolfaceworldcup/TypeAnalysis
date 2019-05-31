@@ -11,7 +11,8 @@
                 <span></span>
     </div>
     <div class="container pt-lg-md"> 
-      <h1>{{ msg }}</h1>
+      <h3> Name : {{user.name}} 님</h3>
+      <h1>{{ msg }}</h1>      
       <section class="section section--demo-2">
       <div class="container-fluid">
         <div row>
@@ -45,16 +46,39 @@
 
 <script>
 import { VueAgile } from 'vue-agile' 
+import axios from 'axios'
+import router from "../router"
+
+
   export default {
+    name : 'mainpage',
     data() {
       return {
         msg: '이상형 월드컵에 오신걸 환영합니다.',
+        user : {
+          name :"Guest"
+        }
       }
     },
     components: {
       agile: VueAgile
+    },
+    methods:{
+      getUserData: function() {
+        let self = this
+        axios.get("${this.$store.state.host/api/login/account")
+        .then((response) => {
+          self.$set(this, "user", response.data.user)
+        })
+        .catch((error) => {
+
+          router.push("/")
+        })
+      }
+    },
+    mounted() {
+      this.getUserData()
     }
-    
   };
 
 </script>

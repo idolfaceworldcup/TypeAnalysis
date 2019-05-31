@@ -9,9 +9,19 @@ import Modify from "./views/Modify";
 import TypeAnalysis from "./views/TypeAnalysis";
 import TypeMan from "./views/TypeMan";
 import TypeWoman from "./views/TypeWoman";
-import User from "./views/User";
+import LoginMe from "./views/LoginMe";
+import ManagerUser from "./views/ManagerUser";
+import ManagerLogin from "./views/ManagerLogin";
+
 
 Vue.use(Router);
+
+const requireAuth = () => (from, to, next) => {
+  const isAuthenticated = false
+  if(isAuthenticated) return next()
+  next('/login?returnPath=loginme')
+}
+
 
 export default new Router({
   linkExactActiveClass: "active",
@@ -46,11 +56,38 @@ export default new Router({
       }
     },
     {
-      path: "/user",
-      name: "user",
+      path: "/loginme",
+      name: "loginme",
       components: {
         header: AppHeader,
-        default: User,
+        default: LoginMe,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/managerlogin",
+      name: "managerlogin",
+      components: {
+        header: AppHeader,
+        default: ManagerLogin,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/manageruser",
+      name: "manageruser",
+      components: {
+        header: AppHeader,
+        default: ManagerUser,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/loginme",
+      name: "loginme",
+      components: {
+        header: AppHeader,
+        default: LoginMe,
         footer: AppFooter
       }
     },
@@ -71,40 +108,26 @@ export default new Router({
         default: TypeAnalysis,
         footer: AppFooter
       },
-      children : [
-        {
-          path : "typeman",
-          name : "typeman",
-          components: {
-            header: AppHeader,
-            default : TypeMan,
-            footer: AppFooter
-          }
-        },
-        {
-          path : "typewoman",
-          name : "typewoman",
-          components: {
-            header: AppHeader,
-            default : TypeWoman,
-            footer: AppFooter
-          }
-        }
-      ]
+    },
+      
+    {
+      path : "/typeman",
+      name : "typeman",
+      components: {
+        header: AppHeader,
+        default: TypeMan,
+        footer: AppFooter
+      },
     },
     {
-      path: "/",
-      redirect: {
-          name : "typeman"
-      }
-    },
-    {
-      path: "/",
-      redirect: {
-          name : "typewoman"
-      }
+      path : "/typewoman",
+      name : "typewoman",
+      components: {
+        header: AppHeader,
+        default: TypeWoman,
+        footer: AppFooter
+      },
     }
-
   ],
 
   scrollBehavior: to => {

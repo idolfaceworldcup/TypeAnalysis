@@ -10,9 +10,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
-    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "test": "npm run unit"
+    "start": "npm run dev"
   },
   "repository": {
     "type": "git",
@@ -21,20 +19,25 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
-    "bootstrap-vue": "^2.0.0-rc.11",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.21",
     "flatpickr": "^4.5.1",
     "gsap": "^2.0.2",
+    "lodash.orderby": "^4.6.0",
     "nouislider": "^11.1.0",
     "register-service-worker": "^1.5.2",
     "three": "^0.98.0",
-    "vue": "^2.6.6",
+    "vue": "^2.6.10",
     "vue-agile": "^1.0.8",
     "vue-flatpickr-component": "^8.1.1",
+    "vue-good-table": "^2.16.5",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.2",
     "vue-select-image": "^1.7.0",
+    "vue-simple-spinner": "^1.2.8",
     "vue2-transitions": "^0.2.3",
-    "vuetify": "^1.5.14"
+    "vuetify": "^1.5.14",
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
     "raw-loader": "^1.0.0",

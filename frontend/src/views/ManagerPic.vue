@@ -1,0 +1,87 @@
+<template>
+
+  <section class="section section-shaped section-lg my-0">
+      <div class="shape shape-style-1 bg-gradient-success">
+        <span></span>
+        <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+      </div>
+      <div class="container pt-lg-md"> 
+        <div>
+          <vue-good-table
+            @on-selected-rows-change="selectionChanged"
+            :columns="columns"
+            :rows="rows"
+            :select-options="{ 
+              enabled: true,
+            }"
+            :search-options="{ enabled: true }"
+            :pagination-options="{
+              enabled: true,
+              mode: 'pages'}
+              ">
+            <div slot="selected-row-actions">
+              <button>Action 1</button>
+            </div>
+          </vue-good-table>
+        </div>
+      </div>
+  </section>
+</template>
+
+
+<script>
+import 'vue-good-table/dist/vue-good-table.css'
+import { VueGoodTable } from 'vue-good-table';
+
+// add to component
+
+export default {
+  components: {
+    VueGoodTable,
+  },
+  name: 'my-component',
+  data(){
+    return {
+      columns: [
+        {
+          label: 'Name',
+          field: 'name',
+        },
+        {
+          label: 'Humna Race',
+          field: 'human race',
+        },
+        {
+          label: 'Created On',
+          field: 'createdAt',
+          type: 'date',
+          dateInputFormat: 'YYYY-MM-DD',
+          dateOutputFormat: 'MMM Do YY',
+        },
+        {
+          label: 'Percent',
+          field: 'score',
+          type: 'percentage',
+        },
+      ],
+      rows: [
+        { id:1, name:"John", age: 20, createdAt: '201-10-31:9: 35 am',score: 0.03343 },
+        { id:2, name:"Jane", age: 24, createdAt: '2011-10-31', score: 0.03343 },
+        { id:3, name:"Susan", age: 16, createdAt: '2011-10-30', score: 0.03343 },
+        { id:4, name:"Chris", age: 55, createdAt: '2011-10-11', score: 0.03343 },
+        { id:5, name:"Dan", age: 40, createdAt: '2011-10-21', score: 0.03343 },
+        { id:6, name:"John", age: 20, createdAt: '2011-10-31', score: 0.03343 },
+      ],
+    };
+  },
+
+  
+}
+</script>
+
