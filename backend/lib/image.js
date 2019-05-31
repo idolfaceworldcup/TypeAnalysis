@@ -15,10 +15,34 @@ exports.getImage = async (analysisId) => {
     }
 }
 
-exports.getImageByAttribute = async (attributeId, value) => {
+exports.getImageWithValue = async (analysisId) => {
     try {
         let conn = await pool.getConnection()
-        let result = await value.findByCondition(conn, attributeId, value)
+        let result = await image.findByAnalysisId(conn, analysisId)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
+exports.getImageByAttribute = async (attributeId, v) => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await value.findByAttributeIdAndValue(conn, attributeId, v)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
+exports.getImageByNotAttribute = async (attributeId, v) => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await value.findByAttributeIdAndNotValue(conn, attributeId, v)
         await conn.release()
 
         return result

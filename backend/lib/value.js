@@ -25,6 +25,18 @@ exports.getKindOfValue = async (analysisId) => {
     }
 }
 
+exports.getValueCount = async (analysisId, attributeId) => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await value.findByValueCount(conn, analysisId, attributeId)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
 exports.getIdealImage = async (query, condition) => {
     try {
         let conn = await pool.getConnection()
