@@ -34,7 +34,7 @@
                 
                 <div class="row">
                     <div class="col-md-6">
-                        <router-link to="typeman" >
+                        <router-link to="/typeman" >
                             <base-button block type="secondary">
                                     남자 연예인
                             </base-button>
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <router-link to="typewoman" >
+                        <router-link to="/typewoman" >
                             <base-button block type="secondary">
                                     여자 연예인
                             </base-button>

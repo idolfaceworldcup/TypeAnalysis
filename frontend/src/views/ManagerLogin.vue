@@ -70,17 +70,17 @@ export default {
     },
     methods: {
         login: function(event){
-            axios.post('http://localhpst:3000/api/login/account', this.account).then((response) => {
+            axios.post('${this.$store.state.host/api/login/account', this.account).then((response) => {
                 alert('success login')
                 console.log(response);
                 this.$router.push({
-                    name : "mainpage"
+                    name : ""
                 })
             }).catch(error => {
                 alert(error)
                 alert(response.data)
                 this.$router.push({
-                    name : "mainpage"
+                    name : ""
                 })
             })
         }

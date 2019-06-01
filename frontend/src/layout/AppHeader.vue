@@ -20,18 +20,6 @@
                         <router-link to="/typeanalysis" class="dropdown-item">TypeAnalysis</router-link>
                     </base-dropdown>
                 </ul>
-
-                <div class="row" slot="content-header" slot-scope="{closeMenu}">
-                    <div class="col-6 collapse-brand">
-                        <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/">
-                            <img src="https://demos.creative-tim.com/vue-argon-design-system/img/brand/blue.png">
-                        </a>
-                    </div>
-                    <div class="col-6 collapse-close">
-                        <close-button @click="closeMenu"></close-button>
-                    </div>
-                </div>
-
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
                         <a class="nav-link nav-link-icon" href="#">
