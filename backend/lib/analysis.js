@@ -90,7 +90,7 @@ exports.startRandom = async (analysisId, useImageId) => {
     return images
 }
 
-exports.startAdvanced = async (analysisId, useImageId) => {
+exports.startAdvanced = async (analysisId, useImageId, selectAttribute) => {
     let attributes = await attribute.getAttribute(analysisId)
     let values = await value.getKindOfValue(analysisId)
     let result1
@@ -126,7 +126,9 @@ exports.startAdvanced = async (analysisId, useImageId) => {
 
         let response = {
             analysisId : analysisId,
-            status : -1
+            selectAttribute : selectAttribute,
+            status : -1,
+            useImageId : useImageId,
         }
 
         return response
@@ -194,7 +196,7 @@ exports.analysisStart = async (req, res, next) => {
 
     else if(status === 2) {
         //atteribute
-        images = await this.startAdvanced(analysisId, useImageId)
+        images = await this.startAdvanced(analysisId, useImageId, selectAttribute)
     }
 
     let response = await this.createResponse(analysisId, selectAttribute, images, status, useImageId, count)

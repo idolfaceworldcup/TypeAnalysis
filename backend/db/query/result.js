@@ -1,3 +1,13 @@
+exports.findById = async (conn, id) => {
+    try {
+        let result = await conn.query('select * from result r left join image i on r.imageId = i.id where id = ?', [id])
+
+        return result
+    } catch(err) {
+        return 500
+    }
+}
+
 exports.findByAccountId = async (conn, accountId) => {
     try {
         let result = await conn.query('select * from result r left join image i on r.imageId = i.id where accountId = ?', [accountId])

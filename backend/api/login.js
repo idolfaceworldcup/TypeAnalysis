@@ -33,7 +33,6 @@ module.exports = (passport) => {
         if(!error.isEmpty()) {
             return 500;
         }
-        console.log('bye')
         res.sendStatus(await auth.regist(req, res, next));
     })
 

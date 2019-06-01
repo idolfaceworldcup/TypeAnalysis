@@ -39,7 +39,7 @@ exports.findByAttributeIdAndNotValue = async (conn, attributeId, value) => {
 }
 
 
-exports.findByValueCount = async (conn, analysisId, attributeId) => {
+exports.findValueCount = async (conn, analysisId, attributeId) => {
     try {
         let result = await conn.query('select *, count(*) count from value v left join attribute a on v.attributeId = a.id where analysisId = ? and attributeId = ? group by value', [analysisId, attributeId])
     
@@ -49,7 +49,7 @@ exports.findByValueCount = async (conn, analysisId, attributeId) => {
     }
 }
 
-exports.findByKindOfValue = async (conn, analysisId) => {
+exports.findKindOfValue = async (conn, analysisId) => {
     try {
         let result = await conn.query('select * from value v left join attribute a on v.attributeId = a.id where a.analysisId = ? group by value;', [analysisId])
 
@@ -61,7 +61,17 @@ exports.findByKindOfValue = async (conn, analysisId) => {
 
 exports.findByCondition = async (conn, query, condition) => {
     try {
-        let result = await conn.query('select *, a.name attributeName, count(*) count from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where ' + query + ' group by v.imageId order by count', condition)
+        let result = await conn.query('select *, a.name attributeName, count(*) count from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where ' + query + ' group by v.imageId having count = ? order by count desc', condition)
+        
+        return result
+    } catch(err) {
+        return 500
+    }
+}
+
+exports.findMaxCount = async (conn, query, condition) => {
+    try {
+        let result = await conn.query('select max(counted) maxCount from (select count(*) as counted from value v left join attribute a on v.attributeId = a.id left join image i on v.imageId = i.id where ' + query + ' group by v.imageId) as counts', condition)
         
         return result
     } catch(err) {
