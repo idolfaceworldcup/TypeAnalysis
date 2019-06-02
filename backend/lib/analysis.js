@@ -166,6 +166,18 @@ exports.createResponse = async(analysisId, selectAttribute, images, status, useI
     return response
 }
 
+exports.enableAnalysis = async (req, res, next) => {
+    let result = await this.getAnalysis()
+    let response = []
+
+    for(let r of result) {
+        let model = require('../model/analysis')(r)
+        response.push(model)
+    }
+
+    return response
+}
+
 exports.analysisStart = async (req, res, next) => {
     let request = req.body
     let selectAttribute = request.selectAttribute

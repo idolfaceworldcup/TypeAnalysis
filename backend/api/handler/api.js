@@ -7,15 +7,15 @@ module.exports = (app) => {
     const passport = require('../../lib/passport')(app)
 
     const managerAPI = require('../manager')
-    const loginAPI = require('../login')(passport)
+    const authAPI = require('../auth')(passport)
     const analysisAPI = require('../analysis')
-    const imageAPI = require('../image')
+    const userAPI = require('../user')
     const errorAPI = require('../error')
 
     router.use('/manager', managerAPI)
-    router.use('/login', loginAPI)
+    router.use('/auth', authAPI)
     router.use('/analysis', analysisAPI)
-    router.use('/image', imageAPI)
+    router.use('/user', userAPI)
     router.use('/error', errorAPI)
 
     return router

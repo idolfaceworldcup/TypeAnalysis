@@ -68,8 +68,5 @@ module.exports = (app) => {
         })
     )
 
-
-    console.log('gg')
-
     return passport
 }

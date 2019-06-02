@@ -40,7 +40,37 @@ exports.getAccountResult = async (accountId) => {
     }
 }
 
-exports.createResult = async (req, res, next) => {
+exports.userResultTable = async (req, res, next) => {
+    if(!auth.isLogin(req, res, next)) {
+        return 401
+    }
+    let row = await this.getAccountResult(req.user.id)
+
+    let response = []
+
+    for(let r of row) {
+        let model = require('../model/result')(r)
+        response.push(model)
+    }
+
+    return response
+}
+
+
+exports.userResultView = async (req, res, next) => {
+    if(!auth.isLogin(req, res, next)) {
+        return 401
+    }
+    
+    let row = await this.getResult(req.body.id)
+
+    let response = require('../model/result')(row[0])
+
+    return response
+}
+
+
+exports.analysisResult = async (req, res, next) => {
     let request = req.body
     let analysisId = request.analysisId
     let analysisData = request.analysisAttribute

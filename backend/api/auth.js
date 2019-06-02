@@ -36,7 +36,7 @@ module.exports = (passport) => {
         res.sendStatus(await auth.regist(req, res, next));
     })
 
-    router.post('/authentication', (req, res, next) => {
+    router.get('/exist', (req, res, next) => {
         res.send(req.user)
     })
     
