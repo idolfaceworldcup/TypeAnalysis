@@ -14,6 +14,18 @@ exports.getAttribute = async (analysisId) => {
     }
 }
 
+exports.addAttribute = async (name, analysisId) => {
+    try {
+        let conn = await pool.getConnection()
+        await attribute.insert(conn, name, analysisId)
+        await conn.release()
+
+        return 200
+    } catch (err) {
+        return 500
+    }
+}
+
 exports.deleteAttribute = async (attributeId) => {
     try {
         let conn = await pool.getConnection()

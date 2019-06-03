@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const test = require('../lib/test')
+const manager = require('../lib/manager')
 
-router.post('/test', async (req, res, next) => {
-    res.send(await test.myTest());
+router.put('/setting', async (req, res, next) => {
+    res.send(await manager.setting(req, res, next));
 })
 
 module.exports = router;

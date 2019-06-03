@@ -7,18 +7,6 @@ exports.logout = async (req, res, next) => {
     })
 }
 
-exports.regist = async (req, res, next) => {
-    
-    try {
-        let result = await account.createAccount(req.body.account.loginId, req.body.account.password)
-        console.log(result)
-        return 200
-    } catch(err) {
-        console.log('err')
-        return 500
-    }
-}
-
 exports.isLogin = (req, res, next) => {
     if(req.user) {
         return true

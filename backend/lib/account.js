@@ -65,12 +65,18 @@ exports.delete = async (id) => {
     }
 }
 
+exports.regist = async (req, res, next) => {
+    let status = await this.createAccount(req.body.account.loginId, req.body.account.password)
+    
+    return status
+}
+
 exports.setting = async (req, res, next) => {
     if(!auth.isLogin(req, res, next)) {
         return 401
     }
     
-    let result = await this.update(req.body.password, req.user.id)
+    let status = await this.update(req.body.password, req.user.id)
 
-    return result
+    return status
 }

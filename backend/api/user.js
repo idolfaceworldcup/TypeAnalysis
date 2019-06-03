@@ -3,11 +3,11 @@ const router = express.Router();
 const result = require('../lib/result')
 const account = require('../lib/account')
 
-router.get('/result/table', async (req, res, next) => {
+router.get('/result', async (req, res, next) => {
     res.send(await result.userResultTable(req, res, next));
 })
 
-router.get('/result/table/:id', async (req, res, next) => {
+router.get('/result/:id', async (req, res, next) => {
     res.send(await result.userResultView(req, res, next));
 })
 

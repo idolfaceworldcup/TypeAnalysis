@@ -1,5 +1,6 @@
 const manager = require('../db/query/manager')
 const pool = require('../db/pool')
+const auth = require('../lib/auth')
 
 exports.login = async (loginId, password) => {
     try {
@@ -51,3 +52,12 @@ exports.delete = async (id) => {
     }
 }
 
+exports.setting = async (req, res, next) => {
+    if(!auth.isLogin(req, res, next)) {
+        return 401
+    }
+    
+    let status = await this.update(req.body.password, req.user.id)
+
+    return status
+}

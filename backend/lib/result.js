@@ -1,6 +1,7 @@
 const result = require('../db/query/result')
 const pool = require('../db/pool')
 const value = require('./value')
+const image = require('./value')
 const attribute = require('./attribute')
 const auth = require('./auth')
 
@@ -141,7 +142,7 @@ exports.analysisResult = async (req, res, next) => {
 
     condition.push(maxCount[0].maxCount)
 
-    let idealImages = await value.getIdealImage(query, condition)
+    let idealImages = await image.getIdealImage(query, condition)
     let imageId = 0
     for(idealImage of idealImages) {
         for(i of useImageId) {
