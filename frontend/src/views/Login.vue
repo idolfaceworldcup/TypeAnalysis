@@ -70,7 +70,8 @@ export default {
     },
     methods: {
         login: function(event){
-            axios.post('http://localhpst:3000/api/login/account', this.account).then((response) => {
+            axios.post('http://localhpst:3000/api/login/account', this.account)
+            .then((response) => {
                 alert('success login')
                 console.log(response);
                 this.$router.push({

@@ -6,7 +6,13 @@ import axios from 'axios'
 import {store} from './store/index'
 import BootstrapVue from 'bootstrap-vue'
 import './registerServiceWorker'
+import Vuetify from 'vuetify'
+import '@mdi/font/css/materialdesignicons.css'
 
+
+Vue.use(Vuetify, {
+  iconfont: 'mdi'
+});
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 Vue.use(Argon);
