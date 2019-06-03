@@ -143,5 +143,6 @@ import router from "../router"
 				display: block
 				object-fit: cover
 				width: 100%
+        
 
 </style>
