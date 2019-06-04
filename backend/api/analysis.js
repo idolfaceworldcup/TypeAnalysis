@@ -9,7 +9,7 @@ router.get('/analysises', async (req, res, next) => {
     res.send(await analysis.enableAnalysis(req, res, next))
 })
 
-router.get('/start/:analysisId', async (req, res, next) => {
+router.post('/start/:analysisId', async (req, res, next) => {
     res.send(await analysis.analysisStart(req, res, next))
 })
 

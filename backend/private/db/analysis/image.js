@@ -68,9 +68,6 @@
                 for(let j = startIndex; j <= endIndex; ++j) {
                     let value = worksheet[arr[j] + i].v
                     
-                    if(j === startIndex)
-                        value = path.join(__dirname,'../../../../frontend/public/img/analysis/image', folder, value)
-                    
                     obj[p++] =  value
                 }
                 map.set(i, obj)

@@ -51,7 +51,7 @@ exports.findValueCount = async (conn, analysisId, attributeId) => {
 
 exports.findKindOfValue = async (conn, analysisId) => {
     try {
-        let result = await conn.query('select * from value v left join attribute a on v.attributeId = a.id where a.analysisId = ? group by value;', [analysisId])
+        let result = await conn.query('select * from value v left join attribute a on v.attributeId = a.id where a.analysisId = ? group by value, attributeId;', [analysisId])
 
         return result
     } catch(err) {

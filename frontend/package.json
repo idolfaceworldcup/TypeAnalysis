@@ -17,6 +17,7 @@
     "url": "https://github.com/AlbanCrepel/vue-displacement-slideshow.git"
   },
   "dependencies": {
+    "@mdi/font": "^3.6.95",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.3.1",

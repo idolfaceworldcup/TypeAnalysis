@@ -19,7 +19,7 @@ exports.getAnalysis = async () => {
 exports.createSelectAttribute = async (analysisId) => {
     let attributes = await attribute.getAttribute(analysisId)
     let values = await value.getKindOfValue(analysisId)
-
+    
     let selectAttribute = {}
     for(let a of attributes) {
         let valArr = {}
@@ -41,22 +41,22 @@ exports.createSelectAttribute = async (analysisId) => {
 }
 
 exports.setSelectAttribute = async (selectAttribute, imageId) => {
-    let result = await value.getValue(imageId)
+    let result = await image.getImageValue(imageId)
 
     for(let v of result) {
         let temp = (selectAttribute[v.attributeId][v.value])
         
-        (selectAttribute[v.attributeId][v.value])[0] = temp[0] + Math.round(100 * ((temp[1] / temp[2]).toFixed(1)))
+        selectAttribute[v.attributeId][v.value][0] = temp[0] + Math.round(100 * ((temp[1] / temp[2]).toFixed(1)))
     }
 
     return selectAttribute
 }
 
 exports.setGetAttribute = async (selectAttribute, imageId) => {
-    let result = await value.getValue(imageId)
+    let result = await image.getImageValue(imageId)
 
     for(let v of result) {
-        ++(selectAttribute[v.attributeId][v.value])[1]
+        ++(selectAttribute[v.attributeId][v.value][1])
     }
 
     return selectAttribute
@@ -67,9 +67,12 @@ exports.startRandom = async (analysisId, useImageId) => {
     let resultLength = result.length
     let condition = 0
 
+    let randomIndex1
+    let randomIndex2
+
     while(condition === 0) {
-        let randomIndex1 = Math.floor(Math.random() * resultLength)
-        let randomIndex2 = Math.floor(Math.random() * resultLength)
+        randomIndex1 = Math.floor(Math.random() * resultLength)
+        randomIndex2 = Math.floor(Math.random() * resultLength)
 
         if(randomIndex1 === randomIndex2) {
             continue;
@@ -78,7 +81,7 @@ exports.startRandom = async (analysisId, useImageId) => {
         condition = 1
 
         for(let imageId of useImageId) {
-            if(result[randomIndex1].imageId === imageId || result[randomIndex2].imageId === imageId) {
+            if(result[randomIndex1].id === imageId || result[randomIndex2].id === imageId) {
                 condition = 0
                 break
             }
@@ -86,27 +89,25 @@ exports.startRandom = async (analysisId, useImageId) => {
     }
 
     let images = [require('../model/image')(result[randomIndex1]), require('../model/image')(result[randomIndex2])]
-    
+
     return images
 }
 
-exports.startAdvanced = async (analysisId, useImageId, selectAttribute) => {
-    let attributes = await attribute.getAttribute(analysisId)
-    let values = await value.getKindOfValue(analysisId)
+exports.startAdvanced = async (analysisId, useImageId, selectAttribute, count) => {
+    let values = await image.getImageValue(analysisId)
     let result1
     let result2
     let condition = 0
-    
-    for(let a of attributes) {
-        for(let v of values) {
-            let valueTemp  = selectAttribute[a.id][v.value]
-            if(valueTemp[1] < 2) {
-                result1 = await image.getImageByAttribute(a.id, v.value)
-                result2 = await image.getImageByNotAttribute(a.id, v.value)
 
-                condition = 1
-                break
-            }
+    for(let v of values) {
+        let valueTemp  = selectAttribute[v.attributeId][v.value]
+
+        if(valueTemp[1] < 2) {
+            result1 = await image.getImageByAttribute(a.id, v.value)
+            result2 = await image.getImageByNotAttribute(a.id, v.value)
+
+            condition = 1
+            break
         }
 
         if(condition === 1) {
@@ -116,33 +117,21 @@ exports.startAdvanced = async (analysisId, useImageId, selectAttribute) => {
 
     if(condition === 0) {
         // end
-        if(count < 20) {
-            let images = await this.startRandom(analysisId, useImageId)
-            status = 3
-            let response = await this.createResponse(analysisId, selectAttribute, images, status, useImageId, count)
-
-            return response
-        }
-
-        let response = {
-            analysisId : analysisId,
-            selectAttribute : selectAttribute,
-            status : -1,
-            useImageId : useImageId,
-        }
-
-        return response
+        return undefined
     }
 
     condition = 0
+    let randomIndex1
+    let randomIndex2
+
     while(condition === 0) {
-        let randomIndex1 = Math.floor(Math.random() * result1.length)
-        let randomIndex2 = Math.floor(Math.random() * result2.length)
+        randomIndex1 = Math.floor(Math.random() * result1.length)
+        randomIndex2 = Math.floor(Math.random() * result2.length)
 
         condition = 1
 
         for (let imageId of useImageId) {
-            if(result1[randomIndex1].imageId === iamgeId || result2[randomIndex2].imageId === imageId) {
+            if(result1[randomIndex1].id === iamgeId || result2[randomIndex2].id === imageId) {
                 condition = 0
                 break
             }
@@ -155,11 +144,10 @@ exports.startAdvanced = async (analysisId, useImageId, selectAttribute) => {
 }
 
 exports.createResponse = async(analysisId, selectAttribute, images, status, useImageId, count) => {
-    selectAttribute = await this.setGetAttribute(selectAttribute, images[0].imageId)
-    selectAttribute = await this.setGetAttribute(selectAttribute, images[1].imageId)
-
-    useImageId.push(images[0].imageId)
-    useImageId.push(images[1].imageId)
+    selectAttribute = await this.setGetAttribute(selectAttribute, images[0].id)
+    selectAttribute = await this.setGetAttribute(selectAttribute, images[1].id)
+    useImageId.push(images[0].id)
+    useImageId.push(images[1].id)
 
     let response = require('../model/response')(analysisId, selectAttribute, images, status, useImageId, count)
 
@@ -188,6 +176,17 @@ exports.analysisStart = async (req, res, next) => {
     let count = request.count
     let images = []
 
+    if(count > 20) {
+        let response = {
+            analysisId : analysisId,
+            selectAttribute : selectAttribute,
+            status : -1,
+            useImageId : useImageId,
+        }
+
+        return response
+    }
+
     if(status === 0) {
         selectAttribute = await this.createSelectAttribute(analysisId)
         status = 1
@@ -208,7 +207,12 @@ exports.analysisStart = async (req, res, next) => {
 
     else if(status === 2) {
         //atteribute
-        images = await this.startAdvanced(analysisId, useImageId, selectAttribute)
+        images = await this.startAdvanced(analysisId, useImageId, selectAttribute, count)
+
+        if(images === undefined) {
+            status = 3
+            images = await this.startRandom(analysisId, useImageId)
+        }
     }
 
     let response = await this.createResponse(analysisId, selectAttribute, images, status, useImageId, count)

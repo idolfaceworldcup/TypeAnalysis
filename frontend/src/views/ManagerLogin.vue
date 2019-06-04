@@ -72,7 +72,6 @@ export default {
         login: function(event){
             axios.post('${this.$store.state.host/api/login/account', this.account).then((response) => {
                 alert('success login')
-                console.log(response);
                 this.$router.push({
                     name : ""
                 })
