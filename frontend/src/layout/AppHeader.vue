@@ -14,9 +14,9 @@
                             <span class="nav-link-inner--text">MENU</span>
                         </a>
                         <router-link to="/" class="dropdown-item">Main</router-link>
-                        <router-link to="/login" class="dropdown-item">Login</router-link>
-                        <router-link to="/register" class="dropdown-item">Register</router-link>
-                        <router-link to="/modify" class="dropdown-item">Modify</router-link>
+                        <router-link to="/login" class="dropdown-item" v-show = "user.id === 0">Login</router-link>
+                        <router-link to="/register" class="dropdown-item" v-show = "user.id === 0">Register</router-link>
+                        <router-link to="/modify" class="dropdown-item" v-show = "user.id !== 0">Modify</router-link>
                         <router-link to="/typeanalysis" class="dropdown-item">TypeAnalysis</router-link>
                     </base-dropdown>
                 </ul>
@@ -53,7 +53,36 @@ export default {
     BaseNav,
     CloseButton,
     BaseDropdown
-  }
+  },
+
+    data() {
+      return {
+        user : {
+            id : 0,
+            name :"Guest"
+        }
+      }
+},
+
+    methods:{
+        authentication: function() {
+        axios.get('http://localhost:3000/api/auth/regist/exist')
+        .then((response) => {
+            if(response.data !== undefined) {
+                user.name = response.data.name
+                user.id = response.data.id
+            }
+        })
+        .catch((error) => {
+        //   this.$router.push({
+        //     name : "mainpage"
+        //   })
+        })
+      }
+    },
+    mounted() {
+      this.authentication()
+    }
 };
 </script>
 <style>

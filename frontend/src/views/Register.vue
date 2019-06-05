@@ -62,20 +62,16 @@ export default {
 
     methods : {
         signup: function(event){
-            alert('bye')
-            axios.post('http://localhost:3000/api/login/regist',{
-            account: this.account
+            axios.post('http://localhost:3000/api/auth/regist',{
+                account: this.account
             })
             .then((response) => {
-                alert(response.data)
-                if(response.data.result === 0 ){
-                    alert('Error, Please, try again')
-                }
-                if(response.data.result === 1){
-                    this.$router.push({
+               if(response.data === '500') {
+                   alert('500 error')
+                   this.$router.push({
                     name : "mainpage"
                 })
-                }
+               }
             })
             .catch(function (error) {
                 alert(error)

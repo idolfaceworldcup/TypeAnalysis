@@ -33,23 +33,14 @@
             <div class="section">
                 
                 <div class="row">
-                    <div class="col-md-6">
-                        <router-link to="/typeman" >
+                    <div class="col-md-6" v-for="(a, id) in analysis" :key="id">
+                        <router-link :to="{ name: 'analyzer', params: { analysisId : a.id } }">
                             <base-button block type="secondary">
-                                    남자 연예인
-                            </base-button>
-                        </router-link>
-                    </div>
-
-                    <div class="col-md-6">
-                        <router-link to="/typewoman" >
-                            <base-button block type="secondary">
-                                    여자 연예인
+                                {{ a.name }}
                             </base-button>
                         </router-link>
                     </div>
                 </div>
-                
             </div>
         </div>
     </section>
@@ -57,7 +48,8 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
-
+import axios from 'axios'
+let analysisId = 1
 export default {
     components: {
         Modal
@@ -66,8 +58,24 @@ export default {
         return {
             modals :{
                 modal1 : false
-            }
+            },
+
+            analysis : [{ id : 1, name : 'hi'}, { id : 2, name : 'bye'}]
+        
         }
+    },
+
+    created() {
+        axios.get('http://localhost:3000/api/analysis/analysises')
+        .then((response) => {
+            this.analysis = response.data
+        })
+        .catch(function (error) {
+            alert(error)
+            this.$router.push({
+                name : "mainpage"
+            })
+        })
     }
 }
 </script>

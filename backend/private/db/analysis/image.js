@@ -68,6 +68,10 @@
                 for(let j = startIndex; j <= endIndex; ++j) {
                     let value = worksheet[arr[j] + i].v
                     
+                    if(j === startIndex) {
+                        value = path.join(folder, value)
+                    }
+
                     obj[p++] =  value
                 }
                 map.set(i, obj)

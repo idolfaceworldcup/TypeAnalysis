@@ -56,6 +56,7 @@ import router from "../router"
       return {
         msg: '이상형 월드컵에 오신걸 환영합니다.',
         user : {
+          id : 0,
           name :"Guest"
         }
       }
@@ -65,14 +66,17 @@ import router from "../router"
     },
     methods:{
       getUserData: function() {
-        let self = this
-        axios.get("${this.$store.state.host/api/login/account")
+        axios.get('http://localhost:3000/api/auth/regist/exist')
         .then((response) => {
-          self.$set(this, "user", response.data.user)
+          if(response.data !== undefined) {
+            user.name = response.data.name
+            user.id = response.data.id
+          }
         })
         .catch((error) => {
-
-          router.push("/")
+          this.$router.push({
+            name : "mainpage",
+          })
         })
       }
     },

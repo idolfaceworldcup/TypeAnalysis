@@ -4,7 +4,7 @@ const auth = require('../lib/auth')
 const { check, validationResult } = require('express-validator/check');
 
 module.exports = (passport) => {
-    router.post('/account', passport.authenticate('user', {
+    router.post('/user', passport.authenticate('user', {
         successRedirect : '/',
         failureRedirect : '/login',
         failureFlash : false,

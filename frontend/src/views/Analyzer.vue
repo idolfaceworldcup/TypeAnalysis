@@ -18,7 +18,7 @@
                         body-classes="px-lg-5 py-lg-5"
                         class="border-0">
                         <div >
-                            <img v-bind:src="man.href" v-on:click='test(man.id)'>   
+                            <img v-bind:src="man.href" v-on:click='analyzer(man.id)'>   
                         </div>                    
                     </card>
                 </div>
@@ -30,11 +30,12 @@
 <script>
 import axios from 'axios'
 let selectAttribute
-let analysisId = 1
+let analysisId
 let selectImageId
 let useImageId
 let status
 let count
+let folder
 
 export default {
     data: () => ({
@@ -56,9 +57,8 @@ export default {
     }),
 
      methods : {
-        test(id) {
+        analyzer(id) {
             selectImageId = id
-
             axios.post('http://localhost:3000/api/analysis/start/1',{
                 analysisId : analysisId,
                 count : count,
@@ -72,15 +72,20 @@ export default {
 
                 if(res.status === -1) {
                     this.$router.push({
-                        name : "mainpage"
+                        name : "mainpage",
+                        params : {
+                            analysisId : analysisId,
+                            analysisData : res.selectAttribute,
+                            useImageId : res.useImageId
+                        }
                     })
                 }
 
                 else {
-                    this.mans[0].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/analysis_man/${res.image[0].path}`)
                     this.mans[0].id = res.image[0].id
+                    this.mans[0].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/${res.image[0].path}`)
                     this.mans[1].id = res.image[1].id
-                    this.mans[1].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/analysis_man/${res.image[1].path}`)
+                    this.mans[1].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/${res.image[1].path}`)
 
                     selectAttribute = res.selectAttribute
                     useImageId = res.useImageId
@@ -98,6 +103,7 @@ export default {
     },
 
     created() {
+        analysisId = this.$route.params.analysisId
         selectAttribute = {}
         useImageId = []
         selectImageId = 0
@@ -114,10 +120,11 @@ export default {
         })
         .then((response) => {
             let res = response.data
-            this.mans[0].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/analysis_man/${res.image[0].path}`)
+            folder = res.folder
+            this.mans[0].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/${res.image[0].path}`)
             this.mans[0].id = res.image[0].id
             this.mans[1].id = res.image[1].id
-            this.mans[1].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/analysis_man/${res.image[1].path}`)
+            this.mans[1].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/${res.image[1].path}`)
 
             selectAttribute = res.selectAttribute
             useImageId = res.useImageId

@@ -7,11 +7,9 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Modify from "./views/Modify";
 import TypeAnalysis from "./views/TypeAnalysis";
-import TypeMan from "./views/TypeMan";
-import TypeWoman from "./views/TypeWoman";
+import Analyzer from "./views/Analyzer";
 import LoginMe from "./views/LoginMe";
 import ManagerUser from "./views/ManagerUser";
-import ManagerLogin from "./views/ManagerLogin";
 
 
 Vue.use(Router);
@@ -65,15 +63,6 @@ export default new Router({
       }
     },
     {
-      path: "/managerlogin",
-      name: "managerlogin",
-      components: {
-        header: AppHeader,
-        default: ManagerLogin,
-        footer: AppFooter
-      }
-    },
-    {
       path: "/manageruser",
       name: "manageruser",
       components: {
@@ -111,20 +100,11 @@ export default new Router({
     },
       
     {
-      path : "/typeman",
-      name : "typeman",
+      path : "/analyzer/:analysisId",
+      name : "analyzer",
       components: {
         header: AppHeader,
-        default: TypeMan,
-        footer: AppFooter
-      },
-    },
-    {
-      path : "/typewoman",
-      name : "typewoman",
-      components: {
-        header: AppHeader,
-        default: TypeWoman,
+        default: Analyzer,
         footer: AppFooter
       },
     }

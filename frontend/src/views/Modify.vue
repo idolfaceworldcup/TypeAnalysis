@@ -20,11 +20,6 @@
                         <template>
                             <div id = "modify">
                                 <form role="form">
-                                    <base-input v-model="loginId"
-                                                class="mb-3"
-                                                placeholder="loginId"
-                                                addon-left-icon="ni ni-hat-3">
-                                    </base-input>
                                     <base-input v-model="password"
                                                 type="password"
                                                 placeholder="Present Password"
@@ -49,33 +44,56 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+let id
+
 export default {
     data : function() {
         return {
             user : {
-                loginId : '',
                 password: '',
                 newpassword: ''
             }
         }
     },
     methods:{
-        modify: function(event){
-            axios.post('', {
+        getUserData: function() {
+            axios.get('http://localhost:3000/api/auth/regist/exist')
+            .then((response) => {
+                if(response.data !== undefined) {
+                    id = response.data.id
+                }
+
+                else {
+                    this.$router.push({
+                        name : "mainpage"
+                    })
+                }
+            })
+            .catch(function (error) {
+                this.$router.push({
+                    name : "mainpage"
+                })
+            })
+        },
+        modify: function(event) {
+            axios.put(`http://localhost:3000/api/user/setting/${id}`, {
                 user: this.user
             })
-            .then(
-                (response) => {
-                    alert ('Success Modify Account')
-                },
-                (error) => {
-                    alert(error.response.data.error)
-                }
-            )
-            .catch(error => {
-                alert(error)
+            .then((response) => {
+                alert ('Success Modify Account')
+            })
+            .catch(function (error) {
+                this.$router.push({
+                    name : "mainpage"
+                })
             })
         }
+    },
+
+    mounted() {
+        this.getUserData()
     }
 }
 </script>

@@ -7,7 +7,7 @@ const pool = require('../db/pool')
 exports.getAnalysis = async () => {
     try {
         let conn = await pool.getConnection()
-        let result = await analysis.findAll()
+        let result = await analysis.findAll(conn)
         await conn.release()
 
         return result
@@ -56,7 +56,7 @@ exports.setGetAttribute = async (selectAttribute, imageId) => {
     let result = await image.getImageValue(imageId)
 
     for(let v of result) {
-        ++(selectAttribute[v.attributeId][v.value][1])
+        ++selectAttribute[v.attributeId][v.value][1]
     }
 
     return selectAttribute
@@ -94,17 +94,17 @@ exports.startRandom = async (analysisId, useImageId) => {
 }
 
 exports.startAdvanced = async (analysisId, useImageId, selectAttribute, count) => {
-    let values = await image.getImageValue(analysisId)
+    let values = await value.getKindOfValue(analysisId)
     let result1
     let result2
     let condition = 0
 
     for(let v of values) {
         let valueTemp  = selectAttribute[v.attributeId][v.value]
-
+        
         if(valueTemp[1] < 2) {
-            result1 = await image.getImageByAttribute(a.id, v.value)
-            result2 = await image.getImageByNotAttribute(a.id, v.value)
+            result1 = await image.getImageByAttribute(v.attributeId, v.value)
+            result2 = await image.getImageByNotAttribute(v.attributeId, v.value)
 
             condition = 1
             break
@@ -123,22 +123,43 @@ exports.startAdvanced = async (analysisId, useImageId, selectAttribute, count) =
     condition = 0
     let randomIndex1
     let randomIndex2
+    let temp = []
+
+    for(let r of result1) {
+        for (let imageId of useImageId) {
+            if(r.id === imageId) {
+                condition = 1
+                break
+            }
+        }
+        
+        if(condition === 0) {
+            temp.push(r)
+        }
+
+        condition = 0
+    }
+
+    if(temp.length === 0) {
+        return undefined
+    }
+
+    result1 = temp
 
     while(condition === 0) {
         randomIndex1 = Math.floor(Math.random() * result1.length)
         randomIndex2 = Math.floor(Math.random() * result2.length)
-
         condition = 1
 
         for (let imageId of useImageId) {
-            if(result1[randomIndex1].id === iamgeId || result2[randomIndex2].id === imageId) {
+            if(result1[randomIndex1].id === imageId || result2[randomIndex2].id === imageId) {
                 condition = 0
                 break
             }
         }
     }
 
-    let images = [require('../model/image')(result[randomIndex1]), require('../model/image')(result[randomIndex2])]
+    let images = [require('../model/image')(result1[randomIndex1]), require('../model/image')(result2[randomIndex2])]
 
     return images
 }
@@ -148,6 +169,9 @@ exports.createResponse = async(analysisId, selectAttribute, images, status, useI
     selectAttribute = await this.setGetAttribute(selectAttribute, images[1].id)
     useImageId.push(images[0].id)
     useImageId.push(images[1].id)
+
+    images[0].path = images[0].path.replace('\\', '/')
+    images[1].path = images[1].path.replace('\\', '/')
 
     let response = require('../model/response')(analysisId, selectAttribute, images, status, useImageId, count)
 
@@ -184,6 +208,7 @@ exports.analysisStart = async (req, res, next) => {
             useImageId : useImageId,
         }
 
+        console.log('end')
         return response
     }
 
@@ -208,7 +233,7 @@ exports.analysisStart = async (req, res, next) => {
     else if(status === 2) {
         //atteribute
         images = await this.startAdvanced(analysisId, useImageId, selectAttribute, count)
-
+        console.log('hihi')
         if(images === undefined) {
             status = 3
             images = await this.startRandom(analysisId, useImageId)

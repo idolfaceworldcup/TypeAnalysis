@@ -1,7 +1,7 @@
 exports.findAll = async (conn) => {
     try {
-        let result = await conn.query('select * from analysis')
-        
+        let result = await conn.query('select * from analysis', [])
+
         return result
     } catch(err) {
         return 500

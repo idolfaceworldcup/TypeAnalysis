@@ -57,7 +57,7 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 
 export default {
     data: function() {
@@ -70,7 +70,7 @@ export default {
     },
     methods: {
         login: function(event){
-            axios.post('http://localhpst:3000/api/login/account', this.account)
+            axios.post('http://localhpst:3000/api/auth/user', this.account)
             .then((response) => {
                 alert('success login')
                 this.$router.push({
@@ -78,9 +78,8 @@ export default {
                 })
             }).catch(error => {
                 alert(error)
-                alert(response.data)
                 this.$router.push({
-                    name : "mainpage"
+                    name : "login"
                 })
             })
         }
