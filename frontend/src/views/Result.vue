@@ -1,8 +1,106 @@
 <template>
-    
+    <section class="section section-shaped section-xl my-0">
+        <div class="shape shape-style-1 bg-gradient-success">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="container pt-lg-md">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <card type="secondary" shadow
+                          header-classes="bg-white pb-5"
+                          body-classes="px-lg-5 py-lg-5"
+                          class="border-0">
+                        <div>
+                            <base-button block type="secondary" @click="modals.modal1 = true">
+                                테스트 결과 보기
+                            </base-button>
+                            <modal :show.sync="modals.modal1">
+                                <h6 slot="header" class="modal-title" id="modal-title-default">{{loginId}}님의 테스트 결과</h6>
+
+                                <p>Far far away, behind the word mountains, far from the countries Vokalia and
+                                    Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
+                                    right at the coast of the Semantics, a large language ocean.</p>
+                                <p>A small river named Duden flows by their place and supplies it with the necessary
+                                    regelialia. It is a paradisematic country, in which roasted parts of sentences
+                                    fly into your mouth.</p>
+                                    
+                                    <div>
+                                        <img :src="require('../../public/img/analysis/image/analysis_man/강동원.jpg')">
+                                    </div>
+                                <template slot="footer">
+                                    <base-button type="link" class="ml-auto" @click="modals.modal1 = false">Close
+                                    </base-button>
+                                </template>
+                            </modal>
+                        </div>
+                    </card>
+                </div>
+            </div>
+        </div>
+    </section>
 </template>
+
 <script>
+import axios from 'axios';
+import Modal from "@/components/Modal.vue";
+
+let selectAttribute
+let analysisId
+let selectImageId
+let useImageId
+let status
+let count
+let folder
+
 export default {
-    
-}
+    components: {
+        Modal
+    },
+
+    data: function() {
+        
+        return {
+            modals : {
+                modal1 : false
+            },
+
+            account : {
+                loginId:'',
+                password:'',
+            }
+        }
+    },
+    methods: {
+        login: function(event){
+            axios.post('http://localhpst:3000/api/auth/user', this.account)
+            .then((response) => {
+                alert('success login')
+                this.$router.push({
+                    name : "mainpage"
+                })
+            }).catch(error => {
+                alert(error)
+                this.$router.push({
+                    name : "login"
+                })
+            })
+        }
+    }    
+};
 </script>
+
+<style>
+img {
+    max-width: 100%; /* 이미지의 최대사이즈 */
+    width /***/: auto; /* IE8 */
+    height: auto;
+    vertical-align: bottom;
+}
+</style>
