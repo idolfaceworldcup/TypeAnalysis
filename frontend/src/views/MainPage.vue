@@ -64,13 +64,14 @@ import router from "../router"
     components: {
       agile: VueAgile
     },
+
     methods:{
       getUserData: function() {
-        axios.get('http://localhost:3000/api/auth/regist/exist')
+        axios.get('http://localhost:3000/api/auth/exist')
         .then((response) => {
-          if(response.data !== undefined) {
-            user.name = response.data.name
-            user.id = response.data.id
+          if(response.data.id !== undefined) {
+            this.user.name = response.data.loginId
+            this.user.id = response.data.id
           }
         })
         .catch((error) => {
@@ -80,8 +81,9 @@ import router from "../router"
         })
       }
     },
-    mounted() {
-      this.getUserData()
+
+    mounted () {
+        this.getUserData()
     }
   };
 

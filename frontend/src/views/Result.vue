@@ -51,13 +51,9 @@
 import axios from 'axios';
 import Modal from "@/components/Modal.vue";
 
-let selectAttribute
+let analysisData
 let analysisId
-let selectImageId
 let useImageId
-let status
-let count
-let folder
 
 export default {
     components: {
@@ -69,27 +65,25 @@ export default {
         return {
             modals : {
                 modal1 : false
-            },
-
-            account : {
-                loginId:'',
-                password:'',
             }
         }
     },
+
+    mounted () {
+        analysisData = this.$route.params.analysisData
+        analysisId = this.$route.params.analysisId
+        useImageId = this.$route.params.useImageId
+        this.result()
+    },
+
     methods: {
-        login: function(event){
-            axios.post('http://localhpst:3000/api/auth/user', this.account)
+        result : function(){
+            axios.post(`http://localhpst:3000/api/analysis/result/${analysisId}`, [analysisData, useImageId])
             .then((response) => {
-                alert('success login')
-                this.$router.push({
-                    name : "mainpage"
-                })
+                alert(response.data.id)
+                alert(response.data.content)
             }).catch(error => {
-                alert(error)
-                this.$router.push({
-                    name : "login"
-                })
+
             })
         }
     }    

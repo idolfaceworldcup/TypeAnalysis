@@ -73,7 +73,7 @@ exports.userResultView = async (req, res, next) => {
 
 exports.analysisResult = async (req, res, next) => {
     let request = req.body
-    let analysisId = request.analysisId
+    let analysisId = req.params.analysisId
     let analysisData = request.analysisData
     let useImageId = request.useImageId
     let attributes = await attribute.getAttribute(analysisId)

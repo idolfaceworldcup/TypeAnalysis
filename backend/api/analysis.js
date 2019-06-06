@@ -3,7 +3,6 @@ const router = express.Router();
 const analysis = require('../lib/analysis')
 const result = require('../lib/result')
 const image = require('../lib/image')
-const attribute = require('../lib/attribute')
 
 router.get('/analysises', async (req, res, next) => {
     res.send(await analysis.enableAnalysis(req, res, next))

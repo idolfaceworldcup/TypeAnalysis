@@ -59,8 +59,7 @@ export default {
      methods : {
         analyzer(id) {
             selectImageId = id
-            axios.post('http://localhost:3000/api/analysis/start/1',{
-                analysisId : analysisId,
+            axios.post(`http://localhost:3000/api/analysis/start/${analysisId}`,{
                 count : count,
                 status : status,
                 selectAttribute : selectAttribute,
@@ -72,7 +71,7 @@ export default {
 
                 if(res.status === -1) {
                     this.$router.push({
-                        name : "mainpage",
+                        name : "result",
                         params : {
                             analysisId : analysisId,
                             analysisData : res.selectAttribute,
@@ -110,8 +109,7 @@ export default {
         status = 0
         count = 0
 
-        axios.post('http://localhost:3000/api/analysis/start/1',{
-            analysisId : analysisId,
+        axios.post(`http://localhost:3000/api/analysis/start/${analysisId}`,{
             count : count,
             status : status,
             selectAttribute : selectAttribute,

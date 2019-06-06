@@ -8,8 +8,8 @@ import Register from "./views/Register.vue";
 import Modify from "./views/Modify";
 import TypeAnalysis from "./views/TypeAnalysis";
 import Analyzer from "./views/Analyzer";
-import LoginMe from "./views/LoginMe";
 import ManagerUser from "./views/ManagerUser";
+import Result from "./views/Result";
 
 
 Vue.use(Router);
@@ -54,29 +54,11 @@ export default new Router({
       }
     },
     {
-      path: "/loginme",
-      name: "loginme",
-      components: {
-        header: AppHeader,
-        default: LoginMe,
-        footer: AppFooter
-      }
-    },
-    {
       path: "/manageruser",
       name: "manageruser",
       components: {
         header: AppHeader,
         default: ManagerUser,
-        footer: AppFooter
-      }
-    },
-    {
-      path: "/loginme",
-      name: "loginme",
-      components: {
-        header: AppHeader,
-        default: LoginMe,
         footer: AppFooter
       }
     },
@@ -105,6 +87,15 @@ export default new Router({
       components: {
         header: AppHeader,
         default: Analyzer,
+        footer: AppFooter
+      },
+    },
+    {
+      path : "/result",
+      name : "result",
+      components: {
+        header: AppHeader,
+        default: Result,
         footer: AppFooter
       },
     }

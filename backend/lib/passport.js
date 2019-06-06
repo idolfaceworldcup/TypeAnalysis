@@ -15,11 +15,11 @@ module.exports = (app) => {
             let result
             if(user.authority === undefined) {
                 result = await account.getAccount(user.id)
-                done(null, result[0])
+                done(null, require('../model/account')(result[0]))
             }
             else {
                 result = await manager.getManager(user.id)
-                done(null, result[0])
+                done(null, require('../model/manager')(result[0]))
             }
         } catch(err) {
             return done(null, false, { message : 'DB ERROR'})

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../lib/auth')
+const account = require('../lib/account')
 const { check, validationResult } = require('express-validator/check');
 
 module.exports = (passport) => {
@@ -31,12 +32,13 @@ module.exports = (passport) => {
         const error = validationResult(req);
         console.log(req.body.account)
         if(!error.isEmpty()) {
-            return 500;
+            return res.sendStatus(500);
         }
-        res.sendStatus(await auth.regist(req, res, next));
+        res.sendStatus(await account.regist(req, res, next));
     })
 
     router.get('/exist', (req, res, next) => {
+        console.log('exist', req.user)
         res.send(req.user)
     })
     

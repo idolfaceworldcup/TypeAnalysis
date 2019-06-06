@@ -67,16 +67,25 @@ export default {
             })
             .then((response) => {
                if(response.data === '500') {
-                   alert('500 error')
-                   this.$router.push({
-                    name : "mainpage"
-                })
+                    alert('500 error')
+
+                    this.$router.push({
+                        name : "register"
+                    })
                }
+
+               else {
+                    alert('success')
+                    this.$router.push({
+                        name : "mainpage"
+                    })
+               }
+
             })
             .catch(function (error) {
                 alert(error)
                 this.$router.push({
-                    name : "mainpage"
+                    name : "register"
                 })
             })
         }

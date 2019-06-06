@@ -2,7 +2,7 @@
 module.exports = (obj) => {
     let account = {
         id : obj.id,
-        loginId : loginId
+        loginId : obj.loginId
     }
 
     return account;

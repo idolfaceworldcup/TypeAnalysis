@@ -193,7 +193,7 @@ exports.enableAnalysis = async (req, res, next) => {
 exports.analysisStart = async (req, res, next) => {
     let request = req.body
     let selectAttribute = request.selectAttribute
-    let analysisId = request.analysisId
+    let analysisId = req.params.analysisId
     let selectImageId = request.selectImageId
     let useImageId = request.useImageId
     let status = request.status
