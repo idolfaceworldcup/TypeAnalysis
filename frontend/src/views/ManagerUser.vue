@@ -1,15 +1,14 @@
 <template>
-
   <section class="section section-shaped section-lg my-0">
         <div class="shape shape-style-1 bg-gradient-success">
           <span></span>
           <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
         <div class="container pt-lg-md"> 
           <v-toolbar flat color="dark">
@@ -28,7 +27,6 @@
                 <v-card-title>
                   <span class="headline">{{ formTitle }}</span>
                 </v-card-title>
-
                 <v-card-text>
                   <v-container grid-list-md>
                     <v-layout wrap>
@@ -53,7 +51,6 @@
               </v-card>
             </v-dialog>
           </v-toolbar>
-
           <v-data-table
             v-model="selected"
             :headers="headers"

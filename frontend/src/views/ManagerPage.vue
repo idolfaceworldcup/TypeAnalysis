@@ -65,4 +65,3 @@ import router from "../router"
   };
 
 </script>
-

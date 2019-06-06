@@ -1,94 +1,85 @@
 <template>
-
   <section class="section section-shaped section-lg my-0">
         <div class="shape shape-style-1 bg-gradient-success">
-          <span></span>
-          <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
         <div class="container pt-lg-md"> 
-          <v-toolbar flat color="dark">
-            <h4>User Data</h4>
-            <v-divider
-              class="mx-2"
-              inset
-              vertical
-            ></v-divider>
-            <v-spacer></v-spacer>
-            <v-text-field
-                v-model="search"
-                append-icon="search"
-                label="Search"
-                single-line
-                hide-details
-            ></v-text-field>
-          </v-toolbar>
-
-          <v-data-table
-            v-model="selected"
-            :headers="headers"
-            :items="accounts"
-            :search="search"
-            item-key="loginId"
-            class="elevation-1"
-            prev-icon="mdi-menu-left"
-            next-icon="mdi-menu-right"
-            sort-icon="mdi-menu-down"
-          >
-            <template v-slot:items="props">
-              <td>{{ props.item.loginId }}</td>
-              <td class="text-xs-left">{{ props.item.modifiedDate }}</td>
-              <td class="justify-center layout px-0">
-                <base-button
-                  outline type = "secondary"
-                  @click="modal = true"
+            <v-card>
+                <v-card-title>
+                    User Data
+                <v-spacer></v-spacer>
+                    <v-text-field
+                      v-model="search"
+                      append-icon="search"
+                      label="Search"
+                      single-line
+                      hide-details>
+                    </v-text-field>
+                </v-card-title>
+                <v-data-table
+                    v-model="selected"
+                    :headers="headers"
+                    :items="accounts"
+                    :search="search"
+                    item-key="loginId"
+                    class="elevation-1"
+                    prev-icon="mdi-menu-left"
+                    next-icon="mdi-menu-right"
+                    sort-icon="mdi-menu-down"
                 >
-                  Analyzer result
-                </base-button>
-                <modal :show.sync="modal">
-                  <h6 slot="header" class="modal-title" id="modal-title-default">{{loginId}}님의 테스트 결과</h6>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                        Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
-                        right at the coast of the Semantics, a large language ocean.</p>
-                    <p>A small river named Duden flows by their place and supplies it with the necessary
-                        regelialia. It is a paradisematic country, in which roasted parts of sentences
-                        fly into your mouth.</p>
-                        
-                      <div>
-                          <img :src="require('../../public/img/analysis/image/analysis_man/강동원.jpg')">
-                      </div>
+                <template v-slot:items="props">
+                  <td>{{ props.item.loginId }}</td>
+                  <td class="text-xs-left">{{ props.item.modifiedDate }}</td>
+                  <td class="justify-center layout px-0">
+                    <base-button
+                    outline type = "secondary"
+                    @click="modal = true"
+                    >
+                    Analyzer result
+                    </base-button>
+                    <modal :show.sync="modal">
+                    <h6 slot="header" class="modal-title" id="modal-title-default">{{loginId}}님의 테스트 결과</h6>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia and
+                            Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
+                            right at the coast of the Semantics, a large language ocean.</p>
+                        <p>A small river named Duden flows by their place and supplies it with the necessary
+                            regelialia. It is a paradisematic country, in which roasted parts of sentences
+                            fly into your mouth.</p>
+                            
+                        <div>
+                            <img :src="require('../../public/img/analysis/image/analysis_man/강동원.jpg')">
+                        </div>
 
-                    <template slot="footer">
-                        <base-button type="link" class="ml-auto" @click="modals.modal1 = false">Close
-                        </base-button>
-                    </template>
-                </modal>
-                <base-button
-                  outline type = "danger"
-                  @click="deleteItem(props.item)"
-                >
-                  delete
-                </base-button>
-              </td>
-            </template>
-            <template v-slot:no-data>
-              <v-btn color="primary" @click="initialize">Reset</v-btn>
-            </template>
-            <template v-slot:no-results>
-                <v-alert :value="true" color="error" icon="warning">
-                Your search for "{{ search }}" found no results.
-                </v-alert>
-            </template>
-          </v-data-table>
+                      <template slot="footer">
+                          <base-button type="link" class="ml-auto" @click="modals.modal1 = false">Close
+                          </base-button>
+                      </template>
+                    </modal>
+                    <base-button
+                    outline type = "danger"
+                    @click="deleteItem(props.item)"
+                    >
+                    delete
+                    </base-button>
+                  </td>
+                </template>
+                <template v-slot:no-results>
+                    <v-alert :value="true" color="error" icon="warning">
+                    Your search for "{{ search }}" found no results.
+                    </v-alert>
+                </template>
+                </v-data-table>
+            </v-card>
         </div>
-  </section>
+    </section>
 </template>
-
 
 <script>
 import 'vuetify/dist/vuetify.min.css'
@@ -102,6 +93,7 @@ import Modal from "@/components/Modal.vue";
 
     data: () => ({
       modal : false,
+      search: '',
       selected: [],
       dialog: false,
       headers: [
