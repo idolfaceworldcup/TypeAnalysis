@@ -11,23 +11,23 @@
           <span></span>
         </div>
         <div class="container pt-lg-md"> 
-          <v-toolbar flat color="dark">
-            <h4>User Data</h4>
+          <v-card>
+            <v-card-title>
+              <div>
+                <h3 class="headline mb-0">User Data</h3>
+              </div>
             <v-divider
               class="mx-2"
               inset
               vertical
             ></v-divider>
             <v-spacer></v-spacer>
-            <v-dialog v-model="dialog" max-width="500px" height="300px">
-              <template v-slot:activator="{ on }">
-                <base-button outline type='secondary' v-on="on">New Item</base-button >
+            <base-button outline type='secondary' @click="modals.modal1 = true">New Data</base-button>
+            <modal :show.sync="modals.modal1">
+              <template slot="header">
+                <h5 class="modal-title">Input Image Data</h5>
               </template>
-              <v-card>
-                <v-card-title>
-                  <span class="headline">{{ formTitle }}</span>
-                </v-card-title>
-                <v-card-text>
+              <div>
                   <v-container grid-list-md>
                     <v-layout wrap>
                       <v-flex xs12 sm6 md4>
@@ -41,16 +41,16 @@
                       </v-flex>
                     </v-layout>
                   </v-container>
-                </v-card-text>
-
+              </div>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
                   <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
                 </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-toolbar>
+            </modal>
+            </v-card-title>
+          </v-card>
+            
           <v-data-table
             v-model="selected"
             :headers="headers"
@@ -68,11 +68,11 @@
               <td class="justify-center layout px-0">
                 <base-button
                   outline type = "secondary"
-                  @click="modal = true"
+                  @click="modals.modal2 = true"
                 >
                   Analyzer result
                 </base-button>
-                <modal :show.sync="modal">
+                <modal :show.sync="modals.modal2">
                   <h6 slot="header" class="modal-title" id="modal-title-default">{{loginId}}님의 테스트 결과</h6>
                     <p>Far far away, behind the word mountains, far from the countries Vokalia and
                         Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
@@ -86,7 +86,7 @@
                       </div>
 
                     <template slot="footer">
-                        <base-button type="link" class="ml-auto" @click="modals.modal1 = false">Close
+                        <base-button type="link" class="ml-auto" @click="modals.modal2 = false">Close
                         </base-button>
                     </template>
                 </modal>
@@ -117,7 +117,10 @@ import Modal from "@/components/Modal.vue";
     },
 
     data: () => ({
-      modal : false,
+      modals : {
+        modal1 : false,
+        modal2 : false
+      },
       selected: [],
       dialog: false,
       headers: [
