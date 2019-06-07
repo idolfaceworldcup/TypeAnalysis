@@ -68,17 +68,9 @@ export default {
             }
         }
     },
-
-    mounted () {
-        analysisData = this.$route.params.analysisData
-        analysisId = this.$route.params.analysisId
-        useImageId = this.$route.params.useImageId
-        this.result()
-    },
-
     methods: {
         result : function(){
-            axios.post(`http://localhpst:3000/api/analysis/result/${analysisId}`, [analysisData, useImageId])
+            axios.post(`http://localhost:3000/api/analysis/result/${analysisId}`, {analysisData : analysisData, useImageId : useImageId})
             .then((response) => {
                 alert(response.data.id)
                 alert(response.data.content)
@@ -86,7 +78,14 @@ export default {
 
             })
         }
-    }    
+    },
+    
+     mounted () {
+        analysisData = this.$route.params.analysisData
+        analysisId = this.$route.params.analysisId
+        useImageId = this.$route.params.useImageId
+        this.result()
+    }
 };
 </script>
 

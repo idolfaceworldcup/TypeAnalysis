@@ -76,7 +76,17 @@ exports.setting = async (req, res, next) => {
         return 401
     }
     
-    let status = await this.update(req.body.password, req.user.id)
+    let request = req.body
+
+    let result = await this.getAccount(req.user.id)
+
+    console.log(request.account)
+
+    if(request.account.password !== result[0].password) {
+        return 412
+    }
+
+    let status = await this.update(request.account.newpassword, req.user.id)
 
     return status
 }

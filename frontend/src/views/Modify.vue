@@ -20,12 +20,12 @@
                         <template>
                             <div id = "modify">
                                 <form role="form">
-                                    <base-input v-model="password"
+                                    <base-input v-model="account.password"
                                                 type="password"
                                                 placeholder="Present Password"
                                                 addon-left-icon="ni ni-lock-circle-open">
                                     </base-input>
-                                    <base-input v-model="newpassword"
+                                    <base-input v-model="account.newpassword"
                                                 type="password"
                                                 placeholder="New Password"
                                                 addon-left-icon="ni ni-lock-circle-open">
@@ -51,7 +51,7 @@ let id
 export default {
     data : function() {
         return {
-            user : {
+            account : {
                 password: '',
                 newpassword: ''
             }
@@ -59,13 +59,10 @@ export default {
     },
     methods:{
         getUserData: function() {
-            axios.get('http://localhost:3000/api/auth/regist/exist')
+            axios.get('http://localhost:3000/api/auth/exist')
             .then((response) => {
-                if(response.data !== undefined) {
-                    id = response.data.id
-                }
-
-                else {
+                if(response.data.id === undefined) {
+                    alert('not login')
                     this.$router.push({
                         name : "mainpage"
                     })
@@ -78,22 +75,24 @@ export default {
             })
         },
         modify: function(event) {
-            axios.put(`http://localhost:3000/api/user/setting/${id}`, {
-                user: this.user
+            axios.put(`http://localhost:3000/api/user/setting`, {
+                account: this.account
             })
             .then((response) => {
                 alert ('Success Modify Account')
-            })
-            .catch(function (error) {
                 this.$router.push({
                     name : "mainpage"
                 })
+            })
+            .catch(function (error) {
+                alert(error)
             })
         }
     },
 
     mounted() {
         this.getUserData()
+        alert('hi')
     }
 }
 </script>

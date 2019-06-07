@@ -1,6 +1,6 @@
 // view page result
 module.exports = (obj) => {
-    var result = {
+    let result = {
         id : obj.id,
         content : obj.content,
         date : obj.date,

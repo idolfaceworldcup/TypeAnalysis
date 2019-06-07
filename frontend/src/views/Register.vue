@@ -52,7 +52,7 @@ import axios from 'axios'
 export default {
     data : function() {
         return {
-            account :{
+            account : {
                 loginId : '',
                 password: '',
                 passwordValid: ''
@@ -63,7 +63,7 @@ export default {
     methods : {
         signup: function(event){
             axios.post('http://localhost:3000/api/auth/regist',{
-                account: this.account
+                account : this.account
             })
             .then((response) => {
                if(response.data === '500') {

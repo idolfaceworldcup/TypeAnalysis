@@ -65,6 +65,10 @@ export default {
       }
     },
 
+    watch: {
+        '$route': 'authentication'
+    },
+
     methods:{
         authentication: function() {
         axios.get('http://localhost:3000/api/auth/exist')
@@ -72,7 +76,6 @@ export default {
           if(response.data.id !== undefined) {
             this.user.name = response.data.loginId
             this.user.id = response.data.id
-            alert(this.user.name)
           }
         })
         .catch((error) => {

@@ -1,7 +1,7 @@
 const result = require('../db/query/result')
 const pool = require('../db/pool')
 const value = require('./value')
-const image = require('./value')
+const image = require('./image')
 const attribute = require('./attribute')
 const auth = require('./auth')
 
@@ -11,7 +11,7 @@ exports.createResult = async (content, imageId, analysisId, accountId) => {
         let row = await result.insert(conn, content, imageId, analysisId, accountId)
         await conn.release()
 
-        return row.insertId
+        return row
     } catch (err) {
         return 500
     }
@@ -20,7 +20,7 @@ exports.createResult = async (content, imageId, analysisId, accountId) => {
 exports.getResult = async (id) => {
     try {
         let conn = await pool.getConnection()
-        let row = await result.findById(id)
+        let row = await result.findById(conn, id)
         await conn.release()
 
         return row
@@ -73,18 +73,19 @@ exports.userResultView = async (req, res, next) => {
 
 exports.analysisResult = async (req, res, next) => {
     let request = req.body
-    let analysisId = req.params.analysisId
+    let analysisId = parseInt(req.params.analysisId)
     let analysisData = request.analysisData
     let useImageId = request.useImageId
     let attributes = await attribute.getAttribute(analysisId)
     let values = await value.getKindOfValue(analysisId)
     let attributesLength = attributes.length
-
     let ideals = []
     let condition = []
     let conditionNum = 0
     let query = 'a.analysisId = ?'
     condition.push(analysisId)
+
+    console.log(analysisId)
 
     for(let i = 0; i < attributesLength; ++i) {
         let ideal = {
@@ -94,7 +95,11 @@ exports.analysisResult = async (req, res, next) => {
         }
 
         for(let v of values) {
-            let count = (analysisData[attributes[i].id][v.value])[0]
+            if(v.attributeId !== attributes[i].id) {
+                continue
+            }
+
+            let count = analysisData[attributes[i].id][v.value][0]
             
             if(ideal.count === count) {
                 ideal.value = -1
@@ -103,18 +108,19 @@ exports.analysisResult = async (req, res, next) => {
 
             else if(ideal.count < count) {
                 ideal.value = v.value
-                ideal.count = (analysisData[a.id][v.value])[0]
+                ideal.count = analysisData[attributes[i].id][v.value][0]
             }
         }
 
         if(ideal.value !== -1) {
-            if(conditioNum === 0) {
+            if(conditionNum === 0) {
                 query = query + ' and '
             }
+
             ++conditionNum
 
             query = query + '(attributeId = ? and value = ?)'
-            condition.push(a.id)
+            condition.push(attributes[i].id)
             condition.push(ideal.value)
 
             if(i !== attributesLength - 1) {
@@ -124,9 +130,13 @@ exports.analysisResult = async (req, res, next) => {
         ideals.push(ideal)
     }
 
+    console.log(analysisData)
+    console.log(ideals)
+
     let content = '저희는 당신이 좋아하는 이상형을 분석하기 위해 다양한 기준을 마련했습니다.<br/>당신이 선택한 이미지들을 종합하고 분석하여 당신의 이상형을 이러한 기준에 따라 보여드리겠습니다.<br/>'
 
     if(analysisId === 1) {
+        console.log('go')
         for(let i = 0; i < ideals.length; ++i) {
             content = content + ideals[i].attribute + '<br/>' + '당신은 ' + ideals[i].value + ' 를(을) 선호합니다.<br/>'
         }
@@ -158,15 +168,17 @@ exports.analysisResult = async (req, res, next) => {
     }
 
     if(imageId === 0) {
-        let randomIndex = Math.floor(Math.random() * resultLength)
-        imageId = result[randomIndex].imageId
+        let randomIndex = Math.floor(Math.random() * idealImages.length)
+        imageId = idealImages[randomIndex].imageId
     }
 
     let accountId = auth.isLogin(req, res, next) ? req.user.id : null
 
-    let id = await this.createResult(content, imageId, analysisId, accountId)
+    let creating = await this.createResult(content, imageId, analysisId, accountId)
 
-    let response = require('../model/result')(await this.getResult(id))
+    let data = await this.getResult(creating.insertId)
+
+    let response = require('../model/result')(data[0])
 
     return response
 }

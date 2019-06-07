@@ -30,9 +30,8 @@ module.exports = (passport) => {
         check('account.passwordValid').exists().custom((value, { req }) => value === req.body.account.password)
     ], async (req, res, next) => {
         const error = validationResult(req);
-        console.log(req.body.account)
         if(!error.isEmpty()) {
-            return res.sendStatus(500);
+            return res.sendStatus(412);
         }
         res.sendStatus(await account.regist(req, res, next));
     })
