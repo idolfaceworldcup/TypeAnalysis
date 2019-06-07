@@ -3,16 +3,19 @@
         <div class="shape shape-style-1 bg-gradient-success">
           <span></span>
           <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
         <div class="container pt-lg-md"> 
-          <v-toolbar flat color="dark">
-            <v-toolbar-title>Image Data</v-toolbar-title>
+          <v-card>
+            <v-card-title>
+              <div>
+                <h3 class="headline mb-0">Image Data</h3>
+              </div>
             <v-divider
               class="mx-2"
               inset
@@ -27,74 +30,53 @@
               <div>
                 <v-container grid-list-md>
                       <v-layout wrap>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.loginId" label="LoginID"></v-text-field>
+                        <v-flex xs4 md4>
+                          <v-text-field v-model="editedItem.name" label="name"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.hairstyle" label="eyes"></v-text-field>
+                          <v-text-field v-model="editedItem.hairlength" label="hairlength"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.eyes" label="colors"></v-text-field>
+                          <v-text-field v-model="editedItem.hairstyle" label="hairstyle"></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 sm6 md4>
+                          <v-text-field v-model="editedItem.eyes" label="eyes"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
                           <v-text-field v-model="editedItem.colors" label="colors"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.humanRace" label="colors"></v-text-field>
+                          <v-text-field v-model="editedItem.humanRace" label="humanRace"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.style" label="colors"></v-text-field>
+                          <v-text-field v-model="editedItem.style" label="style"></v-text-field>
                         </v-flex>
                       </v-layout>
                     </v-container>
               </div>
               <template>
+                <div>
+                  <!-- Styled -->
+                  <b-form-file
+                    v-model="file"
+                    :state="Boolean(file)"
+                    placeholder="Choose a file..."
+                    drop-placeholder="Drop file here..."
+                  ></b-form-file>
+                  <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div>
+
+                  <!-- Plain mode -->
+                  <b-form-file v-model="file2" class="mt-3" plain></b-form-file>
+                  <div class="mt-3">Selected file: {{ file2 ? file2.name : '' }}</div>
+                </div>
+              </template>
+              <template>
                 <base-button type="secondary" @click="modals.modal1 = false"> Close </base-button>
                 <base-button type="secondary" @click="save"> Save </base-button>
               </template>
             </modal>
-            <v-dialog v-model="dialog" width="500">
-              <template v-slot:activator="{on}">
-                <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
-              </template>
-              <v-card>
-                <v-card-title>
-                  <span class="headline">{{formTitle}}</span>
-                </v-card-title>
-
-                <v-card-text>
-                  <v-container grid-list-md>
-                      <v-layout wrap>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.loginId" label="LoginID"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.hairstyle" label="eyes"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.eyes" label="colors"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.colors" label="colors"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.humanRace" label="colors"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                          <v-text-field v-model="editedItem.style" label="colors"></v-text-field>
-                        </v-flex>
-                      </v-layout>
-                    </v-container>
-                </v-card-text>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-                    <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-toolbar>
+            </v-card-title>
+          </v-card>
           <v-data-table
             v-model="selected"
             :headers="headers"
@@ -154,6 +136,8 @@ import ImageUploader from 'vue-image-upload-resize'
         Modal
     },
     data: () => ({
+      file: null,
+      file2: null,
       modals :{
                 modal1 : false,
                 modal2 : false
@@ -164,13 +148,12 @@ import ImageUploader from 'vue-image-upload-resize'
         {
           text: '이미지 이름',
           align: 'left',
-          sortable: false,
           value: 'name'
         },
-        { text: '머리길이', value: 'hairlength' },
-        { text: '앞머리', value: 'hairstyle' },
-        { text: '눈 종류', value: 'eyes' },
-        { text: '피부색', value: 'colors' },
+        { text: '머리길이', value: 'hairlength',sortable: false },
+        { text: '앞머리', value: 'hairstyle',sortable: false },
+        { text: '눈 종류', value: 'eyes',sortable: false },
+        { text: '피부색', value: 'colors',sortable: false },
         { text: '인종', value: 'humanRace', sortable: false },
         { text: '스타일', value: 'style', sortable: false }
       ],
@@ -178,21 +161,21 @@ import ImageUploader from 'vue-image-upload-resize'
       editedIndex: -1,
       editedItem: {
         name: '',
-        hairlength: 0,
-        hairstyle: 0,
-        eyes: 0,
-        colors: 0,
-        humanRace: 0,
-        style: 0
+        hairlength: '',
+        hairstyle: '',
+        eyes: '',
+        colors: '',
+        humanRace: '',
+        style: ''
       },
       defaultItem: {
         name: '',
-        hairlength: 0,
-        hairstyle: 0,
-        caeyesrbs: 0,
-        colors: 0,
-        humanRace: 0,
-        style: 0
+        hairlength: '',
+        hairstyle: '',
+        eyes: '',
+        colors: '',
+        humanRace: '',
+        style: ''
       }
     }),
 
@@ -217,75 +200,75 @@ import ImageUploader from 'vue-image-upload-resize'
         this.ImageData = [
           {
             name: 'Frozen Yogurt',
-            hairlength: 159,
-            hairstyle: 6.0,
-            eyes: 24,
-            colors: 4.0,
-            humanRace: 0,
-            style: 0
+            hairlength: '장발',
+            hairstyle: '내림',
+            eyes: '고양이',
+            colors: '흰 피부',
+            humanRace: '백인',
+            style: '훈훈'
           },
           {
             name: 'Ice cream sandwich',
-            hairlength: 237,
-            hairstyle: 9.0,
-            eyes: 37,
-            colors: 4.3,
-            humanRace: 0,
-            style: 0
+            hairlength: '장발',
+            hairstyle: '내림',
+            eyes: '고양이',
+            colors: '흰 피부',
+            humanRace: '백인',
+            style: '훈훈'
           },
           {
             name: 'Eclair',
-            hairlength: 262,
-            hairstyle: 16.0,
-            eyes: 23,
-            colors: 6.0,
-            humanRace: 0,
-            style: 0
+            hairlength: '장발',
+            hairstyle: '내림',
+            eyes: '고양이',
+            colors: '흰 피부',
+            humanRace: '백인',
+            style: '훈훈'
           },
           {
             name: 'Cupcake',
-            hairlength: 305,
-            hairstyle: 3.7,
-            eyes: 67,
-            colors: 4.3,
-            humanRace: 0,
-            style: 0
+            hairlength: '장발',
+            hairstyle: '내림',
+            eyes: '고양이',
+            colors: '흰 피부',
+            humanRace: '백인',
+            style: '훈훈'
           },
           {
             name: 'Gingerbread',
-            hairlength: 356,
-            hairstyle: 16.0,
-            eyes: 49,
-            colors: 3.9,
-            humanRace: 0,
-            style: 0
+            hairlength: '장발',
+            hairstyle: '내림',
+            eyes: '고양이',
+            colors: '흰 피부',
+            humanRace: '백인',
+            style: '훈훈'
           },
           {
             name: 'Jelly bean',
-            hairlength: 375,
-            hairstyle: 0.0,
-            eyes: 94,
-            colors: 0.0,
-            humanRace: 0,
-            style: 0
+            hairlength: '장발',
+            hairstyle: '내림',
+            eyes: '고양이',
+            colors: '흰 피부',
+            humanRace: '백인',
+            style: '훈훈'
           },
           {
             name: 'Lollipop',
-            hairlength: 392,
-            hairstyle: 0.2,
-            eyes: 98,
-            colors: 0,
-            humanRace: 0,
-            style: 0
+            hairlength: '장발',
+            hairstyle: '내림',
+            eyes: '고양이',
+            colors: '흰 피부',
+            humanRace: '백인',
+            style: '훈훈'
           },
           {
             name: 'Honeycomb',
-            hairlength: 408,
-            hairstyle: 3.2,
-            careyesbs: 87,
-            colors: 6.5,
-            humanRace: 0,
-            style: 0
+            hairlength: '장발',
+            hairstyle: '내림',
+            eyes: '고양이',
+            colors: '흰 피부',
+            humanRace: '백인',
+            style: '훈훈'
           }
         ]
       },

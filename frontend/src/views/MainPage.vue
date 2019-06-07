@@ -11,8 +11,10 @@
                 <span></span>
     </div>
     <div class="container pt-lg-md"> 
+      <h1>{{ msg }}</h1>   
       <h3> Name : {{user.name}} 님</h3>
-      <h1>{{ msg }}</h1>      
+      <base-button type="Default" @click="gotoUserpage">MYPAGE</base-button>
+      <base-button type="Default" @click="logoutUser">LOGOUT</base-button>
       <section class="section section--demo-2">
       <div class="container-fluid">
         <div row>
@@ -66,6 +68,21 @@ import router from "../router"
     },
 
     methods:{
+      gotoUserpage: function() {
+        this.$router.push({
+              name : "userpage",
+        })
+      },
+      logoutUser: function(){
+        axios.get('http://localhost:3000/api/auth/logout')
+        .then((response) => {
+          if(response.data === 200){
+            this.$router.push({
+              name : "mainpage",
+            })
+          }
+        })
+      },
       getUserData: function() {
         axios.get('http://localhost:3000/api/auth/exist')
         .then((response) => {
@@ -81,14 +98,12 @@ import router from "../router"
         })
       }
     },
-
     mounted () {
         this.getUserData()
     }
   };
 
 </script>
-
 
 <style lang="sass">
 
@@ -149,6 +164,4 @@ import router from "../router"
 				display: block
 				object-fit: cover
 				width: 100%
-        
-
 </style>
