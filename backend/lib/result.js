@@ -62,10 +62,18 @@ exports.userResultView = async (req, res, next) => {
     if(!auth.isLogin(req, res, next)) {
         return 401
     }
+
+    console.log(req.params.id)
     
-    let row = await this.getResult(req.body.id)
+    let row = await this.getResult(req.params.id)
+
+    console.log(row)
 
     let response = require('../model/result')(row[0])
+
+    response.imagePath = response.imagePath.replace('\\', '/')
+
+    console.log(response)
 
     return response
 }
@@ -84,8 +92,6 @@ exports.analysisResult = async (req, res, next) => {
     let conditionNum = 0
     let query = 'a.analysisId = ?'
     condition.push(analysisId)
-
-    console.log(analysisId)
 
     for(let i = 0; i < attributesLength; ++i) {
         let ideal = {
@@ -130,13 +136,9 @@ exports.analysisResult = async (req, res, next) => {
         ideals.push(ideal)
     }
 
-    console.log(analysisData)
-    console.log(ideals)
-
     let content = '저희는 당신이 좋아하는 이상형을 분석하기 위해 다양한 기준을 마련했습니다.<br/>당신이 선택한 이미지들을 종합하고 분석하여 당신의 이상형을 이러한 기준에 따라 보여드리겠습니다.<br/>'
 
     if(analysisId === 1) {
-        console.log('go')
         for(let i = 0; i < ideals.length; ++i) {
             content = content + ideals[i].attribute + '<br/>' + '당신은 ' + ideals[i].value + ' 를(을) 선호합니다.<br/>'
         }
@@ -179,6 +181,8 @@ exports.analysisResult = async (req, res, next) => {
     let data = await this.getResult(creating.insertId)
 
     let response = require('../model/result')(data[0])
+
+    response.imagePath = response.imagePath.replace('\\', '/')
 
     return response
 }

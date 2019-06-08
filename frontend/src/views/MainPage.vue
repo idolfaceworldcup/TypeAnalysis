@@ -13,8 +13,8 @@
     <div class="container pt-lg-md"> 
       <h1>{{ msg }}</h1>   
       <h3> Name : {{user.name}} 님</h3>
-      <base-button type="Default" @click="gotoUserpage">MYPAGE</base-button>
-      <base-button type="Default" @click="logoutUser">LOGOUT</base-button>
+      <base-button type="Default" @click="gotoMyPage" v-if="user.id !== 0">MYPAGE</base-button>
+      <base-button type="Default" @click="logoutUser" v-if="user.id !== 0">LOGOUT</base-button>
       <section class="section section--demo-2">
       <div class="container-fluid">
         <div row>
@@ -68,19 +68,20 @@ import router from "../router"
     },
 
     methods:{
-      gotoUserpage: function() {
+      gotoMyPage: function() {
         this.$router.push({
-              name : "userpage",
+            name : "mypage",
         })
       },
       logoutUser: function(){
         axios.get('http://localhost:3000/api/auth/logout')
         .then((response) => {
-          if(response.data === 200){
             this.$router.push({
-              name : "mainpage",
+              name : "process"
             })
-          }
+        })
+        .catch((error) => {
+
         })
       },
       getUserData: function() {
@@ -92,9 +93,7 @@ import router from "../router"
           }
         })
         .catch((error) => {
-          this.$router.push({
-            name : "mainpage",
-          })
+          
         })
       }
     },

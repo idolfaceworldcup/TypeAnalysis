@@ -65,10 +65,6 @@ export default {
       }
     },
 
-    watch: {
-        '$route': 'authentication'
-    },
-
     methods:{
         authentication: function() {
         axios.get('http://localhost:3000/api/auth/exist')

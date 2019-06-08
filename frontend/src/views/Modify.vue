@@ -92,7 +92,6 @@ export default {
 
     mounted() {
         this.getUserData()
-        alert('hi')
     }
 }
 </script>

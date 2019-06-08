@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import AppHeader from "./layout/AppHeader";
+import ManagerHeader from "./layout/ManagerHeader";
 import AppFooter from "./layout/AppFooter";
 import MainPage from "./views/MainPage.vue";
 import Login from "./views/Login.vue";
@@ -8,8 +9,13 @@ import Register from "./views/Register.vue";
 import Modify from "./views/Modify";
 import TypeAnalysis from "./views/TypeAnalysis";
 import Analyzer from "./views/Analyzer";
-import ManagerUser from "./views/ManagerUser";
 import Result from "./views/Result";
+import MyPage from "./views/MyPage"
+import ManagerLogin from "./views/ManagerLogin";
+import ManageImage from "./views/ManageImage";
+import ManageUser from "./views/ManageUser";
+import ManagePage from "./views/ManagePage";
+import Process from "./views/Process";
 
 
 Vue.use(Router);
@@ -54,15 +60,6 @@ export default new Router({
       }
     },
     {
-      path: "/manageruser",
-      name: "manageruser",
-      components: {
-        header: AppHeader,
-        default: ManagerUser,
-        footer: AppFooter
-      }
-    },
-    {
       path: "/modify",
       name: "modify",
       components: {
@@ -98,6 +95,65 @@ export default new Router({
         default: Result,
         footer: AppFooter
       },
+    },
+    {
+      path : "/mypage",
+      name : "mypage",
+      components: {
+        header: AppHeader,
+        default: MyPage,
+        footer: AppFooter
+      },
+    },
+    {
+      path : "/management/login",
+      name : "managerlogin",
+      components: {
+        default: ManagerLogin
+      },
+    },
+    {
+      path : "/management",
+      name : "managepage",
+      components: {
+        header: ManagerHeader,
+        default: ManagePage,
+        footer: AppFooter
+      },
+    },
+    {
+      path : "/management/image",
+      name : "manageimage",
+      components: {
+        header: ManagerHeader,
+        default: ManageImage,
+        footer: AppFooter
+      },
+    },
+    {
+      path: "/management/user",
+      name: "manageuser",
+      components: {
+        header: ManagerHeader,
+        default: ManageUser,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/management/user",
+      name: "manageuser",
+      components: {
+        header: ManagerHeader,
+        default: ManageUser,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/wait/process",
+      name: "process",
+      components: {
+        default: Process
+      }
     }
   ],
 

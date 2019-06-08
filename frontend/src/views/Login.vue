@@ -74,13 +74,10 @@ export default {
             .then((response) => {
                 alert('success login')
                 this.$router.push({
-                    name : "mainpage"
+                    name : "process"
                 })
             }).catch(error => {
                 alert(error)
-                this.$router.push({
-                    name : "login"
-                })
             })
         }
     }    

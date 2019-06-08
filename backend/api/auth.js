@@ -20,7 +20,7 @@ module.exports = (passport) => {
         successFlash : false
     }))
 
-    router.post('/logout', (req, res, next) => {
+    router.get('/logout', (req, res, next) => {
         res.send(auth.logout(req, res, next))
     })
 

@@ -2,7 +2,8 @@ var connector = {
     host:'',
     user:'',
     password:'',
-    database:''
+    database:'',
+    dateStrings: 'date'
 }
 
 module.exports = connector;

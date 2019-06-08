@@ -275,7 +275,6 @@ import ImageUploader from 'vue-image-upload-resize'
       setImage: function(output) {
         this.hasImage = true;
         this.image = output;
-        console.log(this.image);
       },
 
       editItem (item) {

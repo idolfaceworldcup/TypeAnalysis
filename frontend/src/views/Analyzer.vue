@@ -41,10 +41,10 @@ export default {
     data: () => ({
         mans:[
             {  
-                href : require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/analysis_man/강동원.jpg`),
+                href : require(`../../public/img/analysis/image/analysis_man/강동원.jpg`),
                 id : 1
             },{  
-                href : require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/analysis_man/강동원.jpg`),
+                href : require(`../../public/img/analysis/image/analysis_man/강동원.jpg`),
                 id : 2
             }
         ],
@@ -82,9 +82,9 @@ export default {
 
                 else {
                     this.mans[0].id = res.image[0].id
-                    this.mans[0].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/${res.image[0].path}`)
+                    this.mans[0].href = require(`../../public/img/analysis/image/${res.image[0].path}`)
                     this.mans[1].id = res.image[1].id
-                    this.mans[1].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/${res.image[1].path}`)
+                    this.mans[1].href = require(`../../public/img/analysis/image/${res.image[1].path}`)
 
                     selectAttribute = res.selectAttribute
                     useImageId = res.useImageId
@@ -119,10 +119,10 @@ export default {
         .then((response) => {
             let res = response.data
             folder = res.folder
-            this.mans[0].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/${res.image[0].path}`)
+            this.mans[0].href = require(`../../public/img/analysis/image/${res.image[0].path}`)
             this.mans[0].id = res.image[0].id
             this.mans[1].id = res.image[1].id
-            this.mans[1].href = require(`C:/Users/user/Desktop/study/Tool/nodejs/TypeAnalysis/frontend/public/img/analysis/image/${res.image[1].path}`)
+            this.mans[1].href = require(`../../public/img/analysis/image/${res.image[1].path}`)
 
             selectAttribute = res.selectAttribute
             useImageId = res.useImageId

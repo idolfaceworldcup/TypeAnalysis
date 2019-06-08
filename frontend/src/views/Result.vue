@@ -23,16 +23,9 @@
                             </base-button>
                             <modal :show.sync="modals.modal1">
                                 <h6 slot="header" class="modal-title" id="modal-title-default">{{loginId}}님의 테스트 결과</h6>
-
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                    Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
-                                    right at the coast of the Semantics, a large language ocean.</p>
-                                <p>A small river named Duden flows by their place and supplies it with the necessary
-                                    regelialia. It is a paradisematic country, in which roasted parts of sentences
-                                    fly into your mouth.</p>
-                                    
+                                <p v-html="content"></p>
                                     <div>
-                                        <img :src="require('../../public/img/analysis/image/analysis_man/강동원.jpg')">
+                                        <img :src="require(`../../public/img/analysis/image/${path}`)">
                                     </div>
                                 <template slot="footer">
                                     <base-button type="link" class="ml-auto" @click="modals.modal1 = false">Close
@@ -64,19 +57,33 @@ export default {
         
         return {
             modals : {
-                modal1 : false
-            }
+                modal1 : false,
+            },
+            content : '<span>hi<br/></span>bye',
+            loginId : 'Guest',
+            path : 'analysis_man/강동원.jpg'
         }
     },
     methods: {
         result : function(){
             axios.post(`http://localhost:3000/api/analysis/result/${analysisId}`, {analysisData : analysisData, useImageId : useImageId})
             .then((response) => {
-                alert(response.data.id)
-                alert(response.data.content)
+                this.content = response.data.content
+                this.path = response.data.imagePath
             }).catch(error => {
 
             })
+        },
+        getUserData: function() {
+        axios.get('http://localhost:3000/api/auth/exist')
+        .then((response) => {
+          if(response.data.id !== undefined) {
+            this.loginId = response.data.loginId
+          }
+        })
+        .catch((error) => {
+
+        })
         }
     },
     
@@ -84,6 +91,7 @@ export default {
         analysisData = this.$route.params.analysisData
         analysisId = this.$route.params.analysisId
         useImageId = this.$route.params.useImageId
+        this.getUserData()
         this.result()
     }
 };
