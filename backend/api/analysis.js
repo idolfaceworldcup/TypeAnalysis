@@ -3,6 +3,7 @@ const router = express.Router();
 const analysis = require('../lib/analysis')
 const result = require('../lib/result')
 const image = require('../lib/image')
+const file = require('../lib/file')
 
 router.get('/analysises', async (req, res, next) => {
     res.send(await analysis.enableAnalysis(req, res, next))
@@ -17,12 +18,16 @@ router.post('/result/:analysisId', async (req, res, next) => {
     res.send(await result.analysisResult(req, res, next))
 })
 
-router.get('/management/image', async (req, res, next) => {
+router.get('/management/image/:analysisId', async (req, res, next) => {
     res.send(await image.imageTable(req, res, next))
 })
 
-router.get('/management/image/:id', async (req, res, next) => {
+router.get('/management/image/value/:id', async (req, res, next) => {
     res.send(await image.imageView(req, res, next))
+})
+
+router.get('/management/image/attribute/:analysisId', async (req, res, next) => {
+    res.send(await image.setImageForm(req, res, next))
 })
 
 router.post('/management/attribute', async (req, res, next) => {
@@ -31,6 +36,32 @@ router.post('/management/attribute', async (req, res, next) => {
 
 router.post('/management/image', async (req, res, next) => {
     res.send(await image.imageAdd(req, res, next))
+})
+
+router.delete('/management/image/:id', async (req, res, next) => {
+    res.sendStatus(await image.imageDelete(req, res, next))
+})
+
+router.post('/image/upload/man', async (req, res, next) => {
+    let upload = await file.manUpload(req, res, next)
+    upload(req, res, err => {
+        if (err) {
+            res.sendStatus(500)
+        }
+        
+        res.send(req.file.filename)
+    })
+})
+
+router.post('/image/upload/woman', async (req, res, next) => {
+    let upload = await file.womanUpload(req, res, next)
+    upload(req, res, err => {
+        if (err) {
+            res.sendStatus(500)
+        }
+
+        res.send(req.file.filename)
+    })
 })
 
 module.exports = router;

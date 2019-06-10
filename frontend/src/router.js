@@ -12,6 +12,7 @@ import Analyzer from "./views/Analyzer";
 import Result from "./views/Result";
 import MyPage from "./views/MyPage"
 import ManagerLogin from "./views/ManagerLogin";
+import ManageAnalysis from "./views/ManageAnalysis";
 import ManageImage from "./views/ManageImage";
 import ManageUser from "./views/ManageUser";
 import ManagePage from "./views/ManagePage";
@@ -114,7 +115,7 @@ export default new Router({
     },
     {
       path : "/management",
-      name : "managepage",
+      name : "management",
       components: {
         header: ManagerHeader,
         default: ManagePage,
@@ -122,22 +123,22 @@ export default new Router({
       },
     },
     {
-      path : "/management/image",
+      path : "/management/analysis",
+      name : "manageanalysis",
+      components: {
+        header: ManagerHeader,
+        default: ManageAnalysis,
+        footer: AppFooter
+      },
+    },
+    {
+      path : "/management/image/:analysisId",
       name : "manageimage",
       components: {
         header: ManagerHeader,
         default: ManageImage,
         footer: AppFooter
       },
-    },
-    {
-      path: "/management/user",
-      name: "manageuser",
-      components: {
-        header: ManagerHeader,
-        default: ManageUser,
-        footer: AppFooter
-      }
     },
     {
       path: "/management/user",

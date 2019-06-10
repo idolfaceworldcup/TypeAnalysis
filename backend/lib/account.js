@@ -2,6 +2,18 @@ const account = require('../db/query/account')
 const pool = require('../db/pool')
 const auth = require('../lib/auth')
 
+exports.getAllAccount = async () => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await account.findAll(conn)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
 exports.login = async (loginId, password) => {
     try {
         let conn = await pool.getConnection()
@@ -55,7 +67,7 @@ exports.update = async (password, id) => {
 exports.delete = async (id) => {
     try {
         let conn = await pool.getConnection()
-        await account.delete(conn, id)
+        await account.delete(id)
         await conn.release()
 
         return 200
@@ -63,6 +75,30 @@ exports.delete = async (id) => {
     catch (err) {
         return 500
     }
+}
+
+exports.multiDelete = async (ids) => {
+    try {
+        let conn = await pool.getConnection()
+        await conn.beginTransaction()
+
+        try {
+            for(id of ids) {
+                await account.delete(conn, id)
+            }
+        } catch(err) {
+                await conn.rollback();
+                await conn.release();
+                return 500
+        }
+        await conn.commit()
+        await conn.release()
+    }
+    catch (err) {
+        return 500
+    }
+
+    return 200
 }
 
 exports.regist = async (req, res, next) => {
@@ -80,13 +116,39 @@ exports.setting = async (req, res, next) => {
 
     let result = await this.getAccount(req.user.id)
 
-    console.log(request.account)
-
     if(request.account.password !== result[0].password) {
         return 412
     }
 
     let status = await this.update(request.account.newpassword, req.user.id)
 
+    return status
+}
+
+exports.accountTable = async (req, res, next) => {
+    let result = await this.getAllAccount()
+    let response = []
+
+    for(let r of result) {
+        let model = require('../model/account')(r)
+        response.push(model)
+    }
+
+    return response
+}
+
+exports.settingFromManager = async (req, res, next) => {
+    let request = req.body
+
+    console.log(request.account)
+
+    let status = await this.update(request.account.password, request.account.id)
+
+    return status
+}
+
+exports.deleteAccount = async (req, res, next) => {
+    let status = await this.delete(req.params.id)
+    
     return status
 }

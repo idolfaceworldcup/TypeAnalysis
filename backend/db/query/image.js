@@ -8,6 +8,16 @@ exports.findByAnalysisId = async (conn, analysisId) => {
     }
 }
 
+exports.findById = async (conn, id) => {
+    try {
+        let result = await conn.query('select * from image where id = ?', [id])
+        
+        return result
+    } catch(err) {
+        return 500
+    }
+}
+
 exports.findByAnalysisIdAndIds = async (conn, analysisId, id1, id2) => {
     try {
         let result = await conn.query('select * from image where analysisId = ? and (id = ? or id = ?)', [analysisId, id1, id2])

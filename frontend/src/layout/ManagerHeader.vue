@@ -2,7 +2,7 @@
     <header class="header-global">
         
             <base-nav class="navbar-main" transparent type="" effect="light" expand>
-                <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
+                <router-link slot="brand" class="navbar-brand mr-lg-5" to="/management">
                     <img src="img/brand/logo.png" alt="logo">
                 </router-link>
                 <a class="navbar-brand" href="#"></a>
@@ -13,10 +13,8 @@
                             <i class="ni ni-collection d-lg-none"></i>
                             <span class="nav-link-inner--text">MENU</span>
                         </a>
-                        
-                        <router-link to="/managerlogin" class="dropdown-item">Login</router-link>
-                        <router-link to="/manageruser" class="dropdown-item">User Manage</router-link>
-                        <router-link to="/managerpic" class="dropdown-item">Pic Manage</router-link>
+                        <router-link to="/management/user" class="dropdown-item">User Management</router-link>
+                        <router-link to="/management/analysis" class="dropdown-item">Analysis Management</router-link>
                     </base-dropdown>
                 </ul>
                 <ul class="navbar-nav ml-lg-auto">

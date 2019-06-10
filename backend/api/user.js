@@ -12,6 +12,11 @@ router.get('/result/:id', async (req, res, next) => {
     res.send(await result.userResultView(req, res, next));
 })
 
+router.delete('/management/account/:id', async (req, res, next) => {
+    res.sendStatus(await account.deleteAccount(req, res, next));
+})
+
+
 router.put('/setting',  [
     check('account.password').isLength( { max : 20, min : 4 } ),
     check('account.newpassword').isLength( { max : 20, min : 4 } )
@@ -21,6 +26,21 @@ router.put('/setting',  [
         return res.sendStatus(412);
     }
     res.sendStatus(await account.setting(req, res, next));
+})
+
+router.get('/management/account', async (req, res, next) => {
+    res.send(await account.accountTable(req, res, next));
+})
+
+router.put('/management/setting',  [
+    check('account.password').isLength( { max : 20, min : 4 } ),
+    check('account.passwordValid').exists().custom((value, { req }) => value === req.body.account.password)
+], async (req, res, next) => {
+    const error = validationResult(req);
+    if(!error.isEmpty()) {
+        return res.sendStatus(412);
+    }
+    res.sendStatus(await account.settingFromManager(req, res, next));
 })
 
 module.exports = router;

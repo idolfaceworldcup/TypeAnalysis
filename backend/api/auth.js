@@ -14,8 +14,8 @@ module.exports = (passport) => {
 
 
     router.post('/manager', passport.authenticate('manager', {
-        successRedirect : '/manager',
-        failureRedirect : '/manager/login',
+        successRedirect : '/',
+        failureRedirect : '/management/login',
         failureFlash : false,
         successFlash : false
     }))

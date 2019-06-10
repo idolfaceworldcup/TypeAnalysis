@@ -12,17 +12,25 @@
     </div>
     <div class="container pt-lg-md"> 
         <h1>{{ msg }}</h1>  
-        <h3> Name : {{user.loginId}} 님</h3>
-          
+        <h3> Name : {{manager.loginId}} 님</h3>
+        <base-button type="Default" @click="logoutManager">LOGOUT</base-button>
+      <div class="section">  
+        <div class="row">
+            <div class="col-md-6">
+                <router-link to="/management/user" >
+                    <base-button block type="secondary" >User Management</base-button>
+                </router-link>
+            </div>
+            <div class="col-md-6">
+                <router-link to="/management/analysis" >
+                    <base-button block type="secondary" >Analysis Management</base-button>
+                </router-link>
+            </div>
+        </div>
+      </div>
       <section class="section section--demo-2">
-      
+        
       </section>
-      <base-button block type="secondary" >
-        <router-link to="/manageruser" >유저 관리 페이지로 이동</router-link>
-      </base-button>
-      <base-button block type="secondary" >
-        <router-link to="/managerpic" >사진 관리 페이지로 이동</router-link>
-      </base-button>
     </div>
   </section>
 </template>
@@ -34,12 +42,14 @@ import router from "../router"
 
 
   export default {
-    name : 'mainpage',
+    name : 'management',
     data() {
       return {
         msg: '관리자 페이지입니다.',
-        user : {
-          loginId :"Guest"
+        manager : {
+          id : '',
+          loginId : '',
+          authority : ''
         }
       }
     },
@@ -48,14 +58,33 @@ import router from "../router"
     },
     methods:{
       getUserData: function() {
-        let self = this
-        axios.get("localhost:3000/api/login/account")
+        axios.get('http://localhost:3000/api/auth/exist')
         .then((response) => {
-          self.$set(this, "user", response.data.user.loginId)
+          if(response.data.id !== undefined) {
+            this.manager.loginId = response.data.loginId
+            this.manaer.id = response.data.id
+            this.manager.authority = response.data.authority
+          }
+
+          else {
+            this.$router.push({
+              name : "managerlogin"
+            })
+          }
+        })
+        .catch((error) => {
+          
+        })
+      },
+      logoutManager: function(){
+        axios.get('http://localhost:3000/api/auth/logout')
+        .then((response) => {
+            this.$router.push({
+              name : "managerlogin"
+            })
         })
         .catch((error) => {
 
-          router.push("")
         })
       }
     },

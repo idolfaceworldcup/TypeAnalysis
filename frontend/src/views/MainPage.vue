@@ -39,9 +39,11 @@
         </div>
       </div>
       </section>
-      <base-button block type="secondary" >
-        <router-link to="/typeanalysis" >테스트 시작하기</router-link>
-      </base-button>
+      <router-link to="/typeanalysis" >
+        <base-button block type="secondary" >
+          테스트 시작하기
+        </base-button>
+      </router-link>
     </div>
   </section>
 </template>

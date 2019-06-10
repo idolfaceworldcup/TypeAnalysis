@@ -63,12 +63,14 @@ exports.setGetAttribute = async (selectAttribute, imageId) => {
 }
 
 exports.startRandom = async (analysisId, useImageId) => {
-    let result = await image.getImage(analysisId)
+    let result = await image.getImages(analysisId)
     let resultLength = result.length
     let condition = 0
 
     let randomIndex1
     let randomIndex2
+
+    console.log(result)
 
     while(condition === 0) {
         randomIndex1 = Math.floor(Math.random() * resultLength)
@@ -200,6 +202,8 @@ exports.analysisStart = async (req, res, next) => {
     let count = request.count
     let images = []
 
+    console.log('hi')
+
     if(count > 20) {
         let response = {
             analysisId : analysisId,
@@ -224,6 +228,8 @@ exports.analysisStart = async (req, res, next) => {
     if(count > 10 && status === 1) {
         status = 2
     }
+
+    console.log('bye')
 
     if(status === 1 || status === 3) {
         //random

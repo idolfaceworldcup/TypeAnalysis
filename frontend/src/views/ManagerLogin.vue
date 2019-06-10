@@ -20,12 +20,12 @@
                         <template>
                             <div id ="login">
                             <form role="form">
-                                <base-input v-model="account.loginId"
+                                <base-input v-model="manager.loginId"
                                             class="mb-3"
                                             placeholder="LoginID"
                                             addon-left-icon="ni ni-hat-3">
                                 </base-input>
-                                <base-input v-model="account.password"
+                                <base-input v-model="manager.password"
                                             type="password"
                                             placeholder="Password"
                                             addon-left-icon="ni ni-lock-circle-open">
@@ -50,7 +50,7 @@ import axios from 'axios'
 export default {
     data: function() {
         return {
-            account : {
+            manager : {
                 loginId:'',
                 password:'',
             }
@@ -58,17 +58,14 @@ export default {
     },
     methods: {
         login: function(event){
-            axios.post('http://localhost:3000/api/auth/user', this.account)
+            axios.post('http://localhost:3000/api/auth/manager', this.manager)
             .then((response) => {
                 alert('success login')
                 this.$router.push({
-                    name : "mainpage"
+                    name : "management"
                 })
             }).catch(error => {
                 alert(error)
-                this.$router.push({
-                    name : "login"
-                })
             })
         }
     }    

@@ -3,10 +3,22 @@ const value = require('../db/query/value')
 const attribute = require('../lib/attribute')
 const pool = require('../db/pool')
 
-exports.getImage = async (analysisId) => {
+exports.getImages = async (analysisId) => {
     try {
         let conn = await pool.getConnection()
         let result = await image.findByAnalysisId(conn, analysisId)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
+exports.getImage = async (imageId) => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await image.findById(conn, imageId)
         await conn.release()
 
         return result
@@ -67,11 +79,14 @@ exports.addImage = async (path, analysisId, values, attributeId) => {
     try {
         let conn = await pool.getConnection()
         await conn.beginTransaction()
+        let imageId
         try {
-            let imageId = (await image.insert(conn, path, analysisId)).insertId
+            imageId = (await image.insert(conn, path, analysisId)).insertId
+
             for(let i = 0; i < attributeId.length; ++i) {
                 await value.insert(conn, values[i], imageId, attributeId[i])
             }
+ 
         } catch(err) {
                 await conn.rollback();
                 await conn.release();
@@ -79,11 +94,10 @@ exports.addImage = async (path, analysisId, values, attributeId) => {
         }
         await conn.commit()
         await conn.release()
+        return imageId
     } catch(err) {
         return 500
     }
-
-    return 200
 }
 
 exports.updateImage = async (values, valueId) => {
@@ -130,12 +144,7 @@ exports.deleteImage = async (imageId) => {
 }
 
 exports.imageTable = async (req, res, next) => {
-    if(!auth.isLogin(req, res, next)) {
-        return 401
-    }
-
-    let result = await this.getImage(req.body.analysisId)
-
+    let result = await this.getImages(req.params.analysisId)
     let response = []
 
     for(let r of result) {
@@ -147,11 +156,7 @@ exports.imageTable = async (req, res, next) => {
 }
 
 exports.imageView = async (req, res, next) => {
-    if(!auth.isLogin(req, res, next)) {
-        return 401
-    }
-
-    let result = await this.getImageValue(req.body.imageId)
+    let result = await this.getImageValue(req.params.id)
 
     let response = []
 
@@ -160,27 +165,61 @@ exports.imageView = async (req, res, next) => {
         response.push(model)
     }
 
+    for(let i = 0; i < response.length; ++i) {
+        response[i].path = response[i].path.replace('\\', '/')
+    }
+
     return response
 }
 
 exports.attributeAdd = async (req, res, next) => {
-    if(!auth.isLogin(req, res, next)) {
-        return 401
-    }
-
     let status = await attribute.addAttribute(req.body.name, req.body.analysisId)
 
     return status
 }
 
 exports.imageAdd = async (req, res, next) => {
-    if(!auth.isLogin(req, res, next)) {
-        return 401
+    let request = req.body.image
+    let path = req.body.path
+
+    if(request.analysisId == 1) {
+        path = 'analysis_man\\' + path
     }
 
-    let request = req.body
+    else if(request.analysisId == 2) {
+        path = 'analysis_woman\\' + path
+    }
 
-    let status = await this.addImage(request.path, request.analysisId, request.values, request.attributeId)
+    let attributeId = []
+
+    for(let attribute of request.attributes) {
+        attributeId.push(attribute.id)
+    }
+
+    let imageId = await this.addImage(path, request.analysisId, request.values, attributeId)
+
+    let result = await this.getImage(imageId)
+
+    let response = require('../model/image')(result[0])
+
+    return response
+}
+
+exports.setImageForm = async (req, res, next) => {
+    let result = await attribute.getAttribute(req.params.analysisId)
+
+    let response = []
+
+    for(let r of result) {
+        let model = require('../model/attribute')(r)
+        response.push(model)
+    }
+
+    return response
+}
+
+exports.imageDelete = async (req, res, next) => {
+    let status = await this.deleteImage(req.params.id)
 
     return status
 }

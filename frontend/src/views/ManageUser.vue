@@ -22,32 +22,6 @@
               vertical
             ></v-divider>
             <v-spacer></v-spacer>
-            <base-button outline type='secondary' @click="modals.modal1 = true">New Data</base-button>
-            <modal :show.sync="modals.modal1">
-              <template slot="header">
-                <h5 class="modal-title">Input Image Data</h5>
-              </template>
-              <div>
-                  <v-container grid-list-md>
-                    <v-layout wrap>
-                      <v-flex xs12 sm6 md4>
-                        <v-text-field v-model="editedItem.loginId" label="LoginID"></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm6 md4>
-                        <v-text-field v-model="editedItem.createdDate" label="createdDate"></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm6 md4>
-                        <v-text-field v-model="editedItem.modifiedDate" label="modifiedDate"></v-text-field>
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-              </div>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-                  <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
-                </v-card-actions>
-            </modal>
             </v-card-title>
           </v-card>
             
@@ -62,34 +36,17 @@
             sort-icon="mdi-menu-down"
           >
             <template v-slot:items="props">
-              <td>{{ props.item.loginId }}</td>
-              <td class="text-xs-left">{{ props.item.createdDate }}</td>
-              <td class="text-xs-left">{{ props.item.modifiedDate }}</td>
-              <td class="justify-center layout px-0">
+              <td class="text-xs-left"></td>
+              <td class="text-xs-left">{{ props.item.id }}</td>
+              <td class="text-xs-center"></td>
+              <td class="text-xs-center">{{ props.item.loginId }}</td>
+              <td class="text-xs-right">
                 <base-button
                   outline type = "secondary"
-                  @click="modals.modal2 = true"
+                  @click="editItem(props.item.id)"
                 >
-                  Analyzer result
+                  Edit
                 </base-button>
-                <modal :show.sync="modals.modal2">
-                  <h6 slot="header" class="modal-title" id="modal-title-default">{{loginId}}님의 테스트 결과</h6>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                        Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
-                        right at the coast of the Semantics, a large language ocean.</p>
-                    <p>A small river named Duden flows by their place and supplies it with the necessary
-                        regelialia. It is a paradisematic country, in which roasted parts of sentences
-                        fly into your mouth.</p>
-                        
-                      <div>
-                          <img :src="require('../../public/img/analysis/image/analysis_man/강동원.jpg')">
-                      </div>
-
-                    <template slot="footer">
-                        <base-button type="link" class="ml-auto" @click="modals.modal2 = false">Close
-                        </base-button>
-                    </template>
-                </modal>
                 <base-button
                   outline type = "danger"
                   @click="deleteItem(props.item)"
@@ -103,6 +60,35 @@
             </template>
           </v-data-table>
         </div>
+        <modal :show.sync="modal">
+          <template slot="header">
+            <h5 class="modal-title">Input Password</h5>
+          </template>
+          <form role="form">
+            <div>
+                <v-container grid-list-md>
+                  <base-input v-model="editedItem.id"
+                                    type="hidden">
+                  </base-input>
+                  <base-input v-model="editedItem.password"
+                              type="password"
+                              placeholder="Password"
+                              addon-left-icon="ni ni-lock-circle-open">
+                  </base-input>
+                  <base-input v-model="editedItem.passwordValid"
+                              type="password"
+                              placeholder="Password confirm"
+                              addon-left-icon="ni ni-lock-circle-open">
+                  </base-input>
+                </v-container>
+            </div>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
+              <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
+            </v-card-actions>
+          </form>
+        </modal>
   </section>
 </template>
 
@@ -117,47 +103,33 @@ import Modal from "@/components/Modal.vue";
     },
 
     data: () => ({
-      modals : {
-        modal1 : false,
-        modal2 : false
-      },
+      modal : false,
       selected: [],
-      dialog: false,
       headers: [
+        { sortable: false },
         {
-          text: 'LoginId',
+          text: 'ID',
           align: 'left',
           sortable: false,
-          value: 'loginId'
+          value: 'id'
         },
-        { text: 'createdDate', value: 'date', sortable: false },
-        { text: 'modifiedDate', value: 'date',sortable: false }
+        { sortable: false },
+        { text: 'ACCOUNT', align: 'center', value: 'loginId', sortable: false },
+        { sortable: false }
       ],
-      accounts: [],
+      accounts: [{ id : 1, loginId : 'test123'},{ id :2, loginId : 'test321'}],
       editedIndex: -1,
       editedItem: {
-        loginId: '',
-        createdDate: 0,
-        modifiedDate: 0
+        id : 0,
+        password: '',
+        passwordValid: '',
       },
       defaultItem: {
-        loginId: '',
-        createdDate: 0,
-        modifiedDate: 0
+        id : 0,
+        password: '',
+        passwordValid: '',
       }
     }),
-
-    computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-      }
-    },
-
-    watch: {
-      dialog (val) {
-        val || this.close()
-      }
-    },
 
     created () {
       this.initialize()
@@ -165,80 +137,54 @@ import Modal from "@/components/Modal.vue";
 
     methods: {
       initialize () {
-        this.accounts = [
-          {
-            loginId: 'Frozen Yogurt',
-            createdDate: 24,
-            modifiedDate: 4.0
-          },
-          {
-            loginId: 'Ice cream sandwich',
-            createdDate: 37,
-            modifiedDate: 4.3
-          },
-          {
-            loginId: 'Eclair',
-            createdDate: 23,
-            modifiedDate: 6.0
-          },
-          {
-            loginId: 'Cupcake',
-            createdDate: 67,
-            modifiedDate: 4.3
-          },
-          {
-            loginId: 'Gingerbread',
-            createdDate: 49,
-            modifiedDate: 3.9
-          },
-          {
-            loginId: 'Jelly bean',
-            createdDate: 94,
-            modifiedDate: 0.0
-          },
-          {
-            loginId: 'Lollipop',
-            createdDate: 98,
-            modifiedDate: 0
-          },
-          {
-            loginId: 'Honeycomb',
-            carcreatedDatebs: 87,
-            modifiedDate: 6.5
-          }
-        ]
+        axios.get(`http://localhost:3000/api/user/management/account`)
+        .then((response) => {
+          this.accounts = response.data
+        })
+        .catch((error) => {
+
+        })
       },
 
-      resultData() {
-
-      },
-
-      editItem (item) {
-        this.editedIndex = this.accounts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
+      editItem (id) {
+        this.modal = true
+        this.editedItem.id = id
       },
 
       deleteItem (item) {
-        const index = this.accounts.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.accounts.splice(index, 1)
+        if(confirm('Are you sure you want to delete this item?')) {
+          let index = this.accounts.indexOf(item)
+          axios.delete(`http://localhost:3000/api/user/management/account/`+ item.id)
+          .then((response) => {
+              alert('delete complete')
+          })
+          .catch((error) => {
+
+          })
+          this.accounts.splice(index, 1)
+        }
       },
 
       close () {
-        this.dialog = false
-        setTimeout(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        }, 300)
+        this.modal = false
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
       },
 
       save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.accounts[this.editedIndex], this.editedItem)
-        } else {
-          this.accounts.push(this.editedItem)
+        if(confirm('Are you sure you want to edit this item?')) {
+          axios.put(`http://localhost:3000/api/user/management/setting`, {
+            account: this.editedItem
+          })
+          .then((response) => {
+              alert ('Success Modify Account')
+          })
+          .catch(function (error) {
+              alert(error)
+          })
+          this.close()
         }
-        this.close()
+        
       }
     }
   }

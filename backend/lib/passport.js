@@ -53,9 +53,10 @@ module.exports = (app) => {
             usernameField : 'loginId',
             passwordField : 'password'
         },
-        async (req, username, password, done) => {
+        async (loginId, password, done) => {
             try {
-                let result = await manager.login(username, password)
+                let result = await manager.login(loginId, password)
+
                 
                 if(result[0] === undefined) return done(null, false, { message : 'Incorrect login'})
 
