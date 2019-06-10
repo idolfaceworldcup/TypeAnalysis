@@ -159,27 +159,13 @@ import axios from 'axios'
         { sortable: false }
       ],
       images : [
-          {
-            id : 1,
-            path : 'analysis_man/강하늘.jpg'
-          },
-          {
-            id : 2,
-            path : 'analysis_man/강동원.jpg'
-          }
       ],
       image : [
           {
             id : 1,
-            path : 'analysis_man/공유.jpg',
+            path : 'pleasewait.jpg',
             attributeName : '머리길이',
             attributeValue : '보통'
-          },
-          {
-            id : 2,
-            path : '',
-            attributeName : '스타일',
-            attributeValue : '카리스마'
           }
       ],
       editedIndex: -1,

@@ -12,14 +12,14 @@
         </div>
         <div class="container pt-lg-md">
             <div class="row justify-content-center">
-                <div class="col-md-5" v-for="(man, index) in mans" :key="index">
+                <div class="col-md-6" v-for="(man, index) in mans" :key="index">
                     <card type="secondary" shadow
                         header-classes="bg-white pb-5"
                         body-classes="px-lg-5 py-lg-5"
-                        class="border-0">
-                        <div >
-                            <img v-bind:src="man.href" v-on:click='analyzer(man.id)'>   
-                        </div>                    
+                        class="border-0"
+                        style="height:100%; width:100%;"
+                        >
+                            <v-img v-bind:src="man.href" v-on:click='analyzer(man.id)' width="100%" height="100%"></v-img>
                     </card>
                 </div>
             </div>
@@ -41,10 +41,10 @@ export default {
     data: () => ({
         mans:[
             {  
-                href : require(`../../public/img/analysis/image/analysis_man/강동원.jpg`),
+                href : require(`../../public/img/analysis/image/pleasewait.jpg`),
                 id : 1
             },{  
-                href : require(`../../public/img/analysis/image/analysis_man/강동원.jpg`),
+                href : require(`../../public/img/analysis/image/pleasewait.jpg`),
                 id : 2
             }
         ],

@@ -70,10 +70,10 @@ import Modal from "@/components/Modal.vue";
           { text: 'Date', align: 'left', value: 'date', sortable: false },
           { text: 'My Result', align: 'center', value: 'resultId', sortable: false }
         ],
-        results: [{id : 1, date : 2014}, {id : 2, date : 2015}],
-        content : 'hihi<br/>bye',
-        path : 'analysis_man/강동원.jpg',
-        date : '2018'
+        results: [],
+        content : '',
+        path : 'pleasewait.jpg',
+        date : ''
       }
     },
 

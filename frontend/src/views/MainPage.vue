@@ -16,18 +16,16 @@
       <base-button type="Default" @click="gotoMyPage" v-if="user.id !== 0">MYPAGE</base-button>
       <base-button type="Default" @click="logoutUser" v-if="user.id !== 0">LOGOUT</base-button>
       <section class="section section--demo-2">
-      <div class="container-fluid">
-        <div row>
-          <div col-xs-12>
             <agile :initial-slide="2" :autoplay-speed="5000" :speed="2500" fade pause-on-hover pause-on-dots-hover autoplay >
-              <img class="slide" src='../../public/img/images/메간폭스.jpg'> 
-              <img class="slide" src='../../public/img/images/김영광.jpg'> 
-              <img class="slide" src='../../public/img/images/드류베이모어.jpg'>
-              <img class="slide" src='../../public/img/images/로버트_다우니_주니어.jpg'>  
-              <img class="slide" src='../../public/img/images/니콜키드먼.jpg'>
-              <img class="slide" src='../../public/img/images/박보검.jpg'>  
-              <img class="slide" src='../../public/img/images/미란다커.jpg'>
-              <img class="slide" src='../../public/img/images/라이언_레이놀즈.jpg'>
+              <div class="container pt-lg-md" v-for="(h, index) in href" :key="index">
+                <div class="row justify-content-center">
+                  <div class="col-md-6">
+                    <card type="secondary" shadow>
+                      <v-img class="slide" v-bind:src="h" height="500px" width="100%"></v-img>
+                    </card>
+                  </div>
+                </div>
+              </div>
               <template slot="prevButton">
                 <i class="ni ni-bold-left"></i>
               </template>
@@ -35,9 +33,6 @@
                 <i class="ni ni-bold-right"></i>
               </template>
             </agile>
-          </div>
-        </div>
-      </div>
       </section>
       <router-link to="/typeanalysis" >
         <base-button block type="secondary" >
@@ -62,7 +57,16 @@ import router from "../router"
         user : {
           id : 0,
           name :"Guest"
-        }
+        },
+        href : [
+          require(`../../public/img/analysis/image/analysis_man/김영광.jpg`),
+          require(`../../public/img/analysis/image/analysis_woman/드류베이모어.jpg`),
+          require(`../../public/img/analysis/image/analysis_man/로버트_다우니_주니어.jpg`),
+          require(`../../public/img/analysis/image/analysis_woman/한효주.jpg`),
+          require(`../../public/img/analysis/image/analysis_man/박보검.jpg`),
+          require(`../../public/img/analysis/image/analysis_woman/클로이모레츠.jpg`),
+          require(`../../public/img/analysis/image/analysis_man/라이언_레이놀즈.jpg`)
+        ]
       }
     },
     components: {

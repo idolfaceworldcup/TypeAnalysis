@@ -59,9 +59,9 @@ export default {
             modals : {
                 modal1 : false,
             },
-            content : '<span>hi<br/></span>bye',
+            content : '',
             loginId : 'Guest',
-            path : 'analysis_man/강동원.jpg'
+            path : ''
         }
     },
     methods: {

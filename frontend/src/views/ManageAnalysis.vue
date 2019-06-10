@@ -40,7 +40,7 @@ export default {
                 modal1 : false
             },
 
-            analysis : [{ id : 1, name : 'hi'}, { id : 2, name : 'bye'}]
+            analysis : []
         
         }
     },

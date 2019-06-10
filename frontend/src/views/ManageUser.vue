@@ -117,7 +117,7 @@ import Modal from "@/components/Modal.vue";
         { text: 'ACCOUNT', align: 'center', value: 'loginId', sortable: false },
         { sortable: false }
       ],
-      accounts: [{ id : 1, loginId : 'test123'},{ id :2, loginId : 'test321'}],
+      accounts: [],
       editedIndex: -1,
       editedItem: {
         id : 0,
