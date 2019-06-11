@@ -21,7 +21,7 @@
                 <div class="row justify-content-center">
                   <div class="col-md-6">
                     <card type="secondary" shadow>
-                      <v-img class="slide" v-bind:src="h" height="500px" width="100%"></v-img>
+                      <v-img class="slide" :src="h" height="100%" width="100%"></v-img>
                     </card>
                   </div>
                 </div>
@@ -59,13 +59,13 @@ import router from "../router"
           name :"Guest"
         },
         href : [
-          require(`../../public/img/analysis/image/analysis_man/김영광.jpg`),
-          require(`../../public/img/analysis/image/analysis_woman/드류베이모어.jpg`),
-          require(`../../public/img/analysis/image/analysis_man/로버트_다우니_주니어.jpg`),
-          require(`../../public/img/analysis/image/analysis_woman/한효주.jpg`),
-          require(`../../public/img/analysis/image/analysis_man/박보검.jpg`),
-          require(`../../public/img/analysis/image/analysis_woman/클로이모레츠.jpg`),
-          require(`../../public/img/analysis/image/analysis_man/라이언_레이놀즈.jpg`)
+          require(`../../public/img/analysis/image/pleasewait.jpg`),
+          require(`../../public/img/analysis/image/pleasewait.jpg`),
+          require(`../../public/img/analysis/image/pleasewait.jpg`),
+          require(`../../public/img/analysis/image/pleasewait.jpg`),
+          require(`../../public/img/analysis/image/pleasewait.jpg`),
+          require(`../../public/img/analysis/image/pleasewait.jpg`),
+          require(`../../public/img/analysis/image/pleasewait.jpg`)
         ]
       }
     },

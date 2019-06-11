@@ -5,7 +5,7 @@ exports.manUpload = async (req, res, next) => {
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
             let folder = 'analysis_man/'
-            cb(null, path.join(__dirname, '../../frontend/public/img/analysis/image/', folder))
+            cb(null, path.join(__dirname, '../public/analysis/image/', folder))
         },
         filename: (req, file, cb) => {
             const fileName =  file.originalname;
@@ -25,7 +25,7 @@ exports.womanUpload = async (req, res, next) => {
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
             let folder = 'analysis_woman/'
-            cb(null, path.join(__dirname, '../../frontend/public/img/analysis/image/', folder))
+            cb(null, path.join(__dirname, '../public/analysis/image/', folder))
         },
         filename: (req, file, cb) => {
             const fileName =  file.originalname;;

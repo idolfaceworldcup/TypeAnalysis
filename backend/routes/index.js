@@ -4,8 +4,6 @@ var path = require('path')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(path.join(__dirname,'../public/dist', 'index.html'))
-  //res.send('hi')
   res.sendFile(path.join(__dirname,'../public/dist', 'index.html'))
 })
 

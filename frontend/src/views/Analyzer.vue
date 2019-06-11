@@ -19,7 +19,7 @@
                         class="border-0"
                         style="height:100%; width:100%;"
                         >
-                            <v-img v-bind:src="man.href" v-on:click='analyzer(man.id)' width="100%" height="100%"></v-img>
+                            <v-img :src="man.href" v-on:click='analyzer(man.id)' width="100%" height="100%"></v-img>
                     </card>
                 </div>
             </div>
@@ -82,9 +82,9 @@ export default {
 
                 else {
                     this.mans[0].id = res.image[0].id
-                    this.mans[0].href = require(`../../public/img/analysis/image/${res.image[0].path}`)
+                    this.mans[0].href = `/analysis/image/` + res.image[0].path
                     this.mans[1].id = res.image[1].id
-                    this.mans[1].href = require(`../../public/img/analysis/image/${res.image[1].path}`)
+                    this.mans[1].href = `/analysis/image/` + res.image[1].path
 
                     selectAttribute = res.selectAttribute
                     useImageId = res.useImageId
@@ -119,10 +119,10 @@ export default {
         .then((response) => {
             let res = response.data
             folder = res.folder
-            this.mans[0].href = require(`../../public/img/analysis/image/${res.image[0].path}`)
+            this.mans[0].href = `/analysis/image/` + res.image[0].path
             this.mans[0].id = res.image[0].id
             this.mans[1].id = res.image[1].id
-            this.mans[1].href = require(`../../public/img/analysis/image/${res.image[1].path}`)
+            this.mans[1].href = `/analysis/image/` + res.image[1].path
 
             selectAttribute = res.selectAttribute
             useImageId = res.useImageId

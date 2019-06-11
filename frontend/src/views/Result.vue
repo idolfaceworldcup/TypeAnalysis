@@ -25,7 +25,7 @@
                                 <h6 slot="header" class="modal-title" id="modal-title-default">{{loginId}}님의 테스트 결과</h6>
                                 <p v-html="content"></p>
                                     <div>
-                                        <img :src="require(`../../public/img/analysis/image/${path}`)">
+                                        <img :src="path">
                                     </div>
                                 <template slot="footer">
                                     <base-button type="link" class="ml-auto" @click="modals.modal1 = false">Close
@@ -61,7 +61,7 @@ export default {
             },
             content : '',
             loginId : 'Guest',
-            path : ''
+            path : require(`../../public/img/analysis/image/pleasewait.jpg`)
         }
     },
     methods: {
@@ -69,7 +69,7 @@ export default {
             axios.post(`http://localhost:3000/api/analysis/result/${analysisId}`, {analysisData : analysisData, useImageId : useImageId})
             .then((response) => {
                 this.content = response.data.content
-                this.path = response.data.imagePath
+                this.path = `/analysis/image/` + response.data.imagePath
             }).catch(error => {
 
             })

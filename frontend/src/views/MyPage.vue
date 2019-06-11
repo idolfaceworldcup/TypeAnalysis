@@ -42,7 +42,7 @@
         <h6 slot="header" class="modal-title" id="modal-title-default">{{date}} Result</h6>
         <p v-html="content"></p>
         <div>
-          <img :src="require(`../../public/img/analysis/image/${path}`)">
+          <img :src="path">
         </div>
 
         <template slot="footer">
@@ -72,7 +72,7 @@ import Modal from "@/components/Modal.vue";
         ],
         results: [],
         content : '',
-        path : 'pleasewait.jpg',
+        path : require(`../../public/img/analysis/image/pleasewait.jpg`),
         date : ''
       }
     },
@@ -97,7 +97,7 @@ import Modal from "@/components/Modal.vue";
           axios.get(`http://localhost:3000/api/user/result/${id}`)
           .then((response) => {
             this.content = response.data.content
-            this.path = response.data.imagePath
+            this.path = `/analysis/image/` + response.data.imagePath
             this.date = response.data.date
           })
           .catch((error) => {

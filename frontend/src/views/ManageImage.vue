@@ -108,7 +108,7 @@
         <modal :show.sync="modals.image">
           <template>
             <div>
-              <img :src="require(`../../public/img/analysis/image/${image[0].path}`)">
+              <img :src="image[0].path">
             </div>
           </template>
           <template>
@@ -163,7 +163,7 @@ import axios from 'axios'
       image : [
           {
             id : 1,
-            path : 'pleasewait.jpg',
+            path : require('../../public/img/analysis/image/pleasewait.jpg'),
             attributeName : '머리길이',
             attributeValue : '보통'
           }
@@ -221,6 +221,8 @@ import axios from 'axios'
         axios.get(`http://localhost:3000/api/analysis/management/image/value/` + item.id)
         .then((response) => {
           this.image = response.data
+          this.image[0].path = `/analysis/image/${this.image[0].path}`
+          alert(this.image[0].path)
         })
         .catch((error) => {
 
