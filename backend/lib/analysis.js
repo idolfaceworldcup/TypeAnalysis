@@ -70,8 +70,6 @@ exports.startRandom = async (analysisId, useImageId) => {
     let randomIndex1
     let randomIndex2
 
-    console.log(result)
-
     while(condition === 0) {
         randomIndex1 = Math.floor(Math.random() * resultLength)
         randomIndex2 = Math.floor(Math.random() * resultLength)
@@ -202,8 +200,6 @@ exports.analysisStart = async (req, res, next) => {
     let count = request.count
     let images = []
 
-    console.log('hi')
-
     if(count > 20) {
         let response = {
             analysisId : analysisId,
@@ -212,7 +208,6 @@ exports.analysisStart = async (req, res, next) => {
             useImageId : useImageId,
         }
 
-        console.log('end')
         return response
     }
 
@@ -229,8 +224,6 @@ exports.analysisStart = async (req, res, next) => {
         status = 2
     }
 
-    console.log('bye')
-
     if(status === 1 || status === 3) {
         //random
         images = await this.startRandom(analysisId, useImageId)
@@ -239,7 +232,6 @@ exports.analysisStart = async (req, res, next) => {
     else if(status === 2) {
         //atteribute
         images = await this.startAdvanced(analysisId, useImageId, selectAttribute, count)
-        console.log('hihi')
         if(images === undefined) {
             status = 3
             images = await this.startRandom(analysisId, useImageId)

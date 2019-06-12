@@ -37,7 +37,6 @@ module.exports = (passport) => {
     })
 
     router.get('/exist', (req, res, next) => {
-        console.log('exist', req.user)
         res.send(req.user)
     })
     

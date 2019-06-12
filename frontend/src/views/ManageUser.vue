@@ -118,13 +118,7 @@ import Modal from "@/components/Modal.vue";
         { sortable: false }
       ],
       accounts: [],
-      editedIndex: -1,
       editedItem: {
-        id : 0,
-        password: '',
-        passwordValid: '',
-      },
-      defaultItem: {
         id : 0,
         password: '',
         passwordValid: '',
@@ -167,8 +161,11 @@ import Modal from "@/components/Modal.vue";
 
       close () {
         this.modal = false
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
+        this.editedItem = {
+          analysisId : '',
+          attributes : [],
+          values : []
+        }
       },
 
       save () {

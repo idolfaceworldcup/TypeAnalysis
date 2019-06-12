@@ -140,8 +140,6 @@ exports.accountTable = async (req, res, next) => {
 exports.settingFromManager = async (req, res, next) => {
     let request = req.body
 
-    console.log(request.account)
-
     let status = await this.update(request.account.password, request.account.id)
 
     return status

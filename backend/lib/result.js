@@ -63,17 +63,11 @@ exports.userResultView = async (req, res, next) => {
         return 401
     }
 
-    console.log(req.params.id)
-    
     let row = await this.getResult(req.params.id)
-
-    console.log(row)
 
     let response = require('../model/result')(row[0])
 
     response.imagePath = response.imagePath.replace('\\', '/')
-
-    console.log(response)
 
     return response
 }

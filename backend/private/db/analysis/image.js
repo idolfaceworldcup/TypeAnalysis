@@ -23,6 +23,9 @@
     try {
         let conn = await pool.getConnection()
         await conn.beginTransaction()
+        await conn.query('insert into analysis(name) values(?)', '남성 이상형 분석')
+        await conn.query('insert into analysis(name) values(?)', '여성 이상형 분석')
+
         for(let num = 1; num < analysises.length; ++num) {
             let folder = setting['B' + (num + 1)].v
             let analysisId = parseInt(analysises[num])

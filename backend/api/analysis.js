@@ -4,8 +4,7 @@ const analysis = require('../lib/analysis')
 const result = require('../lib/result')
 const image = require('../lib/image')
 const file = require('../lib/file')
-const sharp = require('sharp')
-const fs = require('fs').promises
+const uploader = file.getImageUploader()
 
 router.get('/analysises', async (req, res, next) => {
     res.send(await analysis.enableAnalysis(req, res, next))
@@ -44,33 +43,13 @@ router.delete('/management/image/:id', async (req, res, next) => {
     res.sendStatus(await image.imageDelete(req, res, next))
 })
 
-router.post('/image/upload/man', async (req, res, next) => {
-    let upload = await file.manUpload(req, res, next)
-    upload(req, res, async err => {
+router.post('/image/upload', async (req, res, next) => {
+    uploader(req, res, async err => {
         if (err) {
             res.sendStatus(500)
         }
 
-        const buffer = await sharp(req.file.path).resize(250, 250).toBuffer()
-
-        await fs.writeFile(req.file.path, buffer)
-
-        res.send(req.file.filename)
-    })
-})
-
-router.post('/image/upload/woman', async (req, res, next) => {
-    let upload = await file.womanUpload(req, res, next)
-    upload(req, res, async err => {
-        if (err) {
-            res.sendStatus(500)
-        }
-
-        const buffer = await sharp(req.file.path).resize(250, 250).toBuffer()
-
-        await fs.writeFile(req.file.path, buffer)
-
-        res.send(req.file.filename)
+        res.send(await file.resizeImage(req))
     })
 })
 

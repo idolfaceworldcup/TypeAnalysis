@@ -52,9 +52,6 @@
                       drop-placeholder="Drop file here..."
                     ></b-form-file>
                     <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div>
-                    <!-- Plain mode
-                    <b-form-file v-model="file2" class="mt-3" plain></b-form-file>
-                    <div class="mt-3">Selected file: {{ file2 ? file2.name : '' }}</div> -->
                   </div>
                 </template>
                 <template>
@@ -140,7 +137,6 @@ import axios from 'axios'
     data: () => ({
       analysisId : 0,
       file: null,
-      file2: null,
       modals :{
                 form : false,
                 image : false
@@ -170,25 +166,11 @@ import axios from 'axios'
       ],
       editedIndex: -1,
       editedItem : {
-        path : '',
         analysisId : '',
         attributes : [],
         values : []
       },
-      defaultItem : {
-        path : '',
-        analysisId : '',
-        attributes : [],
-        values : []
-      },
-      attributes : [{
-        id : 1,
-        name : '머리길이'
-      },
-      {
-        id : 2,
-        name : '하이욤'
-      }],
+      attributes : [],
     }),
 
     created () {
@@ -222,7 +204,6 @@ import axios from 'axios'
         .then((response) => {
           this.image = response.data
           this.image[0].path = `/analysis/image/${this.image[0].path}`
-          alert(this.image[0].path)
         })
         .catch((error) => {
 
@@ -238,7 +219,7 @@ import axios from 'axios'
       deleteItem (item) {
         if(confirm('Are you sure you want to delete this item?')) {
           let index = this.images.indexOf(item)
-          axios.delete(`http://localhost:3000/api/analysis/management/image/` + item.id)
+          axios.delete(`http://localhost:3000/api/analysis/management/image/` + item.id, {data : { path : item.path }})
           .then((response) => {
               alert('delete complete')
           })
@@ -251,7 +232,12 @@ import axios from 'axios'
 
       closeFormModal () {
         this.modals.form = false
-        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedItem = {
+          analysisId : '',
+          attributes : [],
+          values : []
+        }
+        this.file = null
       },
 
       closeImageModal () {
@@ -260,67 +246,37 @@ import axios from 'axios'
       save () {
         if(confirm('Are you sure you want to create this item?')) {
           let formData = new FormData();
-          let path
+          let fileName
           let item = this.editedItem
-          if(this.analysisId == 1) {
-            formData.append('man', this.file);
 
-            axios.post('http://localhost:3000/api/analysis/image/upload/man', formData,
-                {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }})
+          formData.append('imageFile', this.file);
+          formData.append('analysisId', item.analysisId);
+
+          axios.post('http://localhost:3000/api/analysis/image/upload/', formData,
+              {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }})
+          .then((response) => {
+            fileName = response.data
+          }).then((response) => {
+            axios.post(`http://localhost:3000/api/analysis/management/image`, {
+              image : item,
+              fileName : fileName
+            })
             .then((response) => {
-              path = response.data
-              alert('success')
-            }).then((response) => {
-              axios.post(`http://localhost:3000/api/analysis/management/image`, {
-                image : item,
-                path : path
-              })
-              .then((response) => {
-                  this.images.push(response.data)
-                  alert ('Success Create Image')
-              })
-              .catch(function (error) {
-                  alert(error)
-              })
+                this.images.push(response.data)
+                alert ('Success Create Image')
             })
-            .catch(function(error){
-              alert('fail')
+            .catch(function (error) {
+                alert(error)
             })
-          }
-
-          else if(this.analysisId == 2) {
-            formData.append('woman', this.file);
-
-            axios.post('http://localhost:3000/api/analysis/image/upload/woman', formData,
-                {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }})
-            .then((response) => {
-              path = response.data
-              alert('success')
-            }).then((response) => {
-              axios.post(`http://localhost:3000/api/analysis/management/image`, {
-                image : item,
-                path : path
-              })
-              .then((response) => {
-                  this.images.push(response.data)
-                  alert ('Success Create Image')
-              })
-              .catch(function (error) {
-                  alert(error)
-              })
-            })
-            .catch(function(error){
-              alert('fail')
-            })
-          }
+          })
+          .catch(function(error){
+            alert('fail')
+          })
           this.closeFormModal()
-          }
+        }
       },
 
     }
