@@ -38,7 +38,7 @@ exports.resizeImage = async (req) => {
             folder = 'analysis_man'
         }
 
-        else if(req.body.analysisId == 1) {
+        else if(req.body.analysisId == 2) {
             folder = 'analysis_woman'
         }
 

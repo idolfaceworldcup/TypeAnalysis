@@ -23,6 +23,7 @@
             ></v-divider>
             <v-spacer></v-spacer>
             <base-button outline type='secondary' @click="createItem">New Data</base-button>
+            <base-button outline type='secondary' @click="deleteSelectedItem(selected)">Checked Delete</base-button>
             </v-card-title>
           </v-card>
 
@@ -66,7 +67,6 @@
             v-model="selected"
             :headers="headers"
             :items="images"
-            item-key="name"
             select-all
             class="elevation-1"
             prev-icon="mdi-menu-left"
@@ -174,19 +174,35 @@ import axios from 'axios'
     }),
 
     created () {
+      this.getUserData()
       this.analysisId = this.$route.params.analysisId
       this.initialize()
       this.setAttribute()
     },
 
     methods: {
+      getUserData: function() {
+        axios.get('http://localhost:3000/api/auth/exist')
+        .then((response) => {
+            if(response.data.id === undefined || response.data.authority === undefined) {
+                this.$router.push({
+                    name : "managerlogin"
+                })
+            }
+        })
+        .catch(function (error) {
+            this.$router.push({
+                name : "managerlogin"
+            })
+        })
+      },
       initialize () {
         axios.get(`http://localhost:3000/api/analysis/management/image/` + this.analysisId)
         .then((response) => {
           this.images = response.data
         })
         .catch((error) => {
-
+          
         })
       },
       setAttribute () {
@@ -217,16 +233,33 @@ import axios from 'axios'
       },
 
       deleteItem (item) {
-        if(confirm('Are you sure you want to delete this item?')) {
-          let index = this.images.indexOf(item)
+        if(confirm('Are you sure you want to delete?')) {
           axios.delete(`http://localhost:3000/api/analysis/management/image/` + item.id, {data : { path : item.path }})
           .then((response) => {
+              let index = this.images.indexOf(item)
+              this.images.splice(index, 1)
               alert('delete complete')
+              
           })
           .catch((error) => {
 
           })
-          this.images.splice(index, 1)
+        }
+      },
+      deleteSelectedItem (item) {
+        if(confirm('Are you sure you want to delete?')) {
+          axios.delete(`http://localhost:3000/api/analysis/management/image`, {data : { images : item }})
+          .then((response) => {
+              for(let i of item) {
+                let index = this.images.indexOf(i)
+                this.images.splice(index, 1)
+              }
+              alert('delete complete')
+              
+          })
+          .catch((error) => {
+
+          })
         }
       },
 

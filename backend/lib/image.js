@@ -133,18 +133,43 @@ exports.updateImage = async (values, valueId) => {
     return 200
 }
 
-exports.deleteImage = async (imageId, path) => {
+exports.deleteImages = async (images) => {
     try {
         let conn = await pool.getConnection()
         await conn.beginTransaction()
         try {
-            await value.deleteByImageId(conn, imageId)
-            await image.delete(conn, imageId)
-            await file.imageFileDelete(path)
+            for(let i of images) {
+                await value.deleteByImageId(conn, i.id)
+                await image.delete(conn, i.id)
+                await file.imageFileDelete(i.path)
+            }
         } catch(err) {
-                await conn.rollback();
-                await conn.release();
-                return 500
+            await conn.rollback();
+            await conn.release();
+            return 500
+        }
+        await conn.commit()
+        await conn.release()
+    } catch(err) {
+        return 500
+    }
+
+    return 200
+}
+
+exports.deleteImage = async (id, path) => {
+    try {
+        let conn = await pool.getConnection()
+        await conn.beginTransaction()
+        try {
+            await value.deleteByImageId(conn, id)
+            await image.delete(conn, id)
+            await file.imageFileDelete(path)
+            
+        } catch(err) {
+            await conn.rollback();
+            await conn.release();
+            return 500
         }
         await conn.commit()
         await conn.release()
@@ -255,6 +280,12 @@ exports.setImageForm = async (req, res, next) => {
 
 exports.imageDelete = async (req, res, next) => {
     let status = await this.deleteImage(req.params.id, req.body.path)
+
+    return status
+}
+
+exports.imagesDelete = async (req, res, next) => {
+    let status = await this.deleteImages(req.body.images)
 
     return status
 }

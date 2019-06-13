@@ -57,6 +57,19 @@ export default {
         }
     },
     methods: {
+        getUserData: function() {
+            axios.get('http://localhost:3000/api/auth/exist')
+            .then((response) => {
+                if(response.data.id !== undefined && response.data.authority !== undefined) {
+                    this.$router.push({
+                        name : "management"
+                    })
+                }
+            })
+            .catch(function (error) {
+
+            })
+        },
         login: function(event){
             axios.post('http://localhost:3000/api/auth/manager', this.manager)
             .then((response) => {
@@ -68,6 +81,9 @@ export default {
                 alert(error)
             })
         }
+    },
+    mounted() {
+      this.getUserData()
     }    
 };
 </script>

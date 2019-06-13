@@ -69,6 +69,21 @@ export default {
         }
     },
     methods: {
+        getUserData: function() {
+            axios.get('http://localhost:3000/api/auth/exist')
+            .then((response) => {
+                if(response.data.id !== undefined && response.data.authority === undefined) {
+                    this.$router.push({
+                        name : "mainpage"
+                    })
+                }
+            })
+            .catch(function (error) {
+                this.$router.push({
+                    name : "mainpage"
+                })
+            })
+        },
         login: function(event){
             axios.post('http://localhost:3000/api/auth/user', this.account)
             .then((response) => {
@@ -80,6 +95,9 @@ export default {
                 alert(error)
             })
         }
+    },
+    created() {
+        this.getUserData()
     }    
 };
 </script>

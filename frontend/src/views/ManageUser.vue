@@ -126,10 +126,26 @@ import Modal from "@/components/Modal.vue";
     }),
 
     created () {
+      this.getUserData()
       this.initialize()
     },
 
     methods: {
+      getUserData: function() {
+        axios.get('http://localhost:3000/api/auth/exist')
+        .then((response) => {
+            if(response.data.id === undefined || response.data.authority === undefined) {
+                this.$router.push({
+                    name : "managerlogin"
+                })
+            }
+        })
+        .catch(function (error) {
+            this.$router.push({
+                name : "managerlogin"
+            })
+        })
+      },
       initialize () {
         axios.get(`http://localhost:3000/api/user/management/account`)
         .then((response) => {

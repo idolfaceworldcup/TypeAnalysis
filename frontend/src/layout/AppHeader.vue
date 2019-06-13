@@ -69,7 +69,7 @@ export default {
         authentication: function() {
         axios.get('http://localhost:3000/api/auth/exist')
         .then((response) => {
-          if(response.data.id !== undefined) {
+          if(response.data.id !== undefined && response.data.authority === undefined) {
             this.user.name = response.data.loginId
             this.user.id = response.data.id
           }

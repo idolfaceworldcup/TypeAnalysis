@@ -46,16 +46,37 @@ export default {
     },
 
     created() {
-        axios.get('http://localhost:3000/api/analysis/analysises')
-        .then((response) => {
-            this.analysis = response.data
-        })
-        .catch(function (error) {
-            alert(error)
-            this.$router.push({
-                name : "mainpage"
+        this.getUserData()
+        this.getAnalysis()    
+    },
+    methods: {
+        getUserData: function() {
+            axios.get('http://localhost:3000/api/auth/exist')
+            .then((response) => {
+                if(response.data.id === undefined || response.data.authority === undefined) {
+                    this.$router.push({
+                        name : "managerlogin"
+                    })
+                }
             })
-        })
+            .catch(function (error) {
+                this.$router.push({
+                    name : "managerlogin"
+                })
+            })
+        },
+        getAnalysis: function() {
+            axios.get('http://localhost:3000/api/analysis/analysises')
+            .then((response) => {
+                this.analysis = response.data
+            })
+            .catch(function (error) {
+                alert(error)
+                this.$router.push({
+                    name : "mainpage"
+                })
+            })
+        }
     }
 }
 </script>

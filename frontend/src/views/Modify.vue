@@ -61,8 +61,7 @@ export default {
         getUserData: function() {
             axios.get('http://localhost:3000/api/auth/exist')
             .then((response) => {
-                if(response.data.id === undefined) {
-                    alert('not login')
+                if(response.data.id === undefined || response.data.authority !== undefined) {
                     this.$router.push({
                         name : "mainpage"
                     })
@@ -90,7 +89,7 @@ export default {
         }
     },
 
-    mounted() {
+    created() {
         this.getUserData()
     }
 }

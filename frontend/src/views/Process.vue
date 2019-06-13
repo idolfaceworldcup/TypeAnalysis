@@ -16,7 +16,7 @@ import router from "../router"
         })
       }
     },
-    mounted () {
+    created () {
         this.process()
     }
   };

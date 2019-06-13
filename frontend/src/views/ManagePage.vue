@@ -60,9 +60,9 @@ import router from "../router"
       getUserData: function() {
         axios.get('http://localhost:3000/api/auth/exist')
         .then((response) => {
-          if(response.data.id !== undefined) {
+          if(response.data.id !== undefined && response.data.authority !== undefined) {
             this.manager.loginId = response.data.loginId
-            this.manaer.id = response.data.id
+            this.manager.id = response.data.id
             this.manager.authority = response.data.authority
           }
 
@@ -73,7 +73,9 @@ import router from "../router"
           }
         })
         .catch((error) => {
-          
+          this.$router.push({
+            name : "managerlogin"
+          })
         })
       },
       logoutManager: function(){
@@ -84,11 +86,11 @@ import router from "../router"
             })
         })
         .catch((error) => {
-
+          
         })
       }
     },
-    mounted() {
+    created() {
       this.getUserData()
     }
   };

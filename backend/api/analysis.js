@@ -43,6 +43,10 @@ router.delete('/management/image/:id', async (req, res, next) => {
     res.sendStatus(await image.imageDelete(req, res, next))
 })
 
+router.delete('/management/image', async (req, res, next) => {
+    res.sendStatus(await image.imagesDelete(req, res, next))
+})
+
 router.post('/image/upload', async (req, res, next) => {
     uploader(req, res, async err => {
         if (err) {

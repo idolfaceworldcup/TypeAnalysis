@@ -108,33 +108,41 @@ exports.regist = async (req, res, next) => {
 }
 
 exports.setting = async (req, res, next) => {
-    if(!auth.isLogin(req, res, next)) {
-        return 401
+    try {
+        if(!auth.isLogin(req, res, next)) {
+            return 401
+        }
+        
+        let request = req.body
+
+        let result = await this.getAccount(req.user.id)
+
+        if(request.account.password !== result[0].password) {
+            return 412
+        }
+
+        let status = await this.update(request.account.newpassword, req.user.id)
+
+        return status
+    } catch {
+        return 500
     }
-    
-    let request = req.body
-
-    let result = await this.getAccount(req.user.id)
-
-    if(request.account.password !== result[0].password) {
-        return 412
-    }
-
-    let status = await this.update(request.account.newpassword, req.user.id)
-
-    return status
 }
 
 exports.accountTable = async (req, res, next) => {
-    let result = await this.getAllAccount()
-    let response = []
+    try {
+        let result = await this.getAllAccount()
+        let response = []
 
-    for(let r of result) {
-        let model = require('../model/account')(r)
-        response.push(model)
+        for(let r of result) {
+            let model = require('../model/account')(r)
+            response.push(model)
+        }
+
+        return response
+    } catch(err) {
+        return 500
     }
-
-    return response
 }
 
 exports.settingFromManager = async (req, res, next) => {
