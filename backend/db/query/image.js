@@ -1,3 +1,14 @@
+exports.findAll = async (conn) => {
+    try {
+        console.log('!!')
+        let result = await conn.query('select * from image')
+        
+        return result
+    } catch(err) {
+        return 500
+    }
+}
+
 exports.findByAnalysisId = async (conn, analysisId) => {
     try {
         let result = await conn.query('select * from image where analysisId = ?', [analysisId])

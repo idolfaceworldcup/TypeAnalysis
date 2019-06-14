@@ -38,16 +38,11 @@
 
                         </template>
                     </card>
-                    <div class="row mt-3">
-                        <div class="col-6">
-                            <a href="#" class="text-light">
-                                <small>Forgot password?</small>
-                            </a>
-                        </div>
-                        <div class="col-6 text-right">
-                            <a href="#" class="text-light">
+                    <div class="mt-3 text-center">
+                        <div>
+                            <router-link to="/register" class="text-light">
                                 <small>Create new account</small>
-                            </a>
+                            </router-link>
                         </div>
                     </div>
                 </div>

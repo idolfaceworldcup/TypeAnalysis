@@ -22,6 +22,7 @@
               vertical
             ></v-divider>
             <v-spacer></v-spacer>
+            <base-button outline type='danger' @click="deleteSelectedItem(selected)">Checked Delete</base-button>
             </v-card-title>
           </v-card>
             
@@ -29,13 +30,20 @@
             v-model="selected"
             :headers="headers"
             :items="accounts"
-            item-key="loginId"
+            select-all
             class="elevation-1"
             prev-icon="mdi-menu-left"
             next-icon="mdi-menu-right"
             sort-icon="mdi-menu-down"
           >
             <template v-slot:items="props">
+              <td>
+                <v-checkbox
+                  v-model="props.selected"
+                  primary
+                  hide-details
+                ></v-checkbox>
+              </td>
               <td class="text-xs-left"></td>
               <td class="text-xs-left">{{ props.item.id }}</td>
               <td class="text-xs-center"></td>
@@ -163,15 +171,31 @@ import Modal from "@/components/Modal.vue";
 
       deleteItem (item) {
         if(confirm('Are you sure you want to delete this item?')) {
-          let index = this.accounts.indexOf(item)
           axios.delete(`http://localhost:3000/api/user/management/account/`+ item.id)
           .then((response) => {
+              let index = this.accounts.indexOf(item)
+              this.accounts.splice(index, 1)
               alert('delete complete')
           })
           .catch((error) => {
 
           })
-          this.accounts.splice(index, 1)
+        }
+      },
+      deleteSelectedItem (item) {
+        if(confirm('Are you sure you want to delete?')) {
+          axios.delete(`http://localhost:3000/api/user/management/account`, {data : { accounts : item }})
+          .then((response) => {
+              for(let i of item) {
+                let index = this.accounts.indexOf(i)
+                this.accounts.splice(index, 1)
+              }
+              alert('delete complete')
+              
+          })
+          .catch((error) => {
+
+          })
         }
       },
 

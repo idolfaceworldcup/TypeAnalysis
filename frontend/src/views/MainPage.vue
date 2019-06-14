@@ -17,11 +17,11 @@
       <base-button type="Default" @click="logoutUser" v-if="user.id !== 0">LOGOUT</base-button>
       <section class="section section--demo-2">
             <agile :initial-slide="2" :autoplay-speed="5000" :speed="2500" fade pause-on-hover pause-on-dots-hover autoplay >
-              <div class="container pt-lg-md" v-for="(h, index) in href" :key="index">
+              <div class="container pt-lg-md" v-for="(i, index) in images" :key="index">
                 <div class="row justify-content-center">
                   <div class="col-md-6">
                     <card type="secondary" shadow>
-                      <v-img class="slide" :src="h" height="100%" width="100%"></v-img>
+                      <v-img :src="i.path" class="slide"></v-img>
                     </card>
                   </div>
                 </div>
@@ -58,14 +58,25 @@ import router from "../router"
           id : 0,
           name :"Guest"
         },
-        href : [
-          require(`../../public/img/analysis/image/pleasewait.jpg`),
-          require(`../../public/img/analysis/image/pleasewait.jpg`),
-          require(`../../public/img/analysis/image/pleasewait.jpg`),
-          require(`../../public/img/analysis/image/pleasewait.jpg`),
-          require(`../../public/img/analysis/image/pleasewait.jpg`),
-          require(`../../public/img/analysis/image/pleasewait.jpg`),
-          require(`../../public/img/analysis/image/pleasewait.jpg`)
+        images : [
+          {
+            path : require(`../../public/img/analysis/image/pleasewait.jpg`),
+          },
+          {
+            path : require(`../../public/img/analysis/image/pleasewait.jpg`),
+          },
+          {
+            path : require(`../../public/img/analysis/image/pleasewait.jpg`),
+          },
+          {
+            path : require(`../../public/img/analysis/image/pleasewait.jpg`),
+          },
+          {
+            path : require(`../../public/img/analysis/image/pleasewait.jpg`),
+          },
+          {
+            path : require(`../../public/img/analysis/image/pleasewait.jpg`),
+          }
         ]
       }
     },
@@ -90,6 +101,16 @@ import router from "../router"
 
         })
       },
+      getSlideImage: function() {
+        axios.get('http://localhost:3000/api/image/slide')
+        .then((response) => {
+          this.images = []
+          this.images = response.data
+        })
+        .catch((error) => {
+          
+        })
+      },
       getUserData: function() {
         axios.get('http://localhost:3000/api/auth/exist')
         .then((response) => {
@@ -104,7 +125,8 @@ import router from "../router"
       }
     },
     mounted () {
-        this.getUserData()
+      this.getSlideImage()
+      this.getUserData()
     }
   };
 

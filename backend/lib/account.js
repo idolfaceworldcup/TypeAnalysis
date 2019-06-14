@@ -77,14 +77,14 @@ exports.delete = async (id) => {
     }
 }
 
-exports.multiDelete = async (ids) => {
+exports.multiDelete = async (accounts) => {
     try {
         let conn = await pool.getConnection()
         await conn.beginTransaction()
 
         try {
-            for(id of ids) {
-                await account.delete(conn, id)
+            for(a of accounts) {
+                await account.delete(conn, a.id)
             }
         } catch(err) {
                 await conn.rollback();
@@ -155,6 +155,12 @@ exports.settingFromManager = async (req, res, next) => {
 
 exports.deleteAccount = async (req, res, next) => {
     let status = await this.delete(req.params.id)
+    
+    return status
+}
+
+exports.deleteAccounts = async (req, res, next) => {
+    let status = await this.multiDelete(req.body.accounts)
     
     return status
 }

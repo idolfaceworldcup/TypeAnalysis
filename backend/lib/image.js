@@ -4,6 +4,18 @@ const attribute = require('../lib/attribute')
 const file = require('../lib/file')
 const pool = require('../db/pool')
 
+exports.getAllImage = async () => {
+    try {
+        let conn = await pool.getConnection()
+        let result = await image.findAll(conn)
+        await conn.release()
+
+        return result
+    } catch (err) {
+        return 500
+    }
+}
+
 exports.getImages = async (analysisId) => {
     try {
         let conn = await pool.getConnection()
@@ -178,6 +190,45 @@ exports.deleteImage = async (id, path) => {
     }
 
     return 200
+}
+
+exports.setMainSlide = async (req, res, next) => {
+    try {
+        let result = await this.getAllImage()
+        let resultLength = result.length
+
+        let randomIndex = []
+
+        randomIndex.push(Math.floor(Math.random() * resultLength))
+
+        for(let i = 0; i < 5; ++i) {
+            while(true) {
+                let temp = Math.floor(Math.random() * resultLength)
+
+                if(randomIndex[i] !== temp) {
+                    randomIndex.push(temp)
+                    break
+                }
+            }
+        }
+
+        let response = []
+
+        for(let i of randomIndex) {
+            response.push(require('../model/image')(result[i]))
+        }
+
+        for(let i = 0; i < response.length; ++i) {
+            response[i].path = response[i].path.replace('\\', '/')
+            response[i].path = `/analysis/image/` + response[i].path
+        }
+
+        console.log(response)
+
+        return response
+    } catch(err) {
+        return 500
+    }
 }
 
 exports.imageTable = async (req, res, next) => {

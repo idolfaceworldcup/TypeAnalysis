@@ -23,7 +23,7 @@
             ></v-divider>
             <v-spacer></v-spacer>
             <base-button outline type='secondary' @click="createItem">New Data</base-button>
-            <base-button outline type='secondary' @click="deleteSelectedItem(selected)">Checked Delete</base-button>
+            <base-button outline type='danger' @click="deleteSelectedItem(selected)">Checked Delete</base-button>
             </v-card-title>
           </v-card>
 

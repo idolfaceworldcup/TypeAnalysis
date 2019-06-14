@@ -16,6 +16,9 @@ router.delete('/management/account/:id', async (req, res, next) => {
     res.sendStatus(await account.deleteAccount(req, res, next));
 })
 
+router.delete('/management/account', async (req, res, next) => {
+    res.sendStatus(await account.deleteAccounts(req, res, next));
+})
 
 router.put('/setting',  [
     check('account.password').isLength( { max : 20, min : 4 } ),

@@ -3,7 +3,7 @@
         
             <base-nav class="navbar-main" transparent type="" effect="light" expand>
                 <router-link slot="brand" class="navbar-brand mr-lg-5" to="/">
-                    <img src="img/brand/logo.png" alt="logo">
+                    <img :src="require('../../public/img/brand/logo.png')" alt="logo">
                 </router-link>
                 <a class="navbar-brand" href="#"></a>
 
