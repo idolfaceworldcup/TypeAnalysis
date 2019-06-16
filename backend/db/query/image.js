@@ -1,6 +1,5 @@
 exports.findAll = async (conn) => {
     try {
-        console.log('!!')
         let result = await conn.query('select * from image')
         
         return result

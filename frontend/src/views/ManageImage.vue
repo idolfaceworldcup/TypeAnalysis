@@ -296,7 +296,7 @@ export default {
               });
           })
           .catch(function(error) {
-            alert("fail");
+            alert(error);
           });
         this.closeFormModal();
       }

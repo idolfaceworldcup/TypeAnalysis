@@ -82,7 +82,7 @@ export default {
         .then(response => {
           if (
             response.data.id !== undefined &&
-            responsed.data.authority === undefined
+            response.data.authority === undefined
           ) {
             this.loginId = response.data.loginId;
           }

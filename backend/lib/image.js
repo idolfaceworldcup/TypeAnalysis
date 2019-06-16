@@ -223,8 +223,6 @@ exports.setMainSlide = async (req, res, next) => {
             response[i].path = `/analysis/image/` + response[i].path
         }
 
-        console.log(response)
-
         return response
     } catch(err) {
         return 500
